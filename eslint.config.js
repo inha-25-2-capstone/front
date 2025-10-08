@@ -30,4 +30,23 @@ export default defineConfig([
       react: { version: 'detect' },
     },
   },
+
+  {
+    files: [
+      '**/*.cjs',
+      '**/*.config.{js,cjs,mjs,ts}',
+      'vite.config.ts',
+    ],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      // CJS 파일 지원
+      sourceType: 'script',
+      globals: { ...globals.node },
+      // TS 설정 파일(vite.config.ts 등)도 파싱
+      parser: tseslint.parser,
+    },
+    rules: {
+      // 필요시 추가 완화 규칙…
+    },
+  },
 ])
