@@ -1,8 +1,8 @@
-import { env } from '@/lib/env'
-import { useTodos } from '@/features/todos/useTodos'
+import { env } from '@/lib/env';
+import { useTodos } from '@/features/todos/useTodos';
 
 export default function Home() {
-  const { data, isPending, error } = useTodos()
+  const { data, isPending, error } = useTodos();
 
   return (
     <div>
@@ -19,7 +19,5 @@ export default function Home() {
         </ul>
       )}
     </div>
-  )
+  );
 }
-
-
