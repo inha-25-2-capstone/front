@@ -1,4 +1,13 @@
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Divider } from '@mui/material';
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Divider,
+} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -114,7 +123,11 @@ export default function Sidebar() {
 
       {/* 오늘의 TOP 7 토픽 */}
       <Box sx={{ px: 2, py: 2, flex: 1 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ px: 2, fontWeight: 600, mb: 1, display: 'block' }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ px: 2, fontWeight: 600, mb: 1, display: 'block' }}
+        >
           오늘의 TOP 7 토픽
         </Typography>
         <List>

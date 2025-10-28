@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a Vite + React + TypeScript frontend project using SWC for fast refresh. The project is configured with:
+
 - React 19 with React Router for routing
 - TanStack Query (React Query) for server state management
 - ESLint with TypeScript, React, and import sorting plugins
@@ -38,6 +39,7 @@ npm run format        # Format all files with Prettier
 ## CI/CD Pipeline
 
 The GitHub Actions workflow (`.github/workflows/ci.yml`) runs on push/PR to `main`:
+
 1. Lint check
 2. Format check
 3. Type check
@@ -48,23 +50,27 @@ All checks must pass before merging.
 ## Project Architecture
 
 ### Entry Point & Routing
+
 - `src/main.tsx`: Application entry point that sets up:
   - React Router with `createBrowserRouter`
   - QueryClient and QueryClientProvider for React Query
   - ReactQueryDevtools in development mode
 
 ### Application Structure
+
 - `src/App.tsx`: Root layout component with navigation and `<Outlet />` for nested routes
 - `src/pages/`: Page components mapped to routes
 - `src/features/`: Feature-based modules (e.g., `features/todos/useTodos.ts`)
 - `src/lib/`: Shared utilities (e.g., `lib/env.ts` for environment variables)
 
 ### State Management Pattern
+
 - Use TanStack Query for server state (see `features/todos/useTodos.ts` as reference)
 - Custom hooks pattern: create feature-specific hooks that use `useQuery`/`useMutation`
 - Query keys should be organized by feature (e.g., `['todos']`, `['todos', id]`)
 
 ### Code Organization
+
 - Features should be organized in `src/features/[feature-name]/`
 - Each feature can contain components, hooks, types, and utilities
 - Use path alias `@/` for imports from `src/` (e.g., `import Home from '@/pages/Home'`)
@@ -72,12 +78,14 @@ All checks must pass before merging.
 ## ESLint Configuration
 
 The project uses a flat config ESLint setup with:
+
 - TypeScript ESLint recommended rules
 - React and React Hooks plugins
 - Simple import sort (auto-sorts imports on lint fix)
 - Import plugin for module resolution
 
 Key lint rules:
+
 - `simple-import-sort/imports`: Automatically sorts imports
 - `react-hooks/rules-of-hooks`: Enforces React Hooks rules
 - `react-hooks/exhaustive-deps`: Warns about missing dependencies
@@ -89,11 +97,13 @@ Key lint rules:
 **프로젝트명**: AI 기반 객관적 뉴스 추천 서비스
 
 **목적**:
+
 - 오늘의 국내 정치 뉴스 중 조회수가 높은 Top 7 뉴스 제공
 - 사용자가 클릭한 정치 뉴스 토픽에 대한 기사를 제공
 - 동일한 토픽 내 상반된 의견 기사 리스트 추천을 통해 다양한 관점 제공
 
 **기술 스택**:
+
 - Frontend: React, TypeScript, Material UI, Axios
 - Backend: Flask (API 제공)
 - Database: PostgreSQL
@@ -136,12 +146,14 @@ project-root/
 **경로**: `/`
 
 **주요 기능**:
+
 - Top 7 토픽 리스트 (카드 형태)
 - 전체 스탠스 지수 요약
 - 핵심 키워드 트렌드 (워드클라우드)
 - 언론사별 정치 스펙트럼 시각화
 
 **컴포넌트 구조**:
+
 ```
 MainPage
 ├── Header
@@ -153,6 +165,7 @@ MainPage
 ```
 
 **API 호출**:
+
 - `GET /api/dashboard/summary`
 - `GET /api/dashboard/keywords`
 - `GET /api/dashboard/topics/stance-ratio`
@@ -165,11 +178,13 @@ MainPage
 **경로**: `/topics/:topic_id`
 
 **주요 기능**:
+
 - 대표 기사 카드 (상단)
 - 해당 토픽의 전체 기사 리스트 (하단)
 - 스탠스별 필터링 기능
 
 **컴포넌트 구조**:
+
 ```
 TopicDetailPage
 ├── Header
@@ -186,6 +201,7 @@ TopicDetailPage
 ```
 
 **API 호출**:
+
 - `GET /api/topics/:topic_id?include=main_article,stance_distribution`
 - `GET /api/topics/:topic_id/articles?stance=전체&page=1&limit=20`
 
@@ -196,11 +212,13 @@ TopicDetailPage
 **경로**: `/articles/:article_id`
 
 **주요 기능**:
+
 - 기사 본문 전체 표시 (좌측 메인 영역)
 - 후보 기사 리스트 (우측 사이드바, 최대 3개)
 - 스탠스별 필터링 기능
 
 **컴포넌트 구조**:
+
 ```
 ArticleDetailPage
 ├── Header
@@ -220,6 +238,7 @@ ArticleDetailPage
 ```
 
 **API 호출**:
+
 - `GET /api/articles/:article_id?include=stance,topic,related_articles`
 - `GET /api/topics/:topic_id/recommendations`
 
@@ -230,11 +249,13 @@ ArticleDetailPage
 **경로**: `/articles`
 
 **주요 기능**:
+
 - 모든 기사를 최신 순으로 정렬
 - 필터링 (언론사, 토픽, 스탠스, 날짜)
 - 페이지네이션
 
 **컴포넌트 구조**:
+
 ```
 ArticleListPage
 ├── Header
@@ -249,6 +270,7 @@ ArticleListPage
 ```
 
 **API 호출**:
+
 - `GET /api/articles?page=1&limit=20&sort=published_at:desc`
 
 ---
@@ -258,10 +280,12 @@ ArticleListPage
 **경로**: `/press`
 
 **주요 기능**:
+
 - 모든 언론사를 가나다 순으로 정렬
 - 각 언론사 카드 클릭 시 해당 언론사 기사 목록으로 이동
 
 **컴포넌트 구조**:
+
 ```
 PressListPage
 ├── Header
@@ -274,6 +298,7 @@ PressListPage
 ```
 
 **API 호출**:
+
 - `GET /api/press?sort=name:asc&include=statistics`
 
 ---
@@ -283,10 +308,12 @@ PressListPage
 **경로**: `/press/:press_id/articles`
 
 **주요 기능**:
+
 - 특정 언론사의 최신 기사 모음
 - 필터링 및 정렬
 
 **컴포넌트 구조**:
+
 ```
 PressArticlesPage
 ├── Header
@@ -338,3 +365,4 @@ PressArticlesPage
 10. 상태 관리 및 데이터 캐싱: 불필요한 API 호출 방지를 위한 적절한 캐싱 전략 사용
 11. 환경 변수 관리: API URL 등 환경별로 다른 값은 환경 변수로 관리
 ---
+```
