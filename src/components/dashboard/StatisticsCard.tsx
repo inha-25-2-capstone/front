@@ -38,7 +38,14 @@ export default function StatisticsCard({
             {label}
           </Typography>
         </Box>
-        <Typography variant="h5" fontWeight="bold" sx={{ mb: 0.5, fontSize: typeof value === 'string' && value.length > 10 ? '1.1rem' : '1.5rem' }}>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{
+            mb: 0.5,
+            fontSize: typeof value === 'string' && value.length > 10 ? '1.1rem' : '1.5rem',
+          }}
+        >
           {value}
         </Typography>
         <Typography variant="caption" sx={{ color: subtitleColor }}>
