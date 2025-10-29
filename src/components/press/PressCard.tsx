@@ -1,5 +1,5 @@
-import { Box, Card, CardContent, Typography } from '@mui/material';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface PressCardProps {

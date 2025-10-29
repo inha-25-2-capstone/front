@@ -1,5 +1,5 @@
-import { env } from '@/lib/env';
 import { useTodos } from '@/features/todos/useTodos';
+import { env } from '@/lib/env';
 
 export default function Home() {
   const { data, isPending, error } = useTodos();

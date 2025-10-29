@@ -1,14 +1,15 @@
 import { Box, Paper, Typography } from '@mui/material';
 import {
-  BarChart,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
+
 import { stanceColors } from '@/theme/theme';
 
 interface TopicStanceData {

@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+
 import ArticleListItem from '@/components/article/ArticleListItem';
 
 // 더미 데이터

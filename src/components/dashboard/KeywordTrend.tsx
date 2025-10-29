@@ -1,4 +1,5 @@
 import { Box, Chip, Paper, Typography } from '@mui/material';
+
 import { stanceColors } from '@/theme/theme';
 
 interface Keyword {

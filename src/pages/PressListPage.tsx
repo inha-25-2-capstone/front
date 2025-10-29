@@ -1,6 +1,7 @@
-import { Box, Typography, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 import PressCard from '@/components/press/PressCard';
 
 // 더미 데이터

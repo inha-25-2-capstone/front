@@ -1,7 +1,8 @@
-import { Box, Typography, Paper } from '@mui/material';
-import StatisticsCard from '@/components/dashboard/StatisticsCard';
+import { Box, Paper, Typography } from '@mui/material';
+
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
+import StatisticsCard from '@/components/dashboard/StatisticsCard';
 
 // 더미 데이터
 const statisticsData = [

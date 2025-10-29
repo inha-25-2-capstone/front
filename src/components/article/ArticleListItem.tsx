@@ -1,5 +1,6 @@
-import { Box, Card, CardContent, Typography, Chip } from '@mui/material';
+import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+
 import { stanceColors } from '@/theme/theme';
 
 interface ArticleListItemProps {
