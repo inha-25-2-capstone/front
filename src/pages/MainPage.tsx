@@ -71,6 +71,8 @@ const spectrumData: SpectrumData[] = [
   { name: 'MBC', political: -20, activity: 65 },
   { name: 'KBS', political: 0, activity: 60 },
   { name: 'JTBC', political: -40, activity: 88 },
+];
+
 // 히트맵 더미 데이터
 const heatmapTopics = ['대통령정책', '국회/정당', '북한', '경제', '외교', '사법'];
 const heatmapData: HeatmapData[] = [
