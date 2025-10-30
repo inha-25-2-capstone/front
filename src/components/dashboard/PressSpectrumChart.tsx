@@ -27,8 +27,16 @@ const getPoliticalColor = (political: number): string => {
   return '#9e9e9e'; // 중립 - 회색
 };
 
+// 커스텀 툴팁 타입
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    payload: SpectrumData;
+  }>;
+}
+
 // 커스텀 툴팁
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
@@ -58,22 +66,24 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
+// 커스텀 도트 타입
+interface CustomDotProps {
+  cx?: number;
+  cy?: number;
+  payload?: SpectrumData;
+}
+
 // 커스텀 도트 (언론사 점)
-const CustomDot = (props: any) => {
+const CustomDot = (props: CustomDotProps) => {
   const { cx, cy, payload } = props;
+  if (!cx || !cy || !payload) return null;
+
   const color = getPoliticalColor(payload.political);
 
   return (
     <g>
       <circle cx={cx} cy={cy} r={8} fill={color} opacity={0.8} />
-      <text
-        x={cx}
-        y={cy + 20}
-        textAnchor="middle"
-        fill="#666"
-        fontSize={11}
-        fontWeight="500"
-      >
+      <text x={cx} y={cy + 20} textAnchor="middle" fill="#666" fontSize={11} fontWeight="500">
         {payload.name}
       </text>
     </g>
@@ -159,12 +169,7 @@ export default function PressSpectrumChart({ data }: PressSpectrumChartProps) {
           />
           <ZAxis range={[100, 100]} />
           <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
-          <Scatter
-            data={data}
-            fill="#8884d8"
-            shape={<CustomDot />}
-            isAnimationActive={true}
-          />
+          <Scatter data={data} fill="#8884d8" shape={<CustomDot />} isAnimationActive={true} />
         </ScatterChart>
       </ResponsiveContainer>
     </Box>
