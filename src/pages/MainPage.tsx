@@ -1,4 +1,62 @@
-import { Box, Typography, Card, CardContent, Paper } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
+
+import KeywordTrend from '@/components/dashboard/KeywordTrend';
+import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
+import StatisticsCard from '@/components/dashboard/StatisticsCard';
+
+// 더미 데이터
+const statisticsData = [
+  {
+    icon: '🔥',
+    iconBgColor: '#ff6b6b',
+    label: '기사 스탠스 지수',
+    value: 128,
+    subtitle: '총 논조 수',
+    subtitleColor: '#ff6b6b',
+  },
+  {
+    icon: '📊',
+    iconBgColor: '#e91e63',
+    label: '대표정치 입장평균 논조',
+    value: '대통령 탄핵정책 논란',
+    subtitle: '옹호 39% / 중립 33%',
+  },
+  {
+    icon: '💬',
+    iconBgColor: '#2196f3',
+    label: '논의점 수',
+    value: 12,
+    subtitle: '오늘 핫 화제 가지',
+  },
+  {
+    icon: '📰',
+    iconBgColor: '#4caf50',
+    label: '핵심 언론사',
+    value: 8,
+    subtitle: '다양한 시각 제공',
+  },
+];
+
+const keywordData = [
+  { text: '검찰개혁', stance: 'oppose' as const },
+  { text: '경제정책', stance: 'support' as const },
+  { text: '국정감사', stance: 'neutral' as const },
+  { text: '부동산', stance: 'oppose' as const },
+  { text: '투표율', stance: 'support' as const },
+  { text: '노동법', stance: 'neutral' as const },
+  { text: '교육부', stance: 'oppose' as const },
+  { text: '헌법', stance: 'neutral' as const },
+];
+
+const stanceChartData = [
+  { topic: '대통령정책', support: 3, neutral: 2, oppose: 2 },
+  { topic: '국회/정당', support: 1, neutral: 4, oppose: 2 },
+  { topic: '북한', support: 3, neutral: 2, oppose: 3 },
+  { topic: '불법', support: 2, neutral: 1, oppose: 4 },
+  { topic: '국정/외교', support: 4, neutral: 2, oppose: 1 },
+  { topic: '헌법관련', support: 2, neutral: 3, oppose: 2 },
+  { topic: '정치단체', support: 1, neutral: 5, oppose: 1 },
+];
 
 export default function MainPage() {
   return (
@@ -9,7 +67,7 @@ export default function MainPage() {
           오늘의 정치 지향
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          한국 가장 논쟁적 역할 어휘분류 언론사 탐험되는 논조로 변동 받지 않겠습니다
+          한국 가장 논쟁적 역할을 하는 언론사 탐험되는 논조로 변동 받지 않겠습니다
         </Typography>
       </Box>
 
@@ -22,165 +80,20 @@ export default function MainPage() {
           mb: 4,
         }}
       >
-        <Card>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  bgcolor: '#ff6b6b',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography sx={{ fontSize: 20 }}>🔥</Typography>
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                기사 스탠스 지수
-              </Typography>
-            </Box>
-            <Typography variant="h5" fontWeight="bold">
-              128
-            </Typography>
-            <Typography variant="caption" sx={{ color: '#ff6b6b' }}>
-              총 논조 수
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  bgcolor: '#e91e63',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography sx={{ fontSize: 20 }}>📊</Typography>
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                대표정치 입장평균 논조
-              </Typography>
-            </Box>
-            <Typography variant="h5" fontWeight="bold" sx={{ fontSize: '1.1rem' }}>
-              대통령 탄핵정책 논란
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              옹호 39% / 중립 33%
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  bgcolor: '#2196f3',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography sx={{ fontSize: 20 }}>💬</Typography>
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                논의점 수
-              </Typography>
-            </Box>
-            <Typography variant="h5" fontWeight="bold">
-              12
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              오늘 핫 화제 가지
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  bgcolor: '#4caf50',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography sx={{ fontSize: 20 }}>📰</Typography>
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                핵심 언론사
-              </Typography>
-            </Box>
-            <Typography variant="h5" fontWeight="bold">
-              8
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              다양한 시각 제공
-            </Typography>
-          </CardContent>
-        </Card>
+        {statisticsData.map((stat, index) => (
+          <StatisticsCard key={index} {...stat} />
+        ))}
       </Box>
 
       {/* 핵심 키워드 트렌드 */}
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <Typography>📈</Typography>
-          <Typography variant="h6" fontWeight="bold">
-            핵심 키워드 트렌드
-          </Typography>
-        </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          오늘 가장 많이 달린 논쟁적 정치 키워드는
-        </Typography>
-        <Box sx={{ lineHeight: 2 }}>
-          <Typography variant="body1" component="span">
-            교육부 헌의 봉직금 감축개요 경제정책 국정감사 부종법밤 투표성격책
-          </Typography>
-        </Box>
-      </Paper>
+      <Box sx={{ mb: 4 }}>
+        <KeywordTrend keywords={keywordData} />
+      </Box>
 
-      {/* 우보 핵심팩 스탠스 비율 */}
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <Typography>📊</Typography>
-          <Typography variant="h6" fontWeight="bold">
-            우보 핵심팩 스탠스 비율
-          </Typography>
-        </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Top 7 토픽이 중심성감 정치스펙트럼 비율
-        </Typography>
-        <Box
-          sx={{
-            height: 300,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            bgcolor: '#f5f5f5',
-            borderRadius: 2,
-          }}
-        >
-          <Typography color="text.secondary">차트 영역 (구현 예정)</Typography>
-        </Box>
-      </Paper>
+      {/* 주요 토픽별 스탠스 비율 */}
+      <Box sx={{ mb: 4 }}>
+        <StanceRatioChart data={stanceChartData} />
+      </Box>
 
       {/* 언론사별 스탠스 분포 히트맵 */}
       <Paper sx={{ p: 3, mb: 4 }}>

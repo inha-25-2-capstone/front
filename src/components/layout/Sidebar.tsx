@@ -1,16 +1,16 @@
+import ArticleIcon from '@mui/icons-material/Article';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import {
   Box,
+  Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
-  Divider,
 } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ArticleIcon from '@mui/icons-material/Article';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
