@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
+import PressStanceHeatmap, { type HeatmapData } from '@/components/dashboard/PressStanceHeatmap';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
 import StatisticsCard from '@/components/dashboard/StatisticsCard';
 
@@ -58,6 +59,99 @@ const stanceChartData = [
   { topic: '정치단체', support: 1, neutral: 5, oppose: 1 },
 ];
 
+// 히트맵 더미 데이터
+const heatmapTopics = ['대통령정책', '국회/정당', '북한', '경제', '외교', '사법'];
+const heatmapData: HeatmapData[] = [
+  {
+    press: '조선일보',
+    topics: {
+      대통령정책: 'oppose',
+      '국회/정당': 'neutral',
+      북한: 'oppose',
+      경제: 'support',
+      외교: 'neutral',
+      사법: 'oppose',
+    },
+  },
+  {
+    press: '한겨레',
+    topics: {
+      대통령정책: 'support',
+      '국회/정당': 'support',
+      북한: 'support',
+      경제: 'neutral',
+      외교: 'support',
+      사법: 'support',
+    },
+  },
+  {
+    press: '중앙일보',
+    topics: {
+      대통령정책: 'neutral',
+      '국회/정당': 'neutral',
+      북한: 'oppose',
+      경제: 'support',
+      외교: 'neutral',
+      사법: 'neutral',
+    },
+  },
+  {
+    press: '경향신문',
+    topics: {
+      대통령정책: 'support',
+      '국회/정당': 'support',
+      북한: 'neutral',
+      경제: 'neutral',
+      외교: 'support',
+      사법: 'support',
+    },
+  },
+  {
+    press: '동아일보',
+    topics: {
+      대통령정책: 'oppose',
+      '국회/정당': 'neutral',
+      북한: 'oppose',
+      경제: 'support',
+      외교: 'oppose',
+      사법: 'neutral',
+    },
+  },
+  {
+    press: 'MBC',
+    topics: {
+      대통령정책: 'neutral',
+      '국회/정당': 'support',
+      북한: 'neutral',
+      경제: 'neutral',
+      외교: 'neutral',
+      사법: 'support',
+    },
+  },
+  {
+    press: 'KBS',
+    topics: {
+      대통령정책: 'neutral',
+      '국회/정당': 'neutral',
+      북한: 'neutral',
+      경제: 'neutral',
+      외교: 'neutral',
+      사법: 'neutral',
+    },
+  },
+  {
+    press: 'JTBC',
+    topics: {
+      대통령정책: 'support',
+      '국회/정당': 'neutral',
+      북한: 'support',
+      경제: 'support',
+      외교: 'support',
+      사법: 'neutral',
+    },
+  },
+];
+
 export default function MainPage() {
   return (
     <Box>
@@ -96,29 +190,9 @@ export default function MainPage() {
       </Box>
 
       {/* 언론사별 스탠스 분포 히트맵 */}
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <Typography>🗂️</Typography>
-          <Typography variant="h6" fontWeight="bold">
-            언론사별 스탠스 분포 히트맵
-          </Typography>
-        </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          각 언론사가 주목 눈에될 삿징는 논조를 색상으로 표한
-        </Typography>
-        <Box
-          sx={{
-            height: 400,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            bgcolor: '#f5f5f5',
-            borderRadius: 2,
-          }}
-        >
-          <Typography color="text.secondary">히트맵 테이블 영역 (구현 예정)</Typography>
-        </Box>
-      </Paper>
+      <Box sx={{ mb: 4 }}>
+        <PressStanceHeatmap data={heatmapData} topicNames={heatmapTopics} />
+      </Box>
 
       {/* 언론사별 비교 분석 */}
       <Paper sx={{ p: 3 }}>
