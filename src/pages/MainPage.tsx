@@ -61,6 +61,16 @@ const stanceChartData = [
   { topic: '정치단체', support: 1, neutral: 5, oppose: 1 },
 ];
 
+// 언론사 정치 스펙트럼 더미 데이터
+const spectrumData: SpectrumData[] = [
+  { name: '조선', political: 65, activity: 85 },
+  { name: '한겨레', political: -70, activity: 75 },
+  { name: '중앙', political: 15, activity: 90 },
+  { name: '경향', political: -55, activity: 70 },
+  { name: '동아', political: 55, activity: 80 },
+  { name: 'MBC', political: -20, activity: 65 },
+  { name: 'KBS', political: 0, activity: 60 },
+  { name: 'JTBC', political: -40, activity: 88 },
 // 히트맵 더미 데이터
 const heatmapTopics = ['대통령정책', '국회/정당', '북한', '경제', '외교', '사법'];
 const heatmapData: HeatmapData[] = [
@@ -152,18 +162,6 @@ const heatmapData: HeatmapData[] = [
       사법: 'neutral',
     },
   },
-];
-
-// 언론사 정치 스펙트럼 더미 데이터
-const spectrumData: SpectrumData[] = [
-  { name: '조선', political: 65, activity: 85 },
-  { name: '한겨레', political: -70, activity: 75 },
-  { name: '중앙', political: 15, activity: 90 },
-  { name: '경향', political: -55, activity: 70 },
-  { name: '동아', political: 55, activity: 80 },
-  { name: 'MBC', political: -20, activity: 65 },
-  { name: 'KBS', political: 0, activity: 60 },
-  { name: 'JTBC', political: -40, activity: 88 },
 ];
 
 // 언론사별 활동 지표 더미 데이터
