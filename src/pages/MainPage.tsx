@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
+import PressActivityList, { type ActivityData } from '@/components/dashboard/PressActivityList';
 import PressSpectrumChart, { type SpectrumData } from '@/components/dashboard/PressSpectrumChart';
 import PressStanceHeatmap, { type HeatmapData } from '@/components/dashboard/PressStanceHeatmap';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
@@ -163,6 +164,40 @@ const heatmapData: HeatmapData[] = [
   },
 ];
 
+// 언론사별 활동 지표 더미 데이터
+const activityData: ActivityData[] = [
+  {
+    name: '조선일보',
+    articleCount: 245,
+    activityScore: 92,
+    stanceDistribution: { support: 15, neutral: 35, oppose: 50 },
+  },
+  {
+    name: '한겨레',
+    articleCount: 198,
+    activityScore: 85,
+    stanceDistribution: { support: 55, neutral: 30, oppose: 15 },
+  },
+  {
+    name: 'JTBC',
+    articleCount: 223,
+    activityScore: 88,
+    stanceDistribution: { support: 45, neutral: 35, oppose: 20 },
+  },
+  {
+    name: '중앙일보',
+    articleCount: 267,
+    activityScore: 95,
+    stanceDistribution: { support: 25, neutral: 50, oppose: 25 },
+  },
+  {
+    name: '경향신문',
+    articleCount: 176,
+    activityScore: 78,
+    stanceDistribution: { support: 50, neutral: 30, oppose: 20 },
+  },
+];
+
 export default function MainPage() {
   return (
     <Box>
@@ -224,21 +259,7 @@ export default function MainPage() {
             <PressSpectrumChart data={spectrumData} />
           </Box>
           <Box>
-            <Typography variant="subtitle2" fontWeight="600" sx={{ mb: 2 }}>
-              언론사별 활동 지표
-            </Typography>
-            <Box
-              sx={{
-                height: 300,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: '#f5f5f5',
-                borderRadius: 2,
-              }}
-            >
-              <Typography color="text.secondary">리스트 (구현 예정)</Typography>
-            </Box>
+            <PressActivityList data={activityData} />
           </Box>
         </Box>
       </Paper>
