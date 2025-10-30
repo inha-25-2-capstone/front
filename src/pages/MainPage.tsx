@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
-import PressStanceHeatmap, { HeatmapData } from '@/components/dashboard/PressStanceHeatmap';
+import PressStanceHeatmap, { type HeatmapData } from '@/components/dashboard/PressStanceHeatmap';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
 import StatisticsCard from '@/components/dashboard/StatisticsCard';
 
