@@ -50,7 +50,9 @@ export default function PressActivityList({ data }: PressActivityListProps) {
             }}
           >
             {/* 상단: 언론사명과 순위 */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}
+            >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 {index === 0 && <Typography sx={{ fontSize: 16 }}>🏆</Typography>}
                 <Typography variant="body1" fontWeight="600">
@@ -64,11 +66,22 @@ export default function PressActivityList({ data }: PressActivityListProps) {
 
             {/* 활동도 바 */}
             <Box sx={{ mb: 1.5 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mb: 0.5,
+                }}
+              >
                 <Typography variant="caption" color="text.secondary">
                   활동도
                 </Typography>
-                <Typography variant="caption" fontWeight="600" color={getActivityColor(press.activityScore)}>
+                <Typography
+                  variant="caption"
+                  fontWeight="600"
+                  color={getActivityColor(press.activityScore)}
+                >
                   {press.activityScore}점
                 </Typography>
               </Box>
@@ -89,10 +102,16 @@ export default function PressActivityList({ data }: PressActivityListProps) {
 
             {/* 스탠스 분포 */}
             <Box>
-              <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5, display: 'block' }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mb: 0.5, display: 'block' }}
+              >
                 논조 분포
               </Typography>
-              <Box sx={{ display: 'flex', gap: 0.5, height: 6, borderRadius: 1, overflow: 'hidden' }}>
+              <Box
+                sx={{ display: 'flex', gap: 0.5, height: 6, borderRadius: 1, overflow: 'hidden' }}
+              >
                 {press.stanceDistribution.support > 0 && (
                   <Box
                     sx={{
