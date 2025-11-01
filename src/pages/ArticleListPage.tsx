@@ -1,126 +1,137 @@
-import { Box, Typography } from '@mui/material';
+/**
+ * 전체 기사 목록 페이지
+ */
 
-import ArticleListItem from '@/components/article/ArticleListItem';
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  Paper,
+  Select,
+  type SelectChangeEvent,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
 
-// 더미 데이터
-const articles = [
-  {
-    id: 1,
-    title: '대통령 탄핵정책 논란, 국회 긴급 회의 소집',
-    press: 'JTBC뉴스',
-    date: '2025.10.28',
-    imageUrl: '',
-    stance: 'oppose' as const,
-  },
-  {
-    id: 2,
-    title: '경제정책 발표, 내년도 예산안 통과 전망',
-    press: 'KBS뉴스',
-    date: '2025.10.28',
-    imageUrl: '',
-    stance: 'support' as const,
-  },
-  {
-    id: 3,
-    title: '국정감사 본격 시작, 주요 쟁점은?',
-    press: 'MBC뉴스',
-    date: '2025.10.28',
-    imageUrl: '',
-    stance: 'neutral' as const,
-  },
-  {
-    id: 4,
-    title: '부동산 정책 개편안 발표, 시장 반응은',
-    press: 'SBS뉴스',
-    date: '2025.10.27',
-    imageUrl: '',
-    stance: 'oppose' as const,
-  },
-  {
-    id: 5,
-    title: '투표율 상승세, 젊은 층 정치 참여 증가',
-    press: '경향신문',
-    date: '2025.10.27',
-    imageUrl: '',
-    stance: 'support' as const,
-  },
-  {
-    id: 6,
-    title: '노동법 개정안 국회 제출, 찬반 논란 가열',
-    press: '동아일보',
-    date: '2025.10.27',
-    imageUrl: '',
-    stance: 'neutral' as const,
-  },
-  {
-    id: 7,
-    title: '교육부 예산 삭감 논란, 교육계 반발',
-    press: '매일경제',
-    date: '2025.10.26',
-    imageUrl: '',
-    stance: 'oppose' as const,
-  },
-  {
-    id: 8,
-    title: '헌법재판소 중요 판결 앞두고 관심 집중',
-    press: '연합뉴스',
-    date: '2025.10.26',
-    imageUrl: '',
-    stance: 'neutral' as const,
-  },
-  {
-    id: 9,
-    title: '외교 정책 변화, 국제 관계 재편 전망',
-    press: '조선일보',
-    date: '2025.10.26',
-    imageUrl: '',
-    stance: 'support' as const,
-  },
-  {
-    id: 10,
-    title: '지방자치단체 예산안 통과, 주요 사업은',
-    press: '중앙일보',
-    date: '2025.10.25',
-    imageUrl: '',
-    stance: 'neutral' as const,
-  },
-  {
-    id: 11,
-    title: '환경정책 강화안 발표, 기업들 대응 나서',
-    press: '한겨레',
-    date: '2025.10.25',
-    imageUrl: '',
-    stance: 'support' as const,
-  },
-  {
-    id: 12,
-    title: '금융정책 변화 예고, 시장 영향 주목',
-    press: '한국경제',
-    date: '2025.10.25',
-    imageUrl: '',
-    stance: 'neutral' as const,
-  },
-];
+import ArticleCard from '@/components/article/ArticleCard';
+import StanceFilter from '@/components/common/StanceFilter';
+import { useArticles } from '@/hooks';
+import type { ArticleSortField, Stance } from '@/types';
+
+type SortOption = 'publishedAt:desc' | 'publishedAt:asc' | 'viewCount:desc' | 'viewCount:asc';
 
 export default function ArticleListPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [stanceFilter, setStanceFilter] = useState<Stance | '전체'>('전체');
+  const [sortOption, setSortOption] = useState<SortOption>('publishedAt:desc');
+
+  // 정렬 옵션 파싱
+  const [sortField, sortOrder] = sortOption.split(':') as [ArticleSortField, 'asc' | 'desc'];
+
+  // 기사 목록 조회
+  const {
+    data: articlesData,
+    isLoading,
+    error,
+  } = useArticles({
+    page: currentPage,
+    limit: 20,
+    filter: {
+      stance: stanceFilter,
+    },
+    sortField,
+    sortOrder,
+  });
+
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleStanceChange = (newStance: Stance | '전체') => {
+    setStanceFilter(newStance);
+    setCurrentPage(1); // 필터 변경 시 첫 페이지로
+  };
+
+  const handleSortChange = (event: SelectChangeEvent) => {
+    setSortOption(event.target.value as SortOption);
+    setCurrentPage(1); // 정렬 변경 시 첫 페이지로
+  };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="error">기사 목록을 불러오는데 실패했습니다.</Alert>
+      </Box>
+    );
+  }
+
   return (
     <Box>
       {/* 페이지 헤더 */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
-          인기 기사 목록
+          전체 기사 목록
         </Typography>
         <Typography variant="body1" color="text.secondary">
           최신 정치 기사를 확인해보세요
         </Typography>
       </Box>
 
-      {/* 기사 리스트 */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {articles.map((article) => (
-          <ArticleListItem key={article.id} {...article} />
-        ))}
-      </Box>
+      {/* 필터 및 정렬 */}
+      <Paper sx={{ p: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <StanceFilter value={stanceFilter} onChange={handleStanceChange} />
+          <FormControl size="small" sx={{ minWidth: 200 }}>
+            <InputLabel>정렬</InputLabel>
+            <Select value={sortOption} label="정렬" onChange={handleSortChange}>
+              <MenuItem value="publishedAt:desc">최신순</MenuItem>
+              <MenuItem value="publishedAt:asc">오래된순</MenuItem>
+              <MenuItem value="viewCount:desc">조회수 높은순</MenuItem>
+              <MenuItem value="viewCount:asc">조회수 낮은순</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* 기사 리스트 */}
+        {articlesData && articlesData.items.length > 0 ? (
+          <>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+              {articlesData.items.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </Box>
+
+            {/* 페이지네이션 */}
+            {articlesData.pagination.totalPages > 1 && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                <Pagination
+                  count={articlesData.pagination.totalPages}
+                  page={currentPage}
+                  onChange={handlePageChange}
+                  color="primary"
+                />
+              </Box>
+            )}
+          </>
+        ) : (
+          <Alert severity="info">해당 조건의 기사가 없습니다.</Alert>
+        )}
+      </Paper>
     </Box>
   );
 }
