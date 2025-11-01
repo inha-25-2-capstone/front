@@ -16,6 +16,7 @@ import theme from '@/theme/theme';
 const MainPage = lazy(() => import('@/pages/MainPage'));
 const ArticleListPage = lazy(() => import('@/pages/ArticleListPage'));
 const PressListPage = lazy(() => import('@/pages/PressListPage'));
+const TopicDetailPage = lazy(() => import('@/pages/TopicDetailPage'));
 
 // Loading component
 const LoadingFallback = () => (
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingFallback />}>
             <PressListPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'topics/:topicId',
+        element: (
+          <Suspense fallback={<LoadingFallback />}>
+            <TopicDetailPage />
           </Suspense>
         ),
       },
