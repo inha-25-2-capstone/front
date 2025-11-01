@@ -2,6 +2,8 @@
  * Article API 서비스
  */
 
+import { env } from '@/lib/env';
+import { getMockArticleById, getMockArticles } from '@/mocks/data/articles';
 import type {
   ArticleDetail,
   ArticleFilter,
@@ -29,6 +31,13 @@ interface GetArticlesParams {
 export const getArticles = async (
   params?: GetArticlesParams,
 ): Promise<PaginatedResponse<ArticleSummary>> => {
+  // Mock 모드 체크
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    const { page = 1, limit = 20 } = params || {};
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+    return getMockArticles(page, limit);
+  }
+
   const {
     page = 1,
     limit = 20,
@@ -73,6 +82,12 @@ export const getArticleById = async (
   articleId: number,
   include?: string,
 ): Promise<ArticleDetail> => {
+  // Mock 모드 체크
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+    return getMockArticleById(articleId);
+  }
+
   const queryParams = include ? `?include=${include}` : '';
   const response = await apiClient.get<{ data: ArticleDetail }>(
     `/articles/${articleId}${queryParams}`,
