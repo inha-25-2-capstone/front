@@ -1,4 +1,4 @@
-# AI 기반 객관적 뉴스 추천 서비스 - Frontend
+# AI 기반 객관적 뉴스 추천 서비스
 
 > 오늘의 국내 정치 뉴스 중 조회수가 높은 Top 7 토픽을 제공하고, 동일한 토픽 내 상반된 의견 기사를 추천하여 다양한 관점을 제공하는 서비스입니다.
 
@@ -214,7 +214,7 @@ npm run format:check
 npm run format
 ```
 
-### Pre-push 체크리스트 (필수!)
+### Pre-push 체크리스트
 
 커밋하기 전에 **반드시** 다음 명령어를 실행하세요:
 
@@ -223,76 +223,6 @@ npm run format    # 코드 포맷팅
 npm run typecheck # TypeScript 타입 체크
 npm run build     # 빌드 테스트
 ```
-
-### 코드 스타일 가이드
-
-#### 1. Import 정렬
-```typescript
-// ✅ Good - simple-import-sort가 자동 정렬
-import { Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
-import StanceBadge from '@/components/common/StanceBadge';
-import { useArticles } from '@/hooks';
-import type { Article } from '@/types';
-```
-
-#### 2. 컴포넌트 구조
-```typescript
-// ✅ Good
-interface MyComponentProps {
-  title: string;
-  count: number;
-}
-
-export default function MyComponent({ title, count }: MyComponentProps) {
-  // Hooks
-  const navigate = useNavigate();
-  const { data } = useArticles();
-
-  // Event handlers
-  const handleClick = () => {
-    // ...
-  };
-
-  // Render
-  return (
-    <Box>
-      {/* JSX */}
-    </Box>
-  );
-}
-```
-
-#### 3. 커밋 메시지 규칙
-```
-<type>: <subject>
-
-<body> (선택)
-
-🤖 Generated with Claude Code
-Co-Authored-By: Claude <noreply@anthropic.com>
-```
-
-**Type 종류**:
-- `feat`: 새로운 기능
-- `fix`: 버그 수정
-- `refactor`: 리팩토링
-- `style`: 코드 포맷팅
-- `docs`: 문서 수정
-- `test`: 테스트 추가/수정
-- `chore`: 빌드, 설정 변경
-
-**예시**:
-```
-feat: add Top 7 topics section to MainPage
-
-메인 페이지에 오늘의 토픽 TOP 7 섹션 추가
-- TopicCard 컴포넌트 생성
-- useTopics hook 통합
-```
-
----
 
 ## 🌿 Git 브랜치 전략
 
@@ -314,9 +244,9 @@ feature/* (개발 중)
 
 | 브랜치 | 용도 | 배포 환경 | Mock 데이터 |
 |--------|------|-----------|-------------|
-| **main** | 프로덕션 | Production | ❌ false |
-| **develop** | 개발/테스트 | Staging (Render) | ✅ true |
-| **feature/** | 개별 기능 개발 | Local | ✅ true |
+| **main** | 프로덕션 | Production | false |
+| **develop** | 개발/테스트 | Staging (Render) | true |
+| **feature/** | 개별 기능 개발 | Local | true |
 
 ### 작업 프로세스
 
@@ -380,8 +310,8 @@ git branch -d feature/my-new-feature
 
 | 환경 | 브랜치 | 플랫폼 | URL | Mock 데이터 |
 |------|--------|--------|-----|-------------|
-| **Staging** | `develop` | Render | https://your-app-staging.onrender.com | ✅ true |
-| **Production** | `main` | Render | https://your-app-prod.onrender.com | ❌ false |
+| **Staging** | `develop` | Render | https://your-app-staging.onrender.com | true |
+| **Production** | `main` | Render | https://your-app-prod.onrender.com | false |
 
 ### CI/CD 파이프라인
 
@@ -399,64 +329,12 @@ git branch -d feature/my-new-feature
 
 ---
 
-## 📊 API 연동
-
-### Mock 데이터 모드
-
-백엔드 API 준비 전에 Mock 데이터로 UI를 확인할 수 있습니다:
-
-```bash
-# .env 파일
-VITE_USE_MOCK_DATA=true
-```
-
-**Mock 데이터 포함 내용**:
-- ✅ 5개 기사 샘플
-- ✅ 3개 토픽 샘플
-- ✅ 5개 언론사 샘플
-- ✅ 대시보드 통계 데이터
-
-### 실제 API 연동
-
-백엔드 준비 완료 후:
-
-```bash
-# .env 파일
-VITE_USE_MOCK_DATA=false
-VITE_API_URL=https://your-backend-api.com
-```
-
----
-
-## 🤝 기여하기
-
-1. 이 저장소를 Fork합니다
-2. Feature 브랜치를 생성합니다 (`git checkout -b feature/AmazingFeature`)
-3. 변경사항을 커밋합니다 (`git commit -m 'feat: add some AmazingFeature'`)
-4. 브랜치에 Push합니다 (`git push origin feature/AmazingFeature`)
-5. Pull Request를 생성합니다
-
----
-
-## 📝 라이선스
-
-이 프로젝트는 MIT 라이선스를 따릅니다.
-
----
-
 ## 👥 팀
 
-**인하대학교 2025-2 캡스톤 디자인 프로젝트**
+**인하대학교 2025-2 컴퓨터공학 종합설계 프로젝트**
 
 - Frontend: [GitHub Repository](https://github.com/inha-25-2-capstone/front)
 - Backend: [GitHub Repository](https://github.com/inha-25-2-capstone/back)
+- AI: [GitHub Repository](https://github.com/inha-25-2-capstone/ai)
 
 ---
-
-## 📞 문의
-
-프로젝트에 대한 문의사항이나 버그 제보는 [Issues](https://github.com/inha-25-2-capstone/front/issues)에 등록해주세요.
-
----
-
-**Made with ❤️ by Capstone Team**
