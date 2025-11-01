@@ -11,6 +11,7 @@ import PressSpectrumChart from '@/components/dashboard/PressSpectrumChart';
 import PressStanceHeatmap from '@/components/dashboard/PressStanceHeatmap';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
 import StatisticsCard from '@/components/dashboard/StatisticsCard';
+import TopicCard from '@/components/topic/TopicCard';
 import {
   useDashboardSummary,
   useKeywords,
@@ -18,12 +19,21 @@ import {
   usePressSpectrum,
   usePressStanceHeatmap,
   useTopicStanceRatio,
+  useTopics,
 } from '@/hooks';
 import type { StatisticsCardData } from '@/types';
 
 export default function MainPage() {
   // Dashboard API 호출
   const { data: summary, isLoading: isSummaryLoading, error: summaryError } = useDashboardSummary();
+  const {
+    data: topicsData,
+    isLoading: isTopicsLoading,
+    error: topicsError,
+  } = useTopics({
+    page: 1,
+    limit: 7,
+  });
   const { data: keywords, isLoading: isKeywordsLoading, error: keywordsError } = useKeywords();
   const {
     data: stanceRatioData,
@@ -91,6 +101,7 @@ export default function MainPage() {
   // 로딩 상태
   const isLoading =
     isSummaryLoading ||
+    isTopicsLoading ||
     isKeywordsLoading ||
     isStanceRatioLoading ||
     isSpectrumLoading ||
@@ -100,6 +111,7 @@ export default function MainPage() {
   // 에러 상태
   const hasError =
     summaryError ||
+    topicsError ||
     keywordsError ||
     stanceRatioError ||
     spectrumError ||
@@ -149,6 +161,29 @@ export default function MainPage() {
           <StatisticsCard key={index} {...stat} />
         ))}
       </Box>
+
+      {/* 오늘의 토픽 (Top 7) */}
+      {topicsData && topicsData.items.length > 0 && (
+        <Paper sx={{ p: 3, mb: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+            <Typography>🔥</Typography>
+            <Typography variant="h6" fontWeight="bold">
+              오늘의 토픽 TOP 7
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+              gap: 2,
+            }}
+          >
+            {topicsData.items.map((topic) => (
+              <TopicCard key={topic.id} topic={topic} />
+            ))}
+          </Box>
+        </Paper>
+      )}
 
       {/* 핵심 키워드 트렌드 */}
       {keywords && keywords.length > 0 && (
