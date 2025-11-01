@@ -20,11 +20,13 @@
 ## 🎯 프로젝트 개요
 
 ### 목적
+
 - **객관적인 뉴스 소비**: 동일 토픽에 대한 다양한 관점 제공
 - **스탠스 시각화**: 옹호/중립/비판 논조를 색상으로 구분
 - **정보의 균형**: 편향되지 않은 정보 접근성 향상
 
 ### 주요 타겟
+
 - 정치 뉴스에 관심 있는 일반 사용자
 - 균형 잡힌 시각을 원하는 독자
 - 언론사별 논조 차이를 확인하고 싶은 사람
@@ -34,6 +36,7 @@
 ## ✨ 주요 기능
 
 ### 1. 메인 페이지 (스탠스 대시보드)
+
 - 📊 **통계 카드**: 전체 기사 수, 토픽 수, 언론사 수
 - 🔥 **오늘의 토픽 TOP 7**: 가장 많이 다뤄진 정치 이슈
 - 💬 **핵심 키워드 트렌드**: 워드클라우드 시각화
@@ -42,22 +45,26 @@
 - 🔥 **언론사 스탠스 히트맵**: 토픽별 언론사 논조
 
 ### 2. 토픽 상세 페이지
+
 - 🎯 **대표 기사**: 가장 많이 읽힌 기사
 - 📰 **관련 기사 리스트**: 스탠스별 필터링 가능
 - 🎨 **스탠스 분포**: 시각적 비율 표시
 
 ### 3. 기사 상세 페이지
+
 - 📄 **기사 본문**: 전체 내용 표시
 - 🎭 **스탠스 뱃지**: 옹호/중립/비판 색상 구분
 - 💡 **후보 기사**: 반대 논조 기사 최대 3개 추천
 - 🔄 **관련 기사**: 동일 토픽 내 다른 기사
 
 ### 4. 전체 기사 목록
+
 - 📋 **필터링**: 언론사, 스탠스, 날짜
 - 🔀 **정렬**: 최신순, 조회수순
 - 📄 **페이지네이션**: 20개씩 표시
 
 ### 5. 언론사별 분류
+
 - 📰 **언론사 카드**: 가나다순 정렬
 - 📊 **통계 정보**: 기사 수, 평균 스탠스 점수
 - 🔗 **언론사별 기사 목록**: 개별 언론사 페이지
@@ -67,6 +74,7 @@
 ## 🛠 기술 스택
 
 ### Frontend
+
 - **React 19** - UI 라이브러리
 - **TypeScript** - 정적 타입 검사
 - **Vite** - 빌드 도구 (SWC)
@@ -76,11 +84,13 @@
 - **Axios** - HTTP 클라이언트
 
 ### Development Tools
+
 - **ESLint** - 코드 품질 검사
 - **Prettier** - 코드 포맷팅
 - **GitHub Actions** - CI/CD 파이프라인
 
 ### Backend (별도 Repository)
+
 - **Flask** - API 서버
 - **PostgreSQL** - 데이터베이스
 - **PyTorch** - AI 모델
@@ -91,6 +101,7 @@
 ## 🚀 시작하기
 
 ### 필수 요구사항
+
 - **Node.js**: v20 이상
 - **npm**: v9 이상
 
@@ -117,6 +128,7 @@ npm run dev
 ### 환경 변수 설정
 
 `.env` 파일:
+
 ```bash
 # API 서버 URL
 VITE_API_URL=http://localhost:8000
@@ -126,6 +138,7 @@ VITE_USE_MOCK_DATA=true
 ```
 
 **Mock 데이터 모드**:
+
 - `true`: 백엔드 API 없이 더미 데이터로 UI 확인 가능
 - `false`: 실제 백엔드 API 호출
 
@@ -242,11 +255,11 @@ feature/* (개발 중)
 
 ### 브랜치 설명
 
-| 브랜치 | 용도 | 배포 환경 | Mock 데이터 |
-|--------|------|-----------|-------------|
-| **main** | 프로덕션 | Production | false |
-| **develop** | 개발/테스트 | Staging (Render) | true |
-| **feature/** | 개별 기능 개발 | Local | true |
+| 브랜치       | 용도           | 배포 환경        | Mock 데이터 |
+| ------------ | -------------- | ---------------- | ----------- |
+| **main**     | 프로덕션       | Production       | false       |
+| **develop**  | 개발/테스트    | Staging (Render) | true        |
+| **feature/** | 개별 기능 개발 | Local            | true        |
 
 ### 작업 프로세스
 
@@ -294,11 +307,13 @@ git branch -d feature/my-new-feature
 ### 브랜치 보호 규칙
 
 **main 브랜치**:
+
 - ✅ PR을 통해서만 merge 가능
 - ✅ 최소 1명 이상의 리뷰 필요
 - ✅ CI 통과 필수 (Lint, Type Check, Build)
 
 **develop 브랜치**:
+
 - ✅ PR 권장
 - ✅ CI 통과 필수
 
@@ -308,14 +323,15 @@ git branch -d feature/my-new-feature
 
 ### 환경별 배포 설정
 
-| 환경 | 브랜치 | 플랫폼 | URL | Mock 데이터 |
-|------|--------|--------|-----|-------------|
-| **Staging** | `develop` | Render | https://your-app-staging.onrender.com | true |
-| **Production** | `main` | Render | https://your-app-prod.onrender.com | false |
+| 환경           | 브랜치    | 플랫폼 | URL                                   | Mock 데이터 |
+| -------------- | --------- | ------ | ------------------------------------- | ----------- |
+| **Staging**    | `develop` | Render | https://your-app-staging.onrender.com | true        |
+| **Production** | `main`    | Render | https://your-app-prod.onrender.com    | false       |
 
 ### CI/CD 파이프라인
 
 #### CI (GitHub Actions)
+
 - **트리거**: Push/PR to `main`, `develop`
 - **단계**:
   1. Lint 검사
@@ -324,6 +340,7 @@ git branch -d feature/my-new-feature
   4. Build 테스트
 
 #### CD (Render)
+
 - **트리거**: Push to `develop` 또는 `main`
 - **자동 배포**: 브랜치별 자동 배포 설정
 
