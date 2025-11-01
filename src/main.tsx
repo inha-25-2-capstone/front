@@ -17,6 +17,7 @@ const MainPage = lazy(() => import('@/pages/MainPage'));
 const ArticleListPage = lazy(() => import('@/pages/ArticleListPage'));
 const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));
 const PressListPage = lazy(() => import('@/pages/PressListPage'));
+const PressArticlesPage = lazy(() => import('@/pages/PressArticlesPage'));
 const TopicDetailPage = lazy(() => import('@/pages/TopicDetailPage'));
 
 // Loading component
@@ -60,6 +61,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingFallback />}>
             <PressListPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'press/:pressId/articles',
+        element: (
+          <Suspense fallback={<LoadingFallback />}>
+            <PressArticlesPage />
           </Suspense>
         ),
       },
