@@ -1,27 +1,46 @@
+/**
+ * 언론사별 분류 페이지
+ */
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import PressCard from '@/components/press/PressCard';
-
-// 더미 데이터
-const pressList = [
-  { id: 1, name: 'JTBC뉴스', articleCount: 5, description: 'JTBC뉴스의 최신 뉴스를 확인해보세요' },
-  { id: 2, name: 'KBS뉴스', articleCount: 7, description: 'KBS뉴스의 최신 뉴스를 확인해보세요' },
-  { id: 3, name: 'MBC뉴스', articleCount: 4, description: 'MBC뉴스의 최신 뉴스를 확인해보세요' },
-  { id: 4, name: 'SBS뉴스', articleCount: 5, description: 'SBS뉴스의 최신 뉴스를 확인해보세요' },
-  { id: 5, name: '경향신문', articleCount: 6, description: '경향신문의 최신 뉴스를 확인해보세요' },
-  { id: 6, name: '동아일보', articleCount: 3, description: '동아일보의 최신 뉴스를 확인해보세요' },
-  { id: 7, name: '매일경제', articleCount: 3, description: '매일경제의 최신 뉴스를 확인해보세요' },
-  { id: 8, name: '연합뉴스', articleCount: 4, description: '연합뉴스의 최신 뉴스를 확인해보세요' },
-  { id: 9, name: '조선일보', articleCount: 6, description: '조선일보의 최신 뉴스를 확인해보세요' },
-  { id: 10, name: '중앙일보', articleCount: 4, description: '중앙일보의 최신 뉴스를 확인해보세요' },
-  { id: 11, name: '한겨레', articleCount: 7, description: '한겨레의 최신 뉴스를 확인해보세요' },
-  { id: 12, name: '한국경제', articleCount: 5, description: '한국경제의 최신 뉴스를 확인해보세요' },
-];
+import { usePressList } from '@/hooks';
 
 export default function PressListPage() {
   const navigate = useNavigate();
+
+  // 언론사 목록 조회 (통계 정보 포함)
+  const {
+    data: pressData,
+    isLoading,
+    error,
+  } = usePressList({
+    sort: 'name:asc', // 가나다 순 정렬
+    include: 'statistics',
+  });
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="error">언론사 목록을 불러오는데 실패했습니다.</Alert>
+      </Box>
+    );
+  }
+
+  const pressList = pressData?.items || [];
 
   return (
     <Box>
@@ -46,21 +65,31 @@ export default function PressListPage() {
       </Box>
 
       {/* 언론사 카드 그리드 */}
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
-          },
-          gap: 3,
-        }}
-      >
-        {pressList.map((press) => (
-          <PressCard key={press.id} {...press} />
-        ))}
-      </Box>
+      {pressList.length > 0 ? (
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+            },
+            gap: 3,
+          }}
+        >
+          {pressList.map((press) => (
+            <PressCard
+              key={press.id}
+              id={press.id}
+              name={press.name}
+              articleCount={0} // Press 타입에 articleCount가 없으므로 기본값 (백엔드 연동 후 수정 필요)
+              description={press.description || `${press.name}의 최신 뉴스를 확인해보세요`}
+            />
+          ))}
+        </Box>
+      ) : (
+        <Alert severity="info">등록된 언론사가 없습니다.</Alert>
+      )}
     </Box>
   );
 }
