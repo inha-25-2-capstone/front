@@ -19,7 +19,7 @@ export default function KeywordTrend({ keywords }: KeywordTrendProps) {
     const maxWeight = Math.max(...keywords.map((k) => k.weight || k.count || 1));
     const minWeight = Math.min(...keywords.map((k) => k.weight || k.count || 1));
 
-    return keywords.map((keyword, index) => {
+    return keywords.map((keyword) => {
       const weight = keyword.weight || keyword.count || 1;
       // 가중치에 따라 14px ~ 40px 사이 크기 결정
       const fontSize = 14 + ((weight - minWeight) / (maxWeight - minWeight || 1)) * 26;

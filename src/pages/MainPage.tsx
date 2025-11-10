@@ -18,8 +18,8 @@ import {
   usePressActivity,
   usePressSpectrum,
   usePressStanceHeatmap,
-  useTopicStanceRatio,
   useTopics,
+  useTopicStanceRatio,
 } from '@/hooks';
 import type { StatisticsCardData } from '@/types';
 

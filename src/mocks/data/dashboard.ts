@@ -11,6 +11,7 @@ import type {
   PressStanceData,
   TopicStanceData,
 } from '@/types';
+
 import { MOCK_TOPICS } from './topics';
 
 /**
