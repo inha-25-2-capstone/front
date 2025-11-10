@@ -162,35 +162,58 @@ export default function MainPage() {
         ))}
       </Box>
 
-      {/* 오늘의 토픽 (Top 7) */}
-      {topicsData && topicsData.items.length > 0 && (
-        <Paper sx={{ p: 3, mb: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-            <Typography>🔥</Typography>
-            <Typography variant="h6" fontWeight="bold">
-              오늘의 토픽 TOP 7
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
-              gap: 2,
-            }}
-          >
-            {topicsData.items.map((topic) => (
-              <TopicCard key={topic.id} topic={topic} />
-            ))}
-          </Box>
-        </Paper>
-      )}
+      {/* 오늘의 토픽 TOP 7 & 핵심 키워드 트렌드 (좌우 배치) */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gap: 3,
+          mb: 4,
+        }}
+      >
+        {/* 왼쪽: 오늘의 토픽 (Top 7) */}
+        {topicsData && topicsData.items.length > 0 && (
+          <Paper sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+              <Typography>🔥</Typography>
+              <Typography variant="h6" fontWeight="bold">
+                오늘의 토픽 TOP 7
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+                gap: 2,
+                maxHeight: 550,
+                overflow: 'auto',
+                pr: 1,
+                '&::-webkit-scrollbar': {
+                  width: '8px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  bgcolor: '#f1f1f1',
+                  borderRadius: '4px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  bgcolor: '#888',
+                  borderRadius: '4px',
+                  '&:hover': {
+                    bgcolor: '#555',
+                  },
+                },
+              }}
+            >
+              {topicsData.items.map((topic) => (
+                <TopicCard key={topic.id} topic={topic} />
+              ))}
+            </Box>
+          </Paper>
+        )}
 
-      {/* 핵심 키워드 트렌드 */}
-      {keywords && keywords.length > 0 && (
-        <Box sx={{ mb: 4 }}>
-          <KeywordTrend keywords={keywords} />
-        </Box>
-      )}
+        {/* 오른쪽: 핵심 키워드 트렌드 */}
+        {keywords && keywords.length > 0 && <KeywordTrend keywords={keywords} />}
+      </Box>
 
       {/* 주요 토픽별 스탠스 비율 */}
       {stanceRatioData && stanceRatioData.length > 0 && (

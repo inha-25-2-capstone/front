@@ -32,7 +32,30 @@ export default function PressActivityList({ data }: PressActivityListProps) {
         언론사별 활동 지표
       </Typography>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          maxHeight: 500,
+          overflow: 'auto',
+          pr: 1,
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            bgcolor: '#f1f1f1',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            bgcolor: '#888',
+            borderRadius: '4px',
+            '&:hover': {
+              bgcolor: '#555',
+            },
+          },
+        }}
+      >
         {sortedData.map((press, index) => (
           <Box
             key={press.name}
