@@ -5,7 +5,12 @@
       "Bash(npm run format:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh auth login:*)"
     ],
     "deny": [],
     "ask": []

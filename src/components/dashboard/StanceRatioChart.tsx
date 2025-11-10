@@ -35,14 +35,14 @@ export default function StanceRatioChart({ data }: StanceRatioChartProps) {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         Top 7 토픽의 중심성과 정치스펙트럼 비율
       </Typography>
-      <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart
           data={data}
           margin={{
             top: 20,
             right: 30,
             left: 20,
-            bottom: 60,
+            bottom: 70,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -52,7 +52,7 @@ export default function StanceRatioChart({ data }: StanceRatioChartProps) {
             textAnchor="end"
             height={100}
             interval={0}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 11 }}
           />
           <YAxis />
           <Tooltip
