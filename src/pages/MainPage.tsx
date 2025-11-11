@@ -6,8 +6,6 @@ import { Alert, Box, CircularProgress, Paper, Typography } from '@mui/material';
 import { useMemo } from 'react';
 
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
-import PressActivityList from '@/components/dashboard/PressActivityList';
-import PressSpectrumChart from '@/components/dashboard/PressSpectrumChart';
 import PressStanceHeatmap from '@/components/dashboard/PressStanceHeatmap';
 import StanceRatioChart from '@/components/dashboard/StanceRatioChart';
 import StatisticsCard from '@/components/dashboard/StatisticsCard';
@@ -15,8 +13,6 @@ import TopicCard from '@/components/topic/TopicCard';
 import {
   useDashboardSummary,
   useKeywords,
-  usePressActivity,
-  usePressSpectrum,
   usePressStanceHeatmap,
   useTopics,
   useTopicStanceRatio,
@@ -40,16 +36,6 @@ export default function MainPage() {
     isLoading: isStanceRatioLoading,
     error: stanceRatioError,
   } = useTopicStanceRatio();
-  const {
-    data: spectrumData,
-    isLoading: isSpectrumLoading,
-    error: spectrumError,
-  } = usePressSpectrum();
-  const {
-    data: activityData,
-    isLoading: isActivityLoading,
-    error: activityError,
-  } = usePressActivity();
   const {
     data: heatmapResponse,
     isLoading: isHeatmapLoading,
@@ -104,19 +90,10 @@ export default function MainPage() {
     isTopicsLoading ||
     isKeywordsLoading ||
     isStanceRatioLoading ||
-    isSpectrumLoading ||
-    isActivityLoading ||
     isHeatmapLoading;
 
   // 에러 상태
-  const hasError =
-    summaryError ||
-    topicsError ||
-    keywordsError ||
-    stanceRatioError ||
-    spectrumError ||
-    activityError ||
-    heatmapError;
+  const hasError = summaryError || topicsError || keywordsError || stanceRatioError || heatmapError;
 
   if (isLoading) {
     return (
@@ -227,36 +204,6 @@ export default function MainPage() {
         <Box sx={{ mb: 4 }}>
           <PressStanceHeatmap data={heatmapResponse.data} topicNames={heatmapResponse.topics} />
         </Box>
-      )}
-
-      {/* 언론사별 비교 분석 */}
-      {((spectrumData && spectrumData.length > 0) || (activityData && activityData.length > 0)) && (
-        <Paper sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-            <Typography>📰</Typography>
-            <Typography variant="h6" fontWeight="bold">
-              언론사별 비교 분석
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
-              gap: 3,
-            }}
-          >
-            {spectrumData && spectrumData.length > 0 && (
-              <Box>
-                <PressSpectrumChart data={spectrumData} />
-              </Box>
-            )}
-            {activityData && activityData.length > 0 && (
-              <Box>
-                <PressActivityList data={activityData} />
-              </Box>
-            )}
-          </Box>
-        </Paper>
       )}
     </Box>
   );

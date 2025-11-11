@@ -23,7 +23,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ArticleCard from '@/components/article/ArticleCard';
 import { usePressArticles, usePressDetail } from '@/hooks';
 
-type SortOption = 'publishedAt:desc' | 'publishedAt:asc' | 'viewCount:desc' | 'viewCount:asc';
+type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
 
 export default function PressArticlesPage() {
   const navigate = useNavigate();
@@ -32,10 +32,7 @@ export default function PressArticlesPage() {
   const [sortOption, setSortOption] = useState<SortOption>('publishedAt:desc');
 
   // 정렬 옵션 파싱
-  const [sortField, sortOrder] = sortOption.split(':') as [
-    'publishedAt' | 'viewCount',
-    'asc' | 'desc',
-  ];
+  const [sortField, sortOrder] = sortOption.split(':') as ['publishedAt', 'asc' | 'desc'];
 
   // 언론사 상세 정보
   const {
@@ -110,7 +107,7 @@ export default function PressArticlesPage() {
       </Box>
 
       {/* 언론사 정보 */}
-      <Box sx={{ mb: 4 }}>
+      <Paper sx={{ p: 3, mb: 4 }}>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           {pressDetail.name}
         </Typography>
@@ -119,10 +116,82 @@ export default function PressArticlesPage() {
             {pressDetail.description}
           </Typography>
         )}
-        <Typography variant="body2" color="text.secondary">
-          총 {pressDetail.statistics.articleCount}개의 기사
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          총 {pressDetail.statistics.articleCount}개의 기사 | 평균 스탠스 점수:{' '}
+          {pressDetail.statistics.avgStanceScore.toFixed(2)}
         </Typography>
-      </Box>
+
+        {/* 논조 분포 */}
+        <Box>
+          <Typography variant="subtitle2" fontWeight="600" sx={{ mb: 1 }}>
+            논조 분포
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 0.5, height: 10, borderRadius: 1, overflow: 'hidden' }}>
+            {pressDetail.statistics.stanceDistribution.support > 0 && (
+              <Box
+                sx={{
+                  width: `${(pressDetail.statistics.stanceDistribution.support / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                  bgcolor: '#4caf50',
+                }}
+                title={`옹호 ${pressDetail.statistics.stanceDistribution.support}개`}
+              />
+            )}
+            {pressDetail.statistics.stanceDistribution.neutral > 0 && (
+              <Box
+                sx={{
+                  width: `${(pressDetail.statistics.stanceDistribution.neutral / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                  bgcolor: '#9e9e9e',
+                }}
+                title={`중립 ${pressDetail.statistics.stanceDistribution.neutral}개`}
+              />
+            )}
+            {pressDetail.statistics.stanceDistribution.oppose > 0 && (
+              <Box
+                sx={{
+                  width: `${(pressDetail.statistics.stanceDistribution.oppose / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                  bgcolor: '#f44336',
+                }}
+                title={`비판 ${pressDetail.statistics.stanceDistribution.oppose}개`}
+              />
+            )}
+          </Box>
+          <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+            <Typography variant="caption" color="text.secondary">
+              옹호{' '}
+              {Math.round(
+                (pressDetail.statistics.stanceDistribution.support /
+                  (pressDetail.statistics.stanceDistribution.support +
+                    pressDetail.statistics.stanceDistribution.neutral +
+                    pressDetail.statistics.stanceDistribution.oppose)) *
+                  100,
+              )}
+              % ({pressDetail.statistics.stanceDistribution.support}개)
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              중립{' '}
+              {Math.round(
+                (pressDetail.statistics.stanceDistribution.neutral /
+                  (pressDetail.statistics.stanceDistribution.support +
+                    pressDetail.statistics.stanceDistribution.neutral +
+                    pressDetail.statistics.stanceDistribution.oppose)) *
+                  100,
+              )}
+              % ({pressDetail.statistics.stanceDistribution.neutral}개)
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              비판{' '}
+              {Math.round(
+                (pressDetail.statistics.stanceDistribution.oppose /
+                  (pressDetail.statistics.stanceDistribution.support +
+                    pressDetail.statistics.stanceDistribution.neutral +
+                    pressDetail.statistics.stanceDistribution.oppose)) *
+                  100,
+              )}
+              % ({pressDetail.statistics.stanceDistribution.oppose}개)
+            </Typography>
+          </Box>
+        </Box>
+      </Paper>
 
       {/* 기사 목록 */}
       <Paper sx={{ p: 3 }}>
@@ -130,13 +199,11 @@ export default function PressArticlesPage() {
           <Typography variant="h5" fontWeight="bold">
             기사 목록
           </Typography>
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel>정렬</InputLabel>
             <Select value={sortOption} label="정렬" onChange={handleSortChange}>
               <MenuItem value="publishedAt:desc">최신순</MenuItem>
-              <MenuItem value="publishedAt:asc">오래된순</MenuItem>
-              <MenuItem value="viewCount:desc">조회수 높은순</MenuItem>
-              <MenuItem value="viewCount:asc">조회수 낮은순</MenuItem>
+              <MenuItem value="publishedAt:asc">과거순</MenuItem>
             </Select>
           </FormControl>
         </Box>

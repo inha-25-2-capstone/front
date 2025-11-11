@@ -149,8 +149,8 @@ project-root/
 
 - Top 7 토픽 리스트 (카드 형태)
 - 전체 스탠스 지수 요약
-- 핵심 키워드 트렌드 (워드클라우드)
-- 언론사별 정치 스펙트럼 시각화
+- BERTopic 토픽 클러스터 시각화 (2D 산점도)
+- 언론사별 토픽 커버리지 히트맵
 
 **컴포넌트 구조**:
 
@@ -159,17 +159,17 @@ MainPage
 ├── Header
 ├── DashboardSummary (요약 카드 영역)
 ├── TopTopicsList (Top 7 토픽 리스트)
-├── KeywordCloud (핵심 키워드 트렌드)
-├── PressSpectrum (언론사별 스펙트럼)
+├── BertopicVisualization (토픽 클러스터 시각화)
+├── PressTopicHeatmap (언론사별 토픽 히트맵)
 └── Footer
 ```
 
 **API 호출**:
 
 - `GET /api/dashboard/summary`
-- `GET /api/dashboard/keywords`
-- `GET /api/dashboard/topics/stance-ratio`
-- `GET /api/dashboard/press-spectrum`
+- `GET /api/dashboard/topic_today`
+- `GET /api/dashboard/bertopic_visualization`
+- `GET /api/press/topic-heatmap`
 
 ---
 
@@ -310,6 +310,7 @@ PressListPage
 **주요 기능**:
 
 - 특정 언론사의 최신 기사 모음
+- 논조 분포 시각화 (파이 차트 + 상세 통계)
 - 필터링 및 정렬
 
 **컴포넌트 구조**:
@@ -317,33 +318,89 @@ PressListPage
 ```
 PressArticlesPage
 ├── Header
-├── PressInfo
+├── BackButton (언론사 목록으로)
+├── PressInfoCard (언론사 정보 헤더)
+│   ├── PressLogo
+│   ├── PressName
+│   └── PressStats (총 기사 수, 평균 스탠스)
+├── StanceDistributionSection (논조 분포 분석)
+│   ├── PieChart (파이 차트)
+│   ├── StatsBarList (옹호/중립/비판 막대 그래프)
+│   ├── AverageStanceCard (평균 스탠스 점수)
+│   └── CollapseButton (접기/펼치기)
 ├── FilterBar
+│   ├── TopicFilter (토픽별)
+│   ├── StanceFilter (옹호/중립/비판)
+│   ├── DateRangePicker (기간)
+│   └── SortSelector (최신순/과거순)
 ├── ArticleList
 │   └── ArticleCard[]
 └── Pagination
+```
 
+**API 호출**:
+
+- `GET /api/press?press_id={press_id}&include=statistics` (언론사 정보 및 논조 분포 통계)
+- `GET /api/press?press_id={press_id}/articles?topic_id=&stance=&date=&start_date=&end_date=&sort=published_at:desc&page=1&limit=20` (기사 목록)
+
+---
+
+## 📊 논조 분포 시각화 요구사항
+
+### 표시할 데이터
+
+- **파이 차트**: 옹호/중립/비판 비율을 시각적으로 표현
+- **막대 그래프**: 각 논조별 기사 수와 비율을 상세히 표시
+- **평균 스탠스 점수**: -1(비판) ~ +1(옹호) 범위의 숫자와 해석
+- **접기/펼치기 기능**: 공간 절약을 위한 토글 기능
+
+### 색상 가이드
+
+- 옹호: `#66bb6a` (초록)
+- 중립: `#ffa726` (주황)
+- 비판: `#ef5350` (빨강)
+
+---
+
+## 🎨 정렬 옵션
+
+**전체 기사 목록 페이지 & 언론사 기사 목록 페이지**:
+
+- 최신순 (published_at:desc) - 기본값
+- 과거순 (published_at:asc)
+
+**토픽 기사 목록 페이지**:
+
+- 유사도순 (similarity_score:desc) - 기본값
+- 최신순 (published_at:desc)
+- 과거순 (published_at:asc)
+
+---
 
 ### 3. 개발 우선순위
 
 **Phase 1 - 기본 구조**:
+
 1. 프로젝트 폴더 구조 생성
 2. 타입 정의 파일 작성
 3. API 서비스 레이어 구현
 4. 공통 컴포넌트 개발 (Button, Card, Badge 등)
 
 **Phase 2 - 주요 페이지**:
+
 1. 메인 페이지 (스탠스 대시보드)
 2. 토픽 상세 페이지 (대표 기사)
 3. 기사 상세 페이지 (후보 기사)
 
 **Phase 3 - 추가 기능**:
+
 1. 전체 기사 목록 페이지
 2. 언론사별 분류 페이지
 3. 필터링 및 정렬 기능
 4. 페이지네이션
 
 **Phase 4 - 최적화**:
+
 1. 성능 최적화
 2. 에러 처리 및 로딩 상태
 3. 반응형 디자인
@@ -364,5 +421,9 @@ PressArticlesPage
 9. **페이지네이션 구현**: 사용자가 현재 위치를 알 수 있도록 명확한 UI 제공
 10. 상태 관리 및 데이터 캐싱: 불필요한 API 호출 방지를 위한 적절한 캐싱 전략 사용
 11. 환경 변수 관리: API URL 등 환경별로 다른 값은 환경 변수로 관리
+
 ---
+
+```
+
 ```
