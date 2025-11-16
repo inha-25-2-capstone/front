@@ -3,6 +3,7 @@
  */
 
 import type {
+  BertopicVisualizationData,
   DashboardData,
   DashboardSummary,
   KeywordData,
@@ -153,26 +154,137 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
   data: [
     {
       press: 'JTBC뉴스',
-      topics: { '대통령 정책': 'oppose', '국회/정당': 'oppose', 경제정책: 'neutral' },
+      topics: {
+        '대통령 경제정책': 'oppose',
+        '국회 예산안': 'oppose',
+        '반도체 지원법': 'support',
+        '한미일 회담': 'neutral',
+        '저출산 대책': 'support',
+        '입시 제도': 'neutral',
+        '노동시간 단축': 'support',
+      },
     },
     {
       press: 'KBS뉴스',
-      topics: { '대통령 정책': 'support', '국회/정당': 'support', 경제정책: 'support' },
+      topics: {
+        '대통령 경제정책': 'support',
+        '국회 예산안': 'support',
+        '반도체 지원법': 'support',
+        '한미일 회담': 'support',
+        '저출산 대책': 'support',
+        '입시 제도': 'neutral',
+        '노동시간 단축': 'neutral',
+      },
     },
     {
       press: 'MBC뉴스',
-      topics: { '대통령 정책': 'neutral', '국회/정당': 'neutral', 경제정책: 'neutral' },
+      topics: {
+        '대통령 경제정책': 'neutral',
+        '국회 예산안': 'neutral',
+        '반도체 지원법': 'support',
+        '한미일 회담': 'neutral',
+        '저출산 대책': 'support',
+        '입시 제도': 'oppose',
+        '노동시간 단축': 'neutral',
+      },
     },
     {
       press: 'SBS뉴스',
-      topics: { '대통령 정책': 'oppose', '국회/정당': 'neutral', 경제정책: 'neutral' },
+      topics: {
+        '대통령 경제정책': 'oppose',
+        '국회 예산안': 'neutral',
+        '반도체 지원법': 'support',
+        '한미일 회담': 'support',
+        '저출산 대책': 'neutral',
+        '입시 제도': 'oppose',
+        '노동시간 단축': 'neutral',
+      },
     },
     {
       press: '경향신문',
-      topics: { '대통령 정책': 'oppose', '국회/정당': 'oppose', 경제정책: 'oppose' },
+      topics: {
+        '대통령 경제정책': 'oppose',
+        '국회 예산안': 'oppose',
+        '반도체 지원법': 'neutral',
+        '한미일 회담': 'oppose',
+        '저출산 대책': 'support',
+        '입시 제도': 'oppose',
+        '노동시간 단축': 'support',
+      },
     },
   ],
-  topics: ['대통령 정책', '국회/정당', '경제정책'],
+  topics: ['대통령 경제정책', '국회 예산안', '반도체 지원법', '한미일 회담', '저출산 대책', '입시 제도', '노동시간 단축'],
+};
+
+/**
+ * BERTopic 토픽 클러스터 시각화 Mock
+ */
+export const MOCK_BERTOPIC_VISUALIZATION: BertopicVisualizationData = {
+  topics: [
+    {
+      topic_id: 1,
+      topic_name: '대통령 경제정책 발표에 대한 여야 공방',
+      x: -45,
+      y: 35,
+      article_count: 15,
+      avg_stance: 0.1,
+      keywords: ['대통령', '경제정책', '여야', '공방', '발표'],
+    },
+    {
+      topic_id: 2,
+      topic_name: '국회 예산안 처리 놓고 여야 대립 격화',
+      x: 30,
+      y: -20,
+      article_count: 12,
+      avg_stance: 0.3,
+      keywords: ['국회', '예산안', '여야', '대립', '격화'],
+    },
+    {
+      topic_id: 3,
+      topic_name: '반도체 산업 지원법 통과 여부 논란',
+      x: 60,
+      y: 50,
+      article_count: 18,
+      avg_stance: 0.5,
+      keywords: ['반도체', '산업', '지원법', '통과', '논란'],
+    },
+    {
+      topic_id: 4,
+      topic_name: '한미일 정상회담 성과와 향후 과제',
+      x: -15,
+      y: -45,
+      article_count: 14,
+      avg_stance: 0.2,
+      keywords: ['한미일', '정상회담', '성과', '과제', '외교'],
+    },
+    {
+      topic_id: 5,
+      topic_name: '저출산 대책 예산 증액안 국회 제출',
+      x: -60,
+      y: -10,
+      article_count: 16,
+      avg_stance: 0.4,
+      keywords: ['저출산', '대책', '예산', '증액', '국회'],
+    },
+    {
+      topic_id: 6,
+      topic_name: '대학입시 제도 개편안 발표 후 파장',
+      x: 10,
+      y: 65,
+      article_count: 13,
+      avg_stance: 0.0,
+      keywords: ['대학입시', '제도', '개편안', '발표', '교육'],
+    },
+    {
+      topic_id: 7,
+      topic_name: '노동시간 단축 법안 처리 일정 합의',
+      x: 40,
+      y: 10,
+      article_count: 11,
+      avg_stance: -0.1,
+      keywords: ['노동시간', '단축', '법안', '일정', '합의'],
+    },
+  ],
 };
 
 /**
@@ -186,4 +298,5 @@ export const MOCK_DASHBOARD_DATA: DashboardData = {
   pressSpectrum: MOCK_PRESS_SPECTRUM,
   pressActivity: MOCK_PRESS_ACTIVITY,
   pressStanceHeatmap: MOCK_PRESS_STANCE_HEATMAP,
+  bertopicVisualization: MOCK_BERTOPIC_VISUALIZATION,
 };

@@ -7,6 +7,7 @@
 
 // Dashboard hooks
 export {
+  useBertopicVisualization,
   useDashboardData,
   useDashboardSummary,
   useKeywords,

@@ -6,6 +6,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 
 import { dashboardService } from '@/services';
 import type {
+  BertopicVisualizationData,
   DashboardData,
   DashboardSummary,
   KeywordData,
@@ -83,6 +84,20 @@ export const usePressStanceHeatmap = (): UseQueryResult<
   return useQuery({
     queryKey: ['dashboard', 'pressStanceHeatmap'],
     queryFn: dashboardService.getPressStanceHeatmap,
+    staleTime: 5 * 60 * 1000, // 5분
+  });
+};
+
+/**
+ * BERTopic 토픽 클러스터 시각화 데이터 조회
+ */
+export const useBertopicVisualization = (): UseQueryResult<
+  BertopicVisualizationData,
+  Error
+> => {
+  return useQuery({
+    queryKey: ['dashboard', 'bertopicVisualization'],
+    queryFn: dashboardService.getBertopicVisualization,
     staleTime: 5 * 60 * 1000, // 5분
   });
 };
