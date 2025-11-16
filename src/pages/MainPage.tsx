@@ -8,12 +8,7 @@ import BertopicVisualization from '@/components/dashboard/BertopicVisualization'
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
 import PressStanceHeatmap from '@/components/dashboard/PressStanceHeatmap';
 import TopicCarousel from '@/components/topic/TopicCarousel';
-import {
-  useBertopicVisualization,
-  useKeywords,
-  usePressStanceHeatmap,
-  useTopics,
-} from '@/hooks';
+import { useBertopicVisualization, useKeywords, usePressStanceHeatmap, useTopics } from '@/hooks';
 
 export default function MainPage() {
   // Dashboard API 호출
