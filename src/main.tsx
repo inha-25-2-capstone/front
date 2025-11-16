@@ -19,6 +19,7 @@ const ArticleDetailPage = lazy(() => import('@/pages/ArticleDetailPage'));
 const PressListPage = lazy(() => import('@/pages/PressListPage'));
 const PressArticlesPage = lazy(() => import('@/pages/PressArticlesPage'));
 const TopicDetailPage = lazy(() => import('@/pages/TopicDetailPage'));
+const SwaggerPage = lazy(() => import('@/pages/SwaggerPage'));
 
 // Loading component
 const LoadingFallback = () => (
@@ -77,6 +78,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingFallback />}>
             <TopicDetailPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'api-docs',
+        element: (
+          <Suspense fallback={<LoadingFallback />}>
+            <SwaggerPage />
           </Suspense>
         ),
       },

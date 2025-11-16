@@ -4,6 +4,7 @@
 
 import { env } from '@/lib/env';
 import {
+  MOCK_BERTOPIC_VISUALIZATION,
   MOCK_DASHBOARD_DATA,
   MOCK_DASHBOARD_SUMMARY,
   MOCK_KEYWORDS,
@@ -13,6 +14,7 @@ import {
   MOCK_TOPIC_STANCE_RATIO,
 } from '@/mocks/data/dashboard';
 import type {
+  BertopicVisualizationData,
   DashboardData,
   DashboardSummary,
   KeywordData,
@@ -116,6 +118,22 @@ export const getPressStanceHeatmap = async (): Promise<{
 };
 
 /**
+ * BERTopic 토픽 클러스터 시각화 데이터 조회
+ */
+export const getBertopicVisualization = async (): Promise<BertopicVisualizationData> => {
+  // Mock 모드 체크
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+    return MOCK_BERTOPIC_VISUALIZATION;
+  }
+
+  const response = await apiClient.get<{ data: BertopicVisualizationData }>(
+    '/dashboard/bertopic-visualization',
+  );
+  return response.data.data;
+};
+
+/**
  * 전체 대시보드 데이터 조회
  */
 export const getDashboardData = async (): Promise<DashboardData> => {
@@ -139,5 +157,6 @@ export const dashboardService = {
   getPressSpectrum,
   getPressActivity,
   getPressStanceHeatmap,
+  getBertopicVisualization,
   getDashboardData,
 };

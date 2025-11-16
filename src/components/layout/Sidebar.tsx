@@ -19,7 +19,7 @@ import { useTopics } from '@/hooks';
 
 const navItems = [
   { text: '스탠스 대시보드', icon: <DashboardIcon />, path: '/' },
-  { text: '인기 기사 목록', icon: <ArticleIcon />, path: '/articles' },
+  { text: '전체 기사 목록', icon: <ArticleIcon />, path: '/articles' },
   { text: '언론사별 분류', icon: <NewspaperIcon />, path: '/press' },
 ];
 

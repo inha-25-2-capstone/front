@@ -52,6 +52,26 @@ export interface TopicStanceData {
 }
 
 /**
+ * BERTopic 토픽 클러스터 포인트
+ */
+export interface BertopicPoint {
+  topic_id: number; // 토픽 ID
+  topic_name: string; // 토픽 이름
+  x: number; // UMAP/t-SNE X 좌표
+  y: number; // UMAP/t-SNE Y 좌표
+  article_count: number; // 토픽 내 기사 수
+  avg_stance: number; // 평균 스탠스 (-1 ~ +1)
+  keywords: string[]; // 대표 키워드
+}
+
+/**
+ * BERTopic 시각화 데이터
+ */
+export interface BertopicVisualizationData {
+  topics: BertopicPoint[];
+}
+
+/**
  * 대시보드 전체 데이터
  */
 export interface DashboardData {
@@ -65,4 +85,17 @@ export interface DashboardData {
     data: PressStanceData[];
     topics: string[];
   };
+  bertopicVisualization: BertopicVisualizationData; // BERTopic 토픽 클러스터
+}
+
+/**
+ * BERTopic 시각화 포인트 데이터
+ */
+export interface BertopicPoint {
+  topic_name: string; // 토픽 이름
+  article_count: number; // 기사 수
+  avg_stance: number; // 평균 스탠스 (-1 ~ 1)
+  keywords: string[]; // 키워드 목록
+  x: number; // UMAP X 좌표
+  y: number; // UMAP Y 좌표
 }

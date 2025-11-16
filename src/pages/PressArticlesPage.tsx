@@ -3,13 +3,18 @@
  */
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArticleIcon from '@mui/icons-material/Article';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import {
   Alert,
   Box,
+  Chip,
   CircularProgress,
   FormControl,
   IconButton,
   InputLabel,
+  LinearProgress,
   MenuItem,
   Pagination,
   Paper,
@@ -23,7 +28,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ArticleCard from '@/components/article/ArticleCard';
 import { usePressArticles, usePressDetail } from '@/hooks';
 
-type SortOption = 'publishedAt:desc' | 'publishedAt:asc' | 'viewCount:desc' | 'viewCount:asc';
+type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
 
 export default function PressArticlesPage() {
   const navigate = useNavigate();
@@ -32,10 +37,7 @@ export default function PressArticlesPage() {
   const [sortOption, setSortOption] = useState<SortOption>('publishedAt:desc');
 
   // 정렬 옵션 파싱
-  const [sortField, sortOrder] = sortOption.split(':') as [
-    'publishedAt' | 'viewCount',
-    'asc' | 'desc',
-  ];
+  const [sortField, sortOrder] = sortOption.split(':') as ['publishedAt', 'asc' | 'desc'];
 
   // 언론사 상세 정보
   const {
@@ -110,33 +112,247 @@ export default function PressArticlesPage() {
       </Box>
 
       {/* 언론사 정보 */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          {pressDetail.name}
-        </Typography>
-        {pressDetail.description && (
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            {pressDetail.description}
-          </Typography>
-        )}
-        <Typography variant="body2" color="text.secondary">
-          총 {pressDetail.statistics.articleCount}개의 기사
-        </Typography>
-      </Box>
+      <Paper elevation={1} sx={{ p: 3, mb: 3 }}>
+        {/* 헤더 섹션 */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: 3,
+            pb: 2,
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}
+        >
+          <NewspaperIcon sx={{ fontSize: 36, color: 'primary.main' }} />
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h5" fontWeight="bold">
+              {pressDetail.name}
+            </Typography>
+            {pressDetail.description && (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                {pressDetail.description}
+              </Typography>
+            )}
+          </Box>
+        </Box>
+
+        {/* 통계 요약 */}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            gap: 4,
+            alignItems: 'start',
+          }}
+        >
+          {/* 평균 스탠스 점수 */}
+          <Box>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <TrendingFlatIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
+                <Typography variant="caption" color="text.secondary" fontWeight="500">
+                  평균 논조 성향
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Chip
+                  label={
+                    pressDetail.statistics.avgStanceScore >= 0.3
+                      ? '옹호 성향'
+                      : pressDetail.statistics.avgStanceScore <= -0.3
+                        ? '비판 성향'
+                        : '중립 성향'
+                  }
+                  size="small"
+                  sx={{
+                    bgcolor:
+                      pressDetail.statistics.avgStanceScore >= 0.3
+                        ? '#66bb6a'
+                        : pressDetail.statistics.avgStanceScore <= -0.3
+                          ? '#ef5350'
+                          : '#9e9e9e',
+                    color: 'white',
+                    fontWeight: 600,
+                    height: 24,
+                  }}
+                />
+                <Typography variant="h6" fontWeight="bold">
+                  {pressDetail.statistics.avgStanceScore.toFixed(2)}
+                </Typography>
+              </Box>
+            </Box>
+            <Box sx={{ position: 'relative', height: 8 }}>
+              <LinearProgress
+                variant="determinate"
+                value={100}
+                sx={{
+                  height: 8,
+                  borderRadius: 1,
+                  bgcolor: 'grey.200',
+                  '& .MuiLinearProgress-bar': {
+                    background: 'linear-gradient(to right, #ef5350 0%, #9e9e9e 50%, #66bb6a 100%)',
+                  },
+                }}
+              />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: `${((pressDetail.statistics.avgStanceScore + 1) / 2) * 100}%`,
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 14,
+                  height: 14,
+                  borderRadius: '50%',
+                  bgcolor: 'white',
+                  border: '2px solid',
+                  borderColor:
+                    pressDetail.statistics.avgStanceScore >= 0.3
+                      ? '#66bb6a'
+                      : pressDetail.statistics.avgStanceScore <= -0.3
+                        ? '#ef5350'
+                        : '#9e9e9e',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                }}
+              />
+            </Box>
+          </Box>
+
+          {/* 논조 분포 */}
+          <Box>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
+            >
+              <Typography variant="caption" color="text.secondary" fontWeight="500">
+                논조 분포
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 0.5,
+                height: 8,
+                borderRadius: 1,
+                overflow: 'hidden',
+                mb: 1.5,
+              }}
+            >
+              {pressDetail.statistics.stanceDistribution.support > 0 && (
+                <Box
+                  sx={{
+                    width: `${(pressDetail.statistics.stanceDistribution.support / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    bgcolor: '#66bb6a',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      opacity: 0.8,
+                    },
+                  }}
+                  title={`옹호 ${pressDetail.statistics.stanceDistribution.support}개`}
+                />
+              )}
+              {pressDetail.statistics.stanceDistribution.neutral > 0 && (
+                <Box
+                  sx={{
+                    width: `${(pressDetail.statistics.stanceDistribution.neutral / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    bgcolor: '#9e9e9e',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      opacity: 0.8,
+                    },
+                  }}
+                  title={`중립 ${pressDetail.statistics.stanceDistribution.neutral}개`}
+                />
+              )}
+              {pressDetail.statistics.stanceDistribution.oppose > 0 && (
+                <Box
+                  sx={{
+                    width: `${(pressDetail.statistics.stanceDistribution.oppose / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    bgcolor: '#ef5350',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      opacity: 0.8,
+                    },
+                  }}
+                  title={`비판 ${pressDetail.statistics.stanceDistribution.oppose}개`}
+                />
+              )}
+            </Box>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#66bb6a' }} />
+                <Typography variant="caption" color="text.secondary">
+                  <strong>
+                    {Math.round(
+                      (pressDetail.statistics.stanceDistribution.support /
+                        (pressDetail.statistics.stanceDistribution.support +
+                          pressDetail.statistics.stanceDistribution.neutral +
+                          pressDetail.statistics.stanceDistribution.oppose)) *
+                        100,
+                    )}
+                    %
+                  </strong>{' '}
+                  ({pressDetail.statistics.stanceDistribution.support})
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#9e9e9e' }} />
+                <Typography variant="caption" color="text.secondary">
+                  <strong>
+                    {Math.round(
+                      (pressDetail.statistics.stanceDistribution.neutral /
+                        (pressDetail.statistics.stanceDistribution.support +
+                          pressDetail.statistics.stanceDistribution.neutral +
+                          pressDetail.statistics.stanceDistribution.oppose)) *
+                        100,
+                    )}
+                    %
+                  </strong>{' '}
+                  ({pressDetail.statistics.stanceDistribution.neutral})
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#ef5350' }} />
+                <Typography variant="caption" color="text.secondary">
+                  <strong>
+                    {Math.round(
+                      (pressDetail.statistics.stanceDistribution.oppose /
+                        (pressDetail.statistics.stanceDistribution.support +
+                          pressDetail.statistics.stanceDistribution.neutral +
+                          pressDetail.statistics.stanceDistribution.oppose)) *
+                        100,
+                    )}
+                    %
+                  </strong>{' '}
+                  ({pressDetail.statistics.stanceDistribution.oppose})
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Paper>
 
       {/* 기사 목록 */}
       <Paper sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h5" fontWeight="bold">
-            기사 목록
-          </Typography>
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="h5" fontWeight="bold">
+              기사 목록
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <ArticleIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+              <Typography variant="body2" color="text.secondary">
+                {pressDetail.statistics.articleCount.toLocaleString()}개
+              </Typography>
+            </Box>
+          </Box>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel>정렬</InputLabel>
             <Select value={sortOption} label="정렬" onChange={handleSortChange}>
               <MenuItem value="publishedAt:desc">최신순</MenuItem>
-              <MenuItem value="publishedAt:asc">오래된순</MenuItem>
-              <MenuItem value="viewCount:desc">조회수 높은순</MenuItem>
-              <MenuItem value="viewCount:asc">조회수 낮은순</MenuItem>
+              <MenuItem value="publishedAt:asc">과거순</MenuItem>
             </Select>
           </FormControl>
         </Box>

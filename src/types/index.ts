@@ -41,6 +41,8 @@ export type {
 
 // Dashboard types
 export type {
+  BertopicPoint,
+  BertopicVisualizationData,
   DashboardData,
   DashboardSummary,
   KeywordData,
