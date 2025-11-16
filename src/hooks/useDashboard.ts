@@ -91,10 +91,7 @@ export const usePressStanceHeatmap = (): UseQueryResult<
 /**
  * BERTopic 토픽 클러스터 시각화 데이터 조회
  */
-export const useBertopicVisualization = (): UseQueryResult<
-  BertopicVisualizationData,
-  Error
-> => {
+export const useBertopicVisualization = (): UseQueryResult<BertopicVisualizationData, Error> => {
   return useQuery({
     queryKey: ['dashboard', 'bertopicVisualization'],
     queryFn: dashboardService.getBertopicVisualization,

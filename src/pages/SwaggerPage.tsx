@@ -9,9 +9,10 @@ const SwaggerPage = () => {
 
   // FastAPI는 자동으로 OpenAPI 스펙을 /openapi.json에서 제공합니다
   // 백엔드 실행 없이 로컬 파일을 사용하려면 /openapi.json을 사용
-  const swaggerUrl = import.meta.env.VITE_USE_MOCK_DATA === 'true'
-    ? '/openapi.json' // 로컬 파일 사용 (public/openapi.json)
-    : `${baseUrl}/openapi.json`; // 실제 백엔드에서 실시간으로 가져오기
+  const swaggerUrl =
+    import.meta.env.VITE_USE_MOCK_DATA === 'true'
+      ? '/openapi.json' // 로컬 파일 사용 (public/openapi.json)
+      : `${baseUrl}/openapi.json`; // 실제 백엔드에서 실시간으로 가져오기
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -25,14 +26,16 @@ const SwaggerPage = () => {
           </Typography>
         </Box>
 
-        <Box sx={{
-          '& .swagger-ui': {
-            fontFamily: 'inherit',
-          },
-          '& .swagger-ui .topbar': {
-            display: 'none', // Swagger UI의 기본 헤더 숨기기
-          }
-        }}>
+        <Box
+          sx={{
+            '& .swagger-ui': {
+              fontFamily: 'inherit',
+            },
+            '& .swagger-ui .topbar': {
+              display: 'none', // Swagger UI의 기본 헤더 숨기기
+            },
+          }}
+        >
           <SwaggerUI url={swaggerUrl} />
         </Box>
       </Paper>

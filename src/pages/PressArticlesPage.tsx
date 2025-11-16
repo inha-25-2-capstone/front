@@ -114,7 +114,17 @@ export default function PressArticlesPage() {
       {/* 언론사 정보 */}
       <Paper elevation={1} sx={{ p: 3, mb: 3 }}>
         {/* 헤더 섹션 */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: 3,
+            pb: 2,
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}
+        >
           <NewspaperIcon sx={{ fontSize: 36, color: 'primary.main' }} />
           <Box sx={{ flex: 1 }}>
             <Typography variant="h5" fontWeight="bold">
@@ -129,10 +139,19 @@ export default function PressArticlesPage() {
         </Box>
 
         {/* 통계 요약 */}
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4, alignItems: 'start' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            gap: 4,
+            alignItems: 'start',
+          }}
+        >
           {/* 평균 스탠스 점수 */}
           <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
+            >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <TrendingFlatIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
                 <Typography variant="caption" color="text.secondary" fontWeight="500">
@@ -204,12 +223,23 @@ export default function PressArticlesPage() {
 
           {/* 논조 분포 */}
           <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
+            >
               <Typography variant="caption" color="text.secondary" fontWeight="500">
                 논조 분포
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', gap: 0.5, height: 8, borderRadius: 1, overflow: 'hidden', mb: 1.5 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 0.5,
+                height: 8,
+                borderRadius: 1,
+                overflow: 'hidden',
+                mb: 1.5,
+              }}
+            >
               {pressDetail.statistics.stanceDistribution.support > 0 && (
                 <Box
                   sx={{
