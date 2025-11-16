@@ -22,7 +22,7 @@ import StanceFilter from '@/components/common/StanceFilter';
 import { useArticles } from '@/hooks';
 import type { ArticleSortField, Stance } from '@/types';
 
-type SortOption = 'publishedAt:desc' | 'publishedAt:asc' | 'viewCount:desc' | 'viewCount:asc';
+type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
 
 export default function ArticleListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,13 +96,11 @@ export default function ArticleListPage() {
       <Paper sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <StanceFilter value={stanceFilter} onChange={handleStanceChange} />
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel>정렬</InputLabel>
             <Select value={sortOption} label="정렬" onChange={handleSortChange}>
               <MenuItem value="publishedAt:desc">최신순</MenuItem>
               <MenuItem value="publishedAt:asc">오래된순</MenuItem>
-              <MenuItem value="viewCount:desc">조회수 높은순</MenuItem>
-              <MenuItem value="viewCount:asc">조회수 낮은순</MenuItem>
             </Select>
           </FormControl>
         </Box>

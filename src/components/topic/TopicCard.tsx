@@ -2,21 +2,22 @@
  * 토픽 카드 컴포넌트 (메인 페이지 Top 7 토픽 리스트용)
  */
 
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import type { TopicSummary } from '@/types';
-import { formatNumber } from '@/utils';
 
 interface TopicCardProps {
   topic: TopicSummary;
+  rank?: number; // 순위 (1~7)
 }
 
-export default function TopicCard({ topic }: TopicCardProps) {
-  const { id, name, articleCount, viewCount, stanceDistribution } = topic;
+export default function TopicCard({ topic, rank }: TopicCardProps) {
+  const { id, name, articleCount, stanceDistribution } = topic;
   const total = stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+
+  // 임시 이미지 URL (실제로는 topic.imageUrl 사용)
+  const imageUrl = `https://picsum.photos/seed/${id}/400/240`;
 
   return (
     <Card
@@ -28,50 +29,74 @@ export default function TopicCard({ topic }: TopicCardProps) {
         display: 'flex',
         flexDirection: 'column',
         transition: 'all 0.3s ease',
+        position: 'relative',
+        overflow: 'visible',
         '&:hover': {
           transform: 'translateY(-4px)',
           boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
         },
       }}
     >
-      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {/* 토픽 아이콘 및 제목 */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box
-            sx={{
-              width: 48,
-              height: 48,
-              borderRadius: 2,
-              bgcolor: '#e3f2fd',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <TrendingUpIcon sx={{ fontSize: 28, color: '#1976d2' }} />
-          </Box>
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 0.5 }}>
-              {name}
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="caption" color="text.secondary">
-                {articleCount}개 기사
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                •
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <VisibilityIcon sx={{ fontSize: 14, color: 'text.secondary' }} />
-                <Typography variant="caption" color="text.secondary">
-                  {formatNumber(viewCount)}
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
+      {/* 순위 배지 */}
+      {rank && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -12,
+            left: 12,
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            bgcolor: '#000',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            fontSize: 16,
+            zIndex: 1,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          }}
+        >
+          {rank}
         </Box>
+      )}
 
-        {/* 스탠스 분포 */}
+      {/* 이미지 */}
+      <CardMedia
+        component="img"
+        height="180"
+        image={imageUrl}
+        alt={name}
+        sx={{
+          objectFit: 'cover',
+        }}
+      />
+
+      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1.5, pt: 2 }}>
+        {/* 제목 */}
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            lineHeight: 1.4,
+            minHeight: '2.8em',
+          }}
+        >
+          {name}
+        </Typography>
+
+        {/* 기사 수 */}
+        <Typography variant="body2" color="text.secondary">
+          {articleCount}개 기사
+        </Typography>
+
+        {/* 스탠스 분포 칩 */}
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Chip
             label={`옹호 ${stanceDistribution.support}`}
@@ -80,7 +105,8 @@ export default function TopicCard({ topic }: TopicCardProps) {
               bgcolor: '#e8f5e9',
               color: '#2e7d32',
               fontWeight: 500,
-              fontSize: '0.75rem',
+              fontSize: '0.7rem',
+              height: 24,
             }}
           />
           <Chip
@@ -90,7 +116,8 @@ export default function TopicCard({ topic }: TopicCardProps) {
               bgcolor: '#f5f5f5',
               color: '#616161',
               fontWeight: 500,
-              fontSize: '0.75rem',
+              fontSize: '0.7rem',
+              height: 24,
             }}
           />
           <Chip
@@ -100,7 +127,8 @@ export default function TopicCard({ topic }: TopicCardProps) {
               bgcolor: '#ffebee',
               color: '#c62828',
               fontWeight: 500,
-              fontSize: '0.75rem',
+              fontSize: '0.7rem',
+              height: 24,
             }}
           />
         </Box>
@@ -110,7 +138,7 @@ export default function TopicCard({ topic }: TopicCardProps) {
           <Box
             sx={{
               width: '100%',
-              height: 6,
+              height: 4,
               bgcolor: '#f5f5f5',
               borderRadius: 1,
               overflow: 'hidden',
