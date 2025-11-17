@@ -1,6 +1,7 @@
+import 'swagger-ui-react/swagger-ui.css';
+
 import { Box, Container, Paper, Typography } from '@mui/material';
 import SwaggerUI from 'swagger-ui-react';
-import 'swagger-ui-react/swagger-ui.css';
 
 const SwaggerPage = () => {
   // Swagger JSON URL - 백엔드에서 제공하는 Swagger 문서 URL
