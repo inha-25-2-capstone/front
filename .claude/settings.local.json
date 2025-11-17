@@ -23,7 +23,8 @@
       "Bash(gh run view:*)",
       "Bash(cat:*)",
       "Bash(npm run lint:fix:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npm run format:check:*)"
     ],
     "deny": [],
     "ask": []
