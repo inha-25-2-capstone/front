@@ -6,11 +6,12 @@ import type { Stance } from '@/types';
 
 /**
  * 스탠스 색상 맵
+ * 디자인 가이드에 따른 공식 색상
  */
 export const STANCE_COLORS = {
-  support: '#4caf50', // 초록 (옹호)
-  neutral: '#9e9e9e', // 회색 (중립)
-  oppose: '#f44336', // 빨강 (비판)
+  support: '#66bb6a', // 초록 (옹호)
+  neutral: '#ffa726', // 주황 (중립)
+  oppose: '#ef5350', // 빨강 (비판)
 } as const;
 
 /**
@@ -51,7 +52,7 @@ export const getStanceLabel = (stance: Stance): string => {
  */
 export const STANCE_LIGHT_COLORS = {
   support: '#e8f5e9', // 연한 초록
-  neutral: '#f5f5f5', // 연한 회색
+  neutral: '#fff3e0', // 연한 주황
   oppose: '#ffebee', // 연한 빨강
 } as const;
 
