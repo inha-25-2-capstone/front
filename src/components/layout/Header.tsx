@@ -1,5 +1,4 @@
 import ArticleIcon from '@mui/icons-material/Article';
-import CodeIcon from '@mui/icons-material/Code';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
@@ -9,7 +8,6 @@ const navItems = [
   { text: '스탠스 대시보드', icon: <DashboardIcon />, path: '/' },
   { text: '전체 기사 목록', icon: <ArticleIcon />, path: '/articles' },
   { text: '언론사별 분류', icon: <NewspaperIcon />, path: '/press' },
-  { text: 'API 문서', icon: <CodeIcon />, path: '/api-docs' },
 ];
 
 export default function Header() {
