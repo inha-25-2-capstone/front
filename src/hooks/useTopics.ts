@@ -108,3 +108,28 @@ export const useTopicRecommendations = (
     enabled: enabled && !!topicId,
   });
 };
+
+/**
+ * 토픽 시각화 이미지 조회 파라미터
+ */
+interface UseTopicVisualizationParams {
+  enabled?: boolean;
+}
+
+/**
+ * 토픽 시각화 이미지 조회
+ * BERTopic 클러스터 시각화 PNG 이미지를 반환
+ */
+export const useTopicVisualization = (
+  params?: UseTopicVisualizationParams,
+): UseQueryResult<string, Error> => {
+  const { enabled = true } = params || {};
+
+  return useQuery({
+    queryKey: ['topics', 'visualization'],
+    queryFn: () => topicService.getTopicVisualization(),
+    staleTime: 10 * 60 * 1000, // 10분 (시각화는 자주 변경되지 않음)
+    enabled,
+    retry: false, // 데이터가 없을 경우 재시도하지 않음
+  });
+};
