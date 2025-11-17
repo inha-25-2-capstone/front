@@ -38,7 +38,7 @@ export const usePressList = (
  * 언론사 상세 조회 파라미터
  */
 interface UsePressDetailParams {
-  pressId: number;
+  pressId: string;
   enabled?: boolean;
 }
 
@@ -62,7 +62,7 @@ export const usePressDetail = (
  * 언론사별 기사 조회 파라미터
  */
 interface UsePressArticlesParams {
-  pressId: number;
+  pressId: string;
   page?: number;
   limit?: number;
   sortField?: 'publishedAt' | 'viewCount';
