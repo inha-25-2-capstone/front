@@ -96,11 +96,11 @@ export const MOCK_TOPIC_STANCE_RATIO: TopicStanceData[] = [
  * 언론사 정치 스펙트럼 Mock
  */
 export const MOCK_PRESS_SPECTRUM: PressSpectrum[] = [
-  { pressId: 1, name: 'JTBC뉴스', political: -30, activity: 85 },
-  { pressId: 2, name: 'KBS뉴스', political: 10, activity: 92 },
-  { pressId: 3, name: 'MBC뉴스', political: -10, activity: 78 },
-  { pressId: 4, name: 'SBS뉴스', political: -20, activity: 88 },
-  { pressId: 5, name: '경향신문', political: -40, activity: 75 },
+  { pressId: '001', name: 'JTBC뉴스', political: -30, activity: 85 },
+  { pressId: '002', name: 'KBS뉴스', political: 10, activity: 92 },
+  { pressId: '003', name: 'MBC뉴스', political: -10, activity: 78 },
+  { pressId: '004', name: 'SBS뉴스', political: -20, activity: 88 },
+  { pressId: '005', name: '경향신문', political: -40, activity: 75 },
 ];
 
 /**
@@ -108,35 +108,35 @@ export const MOCK_PRESS_SPECTRUM: PressSpectrum[] = [
  */
 export const MOCK_PRESS_ACTIVITY: PressActivity[] = [
   {
-    pressId: 1,
+    pressId: '001',
     name: 'JTBC뉴스',
     articleCount: 25,
     activityScore: 85,
     stanceDistribution: { support: 5, neutral: 12, oppose: 8 },
   },
   {
-    pressId: 2,
+    pressId: '002',
     name: 'KBS뉴스',
     articleCount: 30,
     activityScore: 92,
     stanceDistribution: { support: 15, neutral: 10, oppose: 5 },
   },
   {
-    pressId: 3,
+    pressId: '003',
     name: 'MBC뉴스',
     articleCount: 22,
     activityScore: 78,
     stanceDistribution: { support: 8, neutral: 9, oppose: 5 },
   },
   {
-    pressId: 4,
+    pressId: '004',
     name: 'SBS뉴스',
     articleCount: 28,
     activityScore: 88,
     stanceDistribution: { support: 10, neutral: 12, oppose: 6 },
   },
   {
-    pressId: 5,
+    pressId: '005',
     name: '경향신문',
     articleCount: 20,
     activityScore: 75,
