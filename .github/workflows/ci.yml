@@ -1,8 +1,10 @@
 name: CI
 
 on:
+  # develop 브랜치에 머지될 때 CI 실행
   push:
-    branches: [main, develop]
+    branches: [develop]
+  # develop과 main으로의 PR 시 CI 실행
   pull_request:
     branches: [main, develop]
 
