@@ -54,10 +54,18 @@ export const getPressList = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<Press> }>(
-    `/press?${queryParams.toString()}`,
-  );
-  return response.data.data;
+  // Press API는 배열을 직접 반환하므로 래핑이 없음
+  const response = await apiClient.get<Press[]>(`/press?${queryParams.toString()}`);
+  // 배열을 PaginatedResponse 형식으로 래핑
+  return {
+    data: response.data,
+    pagination: {
+      page,
+      limit,
+      total: response.data.length,
+      totalPages: Math.ceil(response.data.length / limit),
+    },
+  };
 };
 
 /**
@@ -70,8 +78,9 @@ export const getPressById = async (pressId: string): Promise<PressDetail> => {
     return getMockPressById(pressId);
   }
 
-  const response = await apiClient.get<{ data: PressDetail }>(`/press/${pressId}`);
-  return response.data.data;
+  // Press API는 단일 객체를 직접 반환
+  const response = await apiClient.get<Press>(`/press/${pressId}`);
+  return response.data as PressDetail;
 };
 
 /**
@@ -110,10 +119,11 @@ export const getPressArticles = async (
     sort: `${sortField}:${sortOrder}`,
   });
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  // API 응답이 이미 PaginatedResponse 형태이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/press/${pressId}/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**

@@ -65,10 +65,11 @@ export const getTopics = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<TopicSummary> }>(
+  // API 응답이 이미 PaginatedResponse 형태이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<PaginatedResponse<TopicSummary>>(
     `/topics?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -82,8 +83,9 @@ export const getTopicById = async (topicId: number, include?: string): Promise<T
   }
 
   const queryParams = include ? `?include=${include}` : '';
-  const response = await apiClient.get<{ data: TopicDetail }>(`/topics/${topicId}${queryParams}`);
-  return response.data.data;
+  // API 응답이 직접 TopicDetail 객체이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<TopicDetail>(`/topics/${topicId}${queryParams}`);
+  return response.data;
 };
 
 /**
@@ -110,10 +112,11 @@ export const getTopicArticles = async (
     queryParams.append('stance', stance);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  // API 응답이 이미 PaginatedResponse 형태이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/topics/${topicId}/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -126,10 +129,33 @@ export const getTopicRecommendations = async (topicId: number): Promise<ArticleS
     return MOCK_ARTICLES.slice(0, 3); // 처음 3개 기사 반환
   }
 
-  const response = await apiClient.get<{ data: ArticleSummary[] }>(
-    `/topics/${topicId}/recommendations`,
-  );
-  return response.data.data;
+  // API 응답이 배열이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<ArticleSummary[]>(`/topics/${topicId}/recommendations`);
+  return response.data;
+};
+
+/**
+ * 토픽 시각화 이미지 조회
+ * BERTopic 클러스터 시각화 PNG 이미지를 반환
+ */
+export const getTopicVisualization = async (): Promise<string> => {
+  // Mock 모드에서는 빈 문자열 반환
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    return '';
+  }
+
+  try {
+    const response = await apiClient.get<Blob>('/topics/visualization', {
+      responseType: 'blob',
+    });
+
+    // Blob을 Data URL로 변환
+    return URL.createObjectURL(response.data);
+  } catch (error) {
+    // 데이터가 없을 경우 빈 문자열 반환
+    console.warn('Topic visualization not available:', error);
+    return '';
+  }
 };
 
 /**
@@ -140,4 +166,5 @@ export const topicService = {
   getTopicById,
   getTopicArticles,
   getTopicRecommendations,
+  getTopicVisualization,
 };
