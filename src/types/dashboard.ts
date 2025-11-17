@@ -87,3 +87,15 @@ export interface DashboardData {
   };
   bertopicVisualization: BertopicVisualizationData; // BERTopic 토픽 클러스터
 }
+
+/**
+ * BERTopic 시각화 포인트 데이터
+ */
+export interface BertopicPoint {
+  topic_name: string; // 토픽 이름
+  article_count: number; // 기사 수
+  avg_stance: number; // 평균 스탠스 (-1 ~ 1)
+  keywords: string[]; // 키워드 목록
+  x: number; // UMAP X 좌표
+  y: number; // UMAP Y 좌표
+}
