@@ -36,8 +36,9 @@ export const getDashboardSummary = async (): Promise<DashboardSummary> => {
     return MOCK_DASHBOARD_SUMMARY;
   }
 
-  const response = await apiClient.get<{ data: DashboardSummary }>('/dashboard/summary');
-  return response.data.data;
+  // API 응답이 직접 객체이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<DashboardSummary>('/dashboard/summary');
+  return response.data;
 };
 
 /**
@@ -50,8 +51,8 @@ export const getKeywords = async (): Promise<KeywordData[]> => {
     return MOCK_KEYWORDS;
   }
 
-  const response = await apiClient.get<{ data: KeywordData[] }>('/dashboard/keywords');
-  return response.data.data;
+  const response = await apiClient.get<KeywordData[]>('/dashboard/keywords');
+  return response.data;
 };
 
 /**
@@ -64,10 +65,8 @@ export const getTopicStanceRatio = async (): Promise<TopicStanceData[]> => {
     return MOCK_TOPIC_STANCE_RATIO;
   }
 
-  const response = await apiClient.get<{ data: TopicStanceData[] }>(
-    '/dashboard/topics/stance-ratio',
-  );
-  return response.data.data;
+  const response = await apiClient.get<TopicStanceData[]>('/dashboard/topics/stance-ratio');
+  return response.data;
 };
 
 /**
@@ -80,8 +79,8 @@ export const getPressSpectrum = async (): Promise<PressSpectrum[]> => {
     return MOCK_PRESS_SPECTRUM;
   }
 
-  const response = await apiClient.get<{ data: PressSpectrum[] }>('/dashboard/press-spectrum');
-  return response.data.data;
+  const response = await apiClient.get<PressSpectrum[]>('/dashboard/press-spectrum');
+  return response.data;
 };
 
 /**
@@ -94,8 +93,8 @@ export const getPressActivity = async (): Promise<PressActivity[]> => {
     return MOCK_PRESS_ACTIVITY;
   }
 
-  const response = await apiClient.get<{ data: PressActivity[] }>('/press/activity');
-  return response.data.data;
+  const response = await apiClient.get<PressActivity[]>('/press/activity');
+  return response.data;
 };
 
 /**
@@ -111,10 +110,10 @@ export const getPressStanceHeatmap = async (): Promise<{
     return MOCK_PRESS_STANCE_HEATMAP;
   }
 
-  const response = await apiClient.get<{
-    data: { data: PressStanceData[]; topics: string[] };
-  }>('/press/stance-heatmap');
-  return response.data.data;
+  const response = await apiClient.get<{ data: PressStanceData[]; topics: string[] }>(
+    '/press/stance-heatmap',
+  );
+  return response.data;
 };
 
 /**
@@ -127,10 +126,10 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
     return MOCK_BERTOPIC_VISUALIZATION;
   }
 
-  const response = await apiClient.get<{ data: BertopicVisualizationData }>(
+  const response = await apiClient.get<BertopicVisualizationData>(
     '/dashboard/bertopic-visualization',
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -143,8 +142,8 @@ export const getDashboardData = async (): Promise<DashboardData> => {
     return MOCK_DASHBOARD_DATA;
   }
 
-  const response = await apiClient.get<{ data: DashboardData }>('/dashboard');
-  return response.data.data;
+  const response = await apiClient.get<DashboardData>('/dashboard');
+  return response.data;
 };
 
 /**

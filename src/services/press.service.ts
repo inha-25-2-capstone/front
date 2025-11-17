@@ -23,7 +23,7 @@ interface GetPressListParams {
  * 언론사 기사 조회 파라미터
  */
 interface GetPressArticlesParams {
-  pressId: number;
+  pressId: string;
   page?: number;
   limit?: number;
   sortField?: 'publishedAt' | 'viewCount';
@@ -54,24 +54,33 @@ export const getPressList = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<Press> }>(
-    `/press?${queryParams.toString()}`,
-  );
-  return response.data.data;
+  // Press API는 배열을 직접 반환하므로 래핑이 없음
+  const response = await apiClient.get<Press[]>(`/press?${queryParams.toString()}`);
+  // 배열을 PaginatedResponse 형식으로 래핑
+  return {
+    data: response.data,
+    pagination: {
+      page,
+      limit,
+      total: response.data.length,
+      totalPages: Math.ceil(response.data.length / limit),
+    },
+  };
 };
 
 /**
  * 언론사 상세 조회
  */
-export const getPressById = async (pressId: number): Promise<PressDetail> => {
+export const getPressById = async (pressId: string): Promise<PressDetail> => {
   // Mock 모드 체크
   if (env.VITE_USE_MOCK_DATA === 'true') {
     await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
     return getMockPressById(pressId);
   }
 
-  const response = await apiClient.get<{ data: PressDetail }>(`/press/${pressId}`);
-  return response.data.data;
+  // Press API는 단일 객체를 직접 반환
+  const response = await apiClient.get<Press>(`/press/${pressId}`);
+  return response.data as PressDetail;
 };
 
 /**
@@ -89,17 +98,15 @@ export const getPressArticles = async (
     const filteredArticles = MOCK_ARTICLES.filter((article) => article.pressId === pressId);
     const start = (page - 1) * limit;
     const end = start + limit;
-    const items = filteredArticles.slice(start, end);
+    const data = filteredArticles.slice(start, end);
 
     return {
-      items,
+      data,
       pagination: {
         page,
         limit,
-        totalItems: filteredArticles.length,
+        total: filteredArticles.length,
         totalPages: Math.ceil(filteredArticles.length / limit),
-        hasNext: page < Math.ceil(filteredArticles.length / limit),
-        hasPrev: page > 1,
       },
     };
   }
@@ -112,10 +119,11 @@ export const getPressArticles = async (
     sort: `${sortField}:${sortOrder}`,
   });
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  // API 응답이 이미 PaginatedResponse 형태이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/press/${pressId}/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**

@@ -52,9 +52,9 @@ export const getArticles = async (
     sort: `${sortField}:${sortOrder}`,
   });
 
-  // 필터 추가
+  // 필터 추가 (camelCase로 작성 - 인터셉터가 자동으로 snake_case로 변환)
   if (filter?.pressId) {
-    queryParams.append('pressId', filter.pressId.toString());
+    queryParams.append('pressId', filter.pressId);
   }
   if (filter?.topicId) {
     queryParams.append('topicId', filter.topicId.toString());
@@ -69,10 +69,11 @@ export const getArticles = async (
     queryParams.append('endDate', filter.endDate);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  // API 응답이 이미 PaginatedResponse 형태이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -89,10 +90,9 @@ export const getArticleById = async (
   }
 
   const queryParams = include ? `?include=${include}` : '';
-  const response = await apiClient.get<{ data: ArticleDetail }>(
-    `/articles/${articleId}${queryParams}`,
-  );
-  return response.data.data;
+  // API 응답이 직접 ArticleDetail 객체이며, 인터셉터가 camelCase로 변환함
+  const response = await apiClient.get<ArticleDetail>(`/articles/${articleId}${queryParams}`);
+  return response.data;
 };
 
 /**
