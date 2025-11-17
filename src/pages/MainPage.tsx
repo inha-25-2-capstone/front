@@ -69,9 +69,9 @@ export default function MainPage() {
       </Box>
 
       {/* 오늘의 토픽 TOP 7 캐러셀 */}
-      {topicsData && topicsData.items.length > 0 && (
+      {topicsData && topicsData.data.length > 0 && (
         <Box sx={{ mb: 4 }}>
-          <TopicCarousel topics={topicsData.items} />
+          <TopicCarousel topics={topicsData.data} />
         </Box>
       )}
 

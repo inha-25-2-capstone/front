@@ -23,7 +23,7 @@ interface GetPressListParams {
  * 언론사 기사 조회 파라미터
  */
 interface GetPressArticlesParams {
-  pressId: number;
+  pressId: string;
   page?: number;
   limit?: number;
   sortField?: 'publishedAt' | 'viewCount';
@@ -63,7 +63,7 @@ export const getPressList = async (
 /**
  * 언론사 상세 조회
  */
-export const getPressById = async (pressId: number): Promise<PressDetail> => {
+export const getPressById = async (pressId: string): Promise<PressDetail> => {
   // Mock 모드 체크
   if (env.VITE_USE_MOCK_DATA === 'true') {
     await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
@@ -89,17 +89,15 @@ export const getPressArticles = async (
     const filteredArticles = MOCK_ARTICLES.filter((article) => article.pressId === pressId);
     const start = (page - 1) * limit;
     const end = start + limit;
-    const items = filteredArticles.slice(start, end);
+    const data = filteredArticles.slice(start, end);
 
     return {
-      items,
+      data,
       pagination: {
         page,
         limit,
-        totalItems: filteredArticles.length,
+        total: filteredArticles.length,
         totalPages: Math.ceil(filteredArticles.length / limit),
-        hasNext: page < Math.ceil(filteredArticles.length / limit),
-        hasPrev: page > 1,
       },
     };
   }

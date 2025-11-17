@@ -45,7 +45,7 @@ export default function PressArticlesPage() {
     isLoading: isPressLoading,
     error: pressError,
   } = usePressDetail({
-    pressId: Number(pressId),
+    pressId: pressId as string,
     enabled: !!pressId,
   });
 
@@ -55,7 +55,7 @@ export default function PressArticlesPage() {
     isLoading: isArticlesLoading,
     error: articlesError,
   } = usePressArticles({
-    pressId: Number(pressId),
+    pressId: pressId as string,
     page: currentPage,
     limit: 10,
     sortField,
@@ -363,10 +363,10 @@ export default function PressArticlesPage() {
           </Box>
         ) : articlesError ? (
           <Alert severity="error">기사 목록을 불러오는데 실패했습니다.</Alert>
-        ) : articlesData && articlesData.items.length > 0 ? (
+        ) : articlesData && articlesData.data.length > 0 ? (
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
-              {articlesData.items.map((article) => (
+              {articlesData.data.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
             </Box>

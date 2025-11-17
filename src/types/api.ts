@@ -5,7 +5,7 @@
 import type { ArticleDetail, ArticleSummary } from './article';
 import type { PaginationParams } from './common';
 import type { DashboardData, DashboardSummary, KeywordData, TopicStanceData } from './dashboard';
-import type { Press, PressActivity, PressDetail, PressSpectrum, PressStanceData } from './press';
+import type { Press, PressActivity, PressSpectrum, PressStanceData } from './press';
 import type { TopicDetail, TopicSummary } from './topic';
 
 /**

@@ -85,12 +85,14 @@ export const getMockTopicById = (id: number): TopicDetail => {
       publishedAt: '2025-10-28T10:00:00Z',
       viewCount: 15420,
       stance: 'oppose',
-      pressId: 1,
+      pressId: '001',
       topicId: topic.id,
       press: {
-        id: 1,
+        id: '001',
         name: 'JTBC뉴스',
         description: 'JTBC뉴스 설명',
+        articleCount: 25,
+        stanceDistribution: { support: 8, neutral: 10, oppose: 7 },
         isActive: true,
         createdAt: '2025-01-01T00:00:00Z',
         updatedAt: '2025-01-01T00:00:00Z',
@@ -116,17 +118,15 @@ export const getMockTopicById = (id: number): TopicDetail => {
 export const getMockTopicArticles = (page: number = 1, limit: number = 10) => {
   const start = (page - 1) * limit;
   const end = start + limit;
-  const items = MOCK_ARTICLES.slice(start, end);
+  const data = MOCK_ARTICLES.slice(start, end);
 
   return {
-    items,
+    data,
     pagination: {
       page,
       limit,
-      totalItems: MOCK_ARTICLES.length,
+      total: MOCK_ARTICLES.length,
       totalPages: Math.ceil(MOCK_ARTICLES.length / limit),
-      hasNext: page < Math.ceil(MOCK_ARTICLES.length / limit),
-      hasPrev: page > 1,
     },
   };
 };
