@@ -179,8 +179,8 @@ export default function BertopicVisualization({ data }: BertopicVisualizationPro
       {/* 설명 */}
       <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
         <Typography variant="caption" color="text.secondary">
-          💡 가까이 위치한 토픽일수록 내용이 유사합니다. 원의 크기는 기사 수를, 색상은 평균
-          논조를 나타냅니다.
+          💡 가까이 위치한 토픽일수록 내용이 유사합니다. 원의 크기는 기사 수를, 색상은 평균 논조를
+          나타냅니다.
         </Typography>
       </Box>
     </Box>
