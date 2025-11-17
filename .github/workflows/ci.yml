@@ -1,8 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
+  # develop과 main으로의 PR 시 CI 실행
   pull_request:
     branches: [main, develop]
 
