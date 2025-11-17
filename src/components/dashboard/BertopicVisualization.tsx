@@ -85,6 +85,30 @@ export default function BertopicVisualization({ data }: BertopicVisualizationPro
     };
   }, [data]);
 
+  // 축 범위 계산 (포인터가 잘리지 않도록 여유 공간 추가)
+  const { xDomain, yDomain } = useMemo(() => {
+    if (data.length === 0) {
+      return { xDomain: [-10, 10], yDomain: [-10, 10] };
+    }
+
+    const xValues = data.map((d) => d.x);
+    const yValues = data.map((d) => d.y);
+
+    const xMin = Math.min(...xValues);
+    const xMax = Math.max(...xValues);
+    const yMin = Math.min(...yValues);
+    const yMax = Math.max(...yValues);
+
+    // 범위의 10% 여유 공간 추가 (포인터가 잘리지 않도록)
+    const xPadding = (xMax - xMin) * 0.1 || 1;
+    const yPadding = (yMax - yMin) * 0.1 || 1;
+
+    return {
+      xDomain: [xMin - xPadding, xMax + xPadding],
+      yDomain: [yMin - yPadding, yMax + yPadding],
+    };
+  }, [data]);
+
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -130,6 +154,7 @@ export default function BertopicVisualization({ data }: BertopicVisualizationPro
             type="number"
             dataKey="x"
             name="X"
+            domain={xDomain}
             stroke="#999"
             tick={{ fill: '#666' }}
             label={{ value: 'Dimension 1', position: 'insideBottom', offset: -10, fill: '#666' }}
@@ -138,6 +163,7 @@ export default function BertopicVisualization({ data }: BertopicVisualizationPro
             type="number"
             dataKey="y"
             name="Y"
+            domain={yDomain}
             stroke="#999"
             tick={{ fill: '#666' }}
             label={{ value: 'Dimension 2', angle: -90, position: 'insideLeft', fill: '#666' }}
