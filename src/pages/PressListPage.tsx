@@ -40,7 +40,7 @@ export default function PressListPage() {
     );
   }
 
-  const pressList = pressData?.items || [];
+  const pressList = pressData?.data || [];
 
   return (
     <Box>
@@ -82,7 +82,7 @@ export default function PressListPage() {
               key={press.id}
               id={press.id}
               name={press.name}
-              articleCount={0} // Press 타입에 articleCount가 없으므로 기본값 (백엔드 연동 후 수정 필요)
+              articleCount={press.articleCount}
               description={press.description || `${press.name}의 최신 뉴스를 확인해보세요`}
             />
           ))}

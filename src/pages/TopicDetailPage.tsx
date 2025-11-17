@@ -137,10 +137,10 @@ export default function TopicDetailPage() {
           </Box>
         ) : articlesError ? (
           <Alert severity="error">기사 목록을 불러오는데 실패했습니다.</Alert>
-        ) : articlesData && articlesData.items.length > 0 ? (
+        ) : articlesData && articlesData.data.length > 0 ? (
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
-              {articlesData.items.map((article) => (
+              {articlesData.data.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
             </Box>

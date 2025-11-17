@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface PressCardProps {
-  id: number;
+  id: string;
   name: string;
   articleCount: number;
   description: string;

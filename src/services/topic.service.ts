@@ -41,17 +41,15 @@ export const getTopics = async (
 
     const start = (page - 1) * limit;
     const end = start + limit;
-    const items = MOCK_TOPICS.slice(start, end);
+    const data = MOCK_TOPICS.slice(start, end);
 
     return {
-      items,
+      data,
       pagination: {
         page,
         limit,
-        totalItems: MOCK_TOPICS.length,
+        total: MOCK_TOPICS.length,
         totalPages: Math.ceil(MOCK_TOPICS.length / limit),
-        hasNext: page < Math.ceil(MOCK_TOPICS.length / limit),
-        hasPrev: page > 1,
       },
     };
   }

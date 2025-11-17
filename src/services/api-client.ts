@@ -6,6 +6,7 @@
 import axios, { type AxiosError, type AxiosInstance } from 'axios';
 
 import { env } from '@/lib/env';
+import { toCamelCase, toSnakeCase } from '@/utils/api-transformers';
 
 /**
  * Axios 인스턴스 생성
@@ -21,6 +22,7 @@ export const apiClient: AxiosInstance = axios.create({
 /**
  * Request 인터셉터
  * 요청 전에 추가 설정 (인증 토큰 등)
+ * camelCase 파라미터를 snake_case로 변환
  */
 apiClient.interceptors.request.use(
   (config) => {
@@ -29,6 +31,17 @@ apiClient.interceptors.request.use(
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`;
     // }
+
+    // 요청 파라미터를 snake_case로 변환
+    if (config.params) {
+      config.params = toSnakeCase(config.params);
+    }
+
+    // POST/PUT 요청 body도 snake_case로 변환
+    if (config.data && typeof config.data === 'object') {
+      config.data = toSnakeCase(config.data);
+    }
+
     return config;
   },
   (error) => {
@@ -39,9 +52,14 @@ apiClient.interceptors.request.use(
 /**
  * Response 인터셉터
  * 응답 후 에러 처리
+ * snake_case 응답을 camelCase로 변환
  */
 apiClient.interceptors.response.use(
   (response) => {
+    // 응답 데이터를 camelCase로 변환
+    if (response.data) {
+      response.data = toCamelCase(response.data);
+    }
     return response;
   },
   (error: AxiosError) => {

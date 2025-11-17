@@ -18,7 +18,7 @@ export interface Article extends BaseEntity {
   publishedAt: string; // ISO 8601 형식
   viewCount: number;
   stance: Stance;
-  pressId: number;
+  pressId: string; // Press ID는 문자열
   topicId: number;
 }
 
@@ -38,7 +38,7 @@ export interface ArticleSummary {
   id: number;
   title: string;
   press: string; // 언론사명
-  pressId: number;
+  pressId: string;
   date: string; // 표시용 날짜 (예: "2025.10.28")
   imageUrl?: string;
   stance: Stance;
@@ -49,7 +49,7 @@ export interface ArticleSummary {
  * 기사 필터 옵션
  */
 export interface ArticleFilter {
-  pressId?: number;
+  pressId?: string;
   topicId?: number;
   stance?: Stance | '전체';
   startDate?: string;

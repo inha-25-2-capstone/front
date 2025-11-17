@@ -9,7 +9,7 @@ export const MOCK_ARTICLES: ArticleSummary[] = [
     id: 1,
     title: '대통령 탄핵정책 논란, 국회 긴급 회의 소집',
     press: 'JTBC뉴스',
-    pressId: 1,
+    pressId: '001',
     date: '2025.10.28',
     imageUrl: '',
     stance: 'oppose',
@@ -19,7 +19,7 @@ export const MOCK_ARTICLES: ArticleSummary[] = [
     id: 2,
     title: '경제정책 발표, 내년도 예산안 통과 전망',
     press: 'KBS뉴스',
-    pressId: 2,
+    pressId: '002',
     date: '2025.10.28',
     imageUrl: '',
     stance: 'support',
@@ -29,7 +29,7 @@ export const MOCK_ARTICLES: ArticleSummary[] = [
     id: 3,
     title: '국정감사 본격 시작, 주요 쟁점은?',
     press: 'MBC뉴스',
-    pressId: 3,
+    pressId: '003',
     date: '2025.10.28',
     imageUrl: '',
     stance: 'neutral',
@@ -39,7 +39,7 @@ export const MOCK_ARTICLES: ArticleSummary[] = [
     id: 4,
     title: '부동산 정책 개편안 발표, 시장 반응은',
     press: 'SBS뉴스',
-    pressId: 4,
+    pressId: '004',
     date: '2025.10.27',
     imageUrl: '',
     stance: 'oppose',
@@ -49,7 +49,7 @@ export const MOCK_ARTICLES: ArticleSummary[] = [
     id: 5,
     title: '투표율 상승세, 젊은 층 정치 참여 증가',
     press: '경향신문',
-    pressId: 5,
+    pressId: '005',
     date: '2025.10.27',
     imageUrl: '',
     stance: 'support',
@@ -63,17 +63,15 @@ export const getMockArticles = (
 ): PaginatedResponse<ArticleSummary> => {
   const start = (page - 1) * limit;
   const end = start + limit;
-  const items = MOCK_ARTICLES.slice(start, end);
+  const data = MOCK_ARTICLES.slice(start, end);
 
   return {
-    items,
+    data,
     pagination: {
       page,
       limit,
-      totalItems: MOCK_ARTICLES.length,
+      total: MOCK_ARTICLES.length,
       totalPages: Math.ceil(MOCK_ARTICLES.length / limit),
-      hasNext: page < Math.ceil(MOCK_ARTICLES.length / limit),
-      hasPrev: page > 1,
     },
   };
 };
@@ -105,6 +103,8 @@ export const getMockArticleById = (id: number): ArticleDetail => {
       id: article.pressId,
       name: article.press,
       description: `${article.press}의 설명`,
+      articleCount: 10,
+      stanceDistribution: { support: 3, neutral: 4, oppose: 3 },
       isActive: true,
       createdAt: '2025-01-01T00:00:00Z',
       updatedAt: '2025-01-01T00:00:00Z',

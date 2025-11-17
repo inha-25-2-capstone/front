@@ -174,7 +174,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             오늘의 TOP 7 토픽
           </Typography>
           <List>
-            {topicsData?.items.map((topic, index) => (
+            {topicsData?.data.map((topic, index) => (
               <ListItem key={topic.id} disablePadding>
                 <ListItemButton
                   component={Link}

@@ -106,10 +106,10 @@ export default function ArticleListPage() {
         </Box>
 
         {/* 기사 리스트 */}
-        {articlesData && articlesData.items.length > 0 ? (
+        {articlesData && articlesData.data.length > 0 ? (
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
-              {articlesData.items.map((article) => (
+              {articlesData.data.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
             </Box>
