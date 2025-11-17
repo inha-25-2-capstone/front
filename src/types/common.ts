@@ -45,9 +45,10 @@ export interface DateRangeFilter {
 
 /**
  * 기본 엔티티 인터페이스
+ * @template ID - ID 타입 (기본값: number, Press는 string 사용)
  */
-export interface BaseEntity {
-  id: number;
-  createdAt: string; // ISO 8601 형식
-  updatedAt: string; // ISO 8601 형식
+export interface BaseEntity<ID = number> {
+  id: ID;
+  createdAt?: string; // ISO 8601 형식
+  updatedAt?: string; // ISO 8601 형식
 }
