@@ -54,10 +54,23 @@ export const getPressList = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<PaginatedResponse<Press>>(
-    `/press?${queryParams.toString()}`,
-  );
-  return response.data;
+  // 백엔드는 배열을 반환하므로 PaginatedResponse로 변환
+  const response = await apiClient.get<Press[]>(`/press?${queryParams.toString()}`);
+
+  const allData = response.data || [];
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  const paginatedData = allData.slice(start, end);
+
+  return {
+    data: paginatedData,
+    pagination: {
+      page,
+      limit,
+      total: allData.length,
+      totalPages: Math.ceil(allData.length / limit),
+    },
+  };
 };
 
 /**
