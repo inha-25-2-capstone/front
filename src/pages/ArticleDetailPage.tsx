@@ -106,7 +106,7 @@ export default function ArticleDetailPage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                 <StanceBadge stance={article.stance} size="medium" />
                 <Typography variant="body2" color="text.secondary">
-                  {article.press.name}
+                  {article.press?.name || '알 수 없는 언론사'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   •
@@ -121,7 +121,9 @@ export default function ArticleDetailPage() {
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                조회수 {article.viewCount.toLocaleString()} • 토픽: {article.topic.name}
+                {article.viewCount !== undefined &&
+                  `조회수 ${article.viewCount.toLocaleString()} • `}
+                {article.topic?.name && `토픽: ${article.topic.name}`}
               </Typography>
             </Box>
 
