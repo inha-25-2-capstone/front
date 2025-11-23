@@ -36,8 +36,8 @@ export const getDashboardSummary = async (): Promise<DashboardSummary> => {
     return MOCK_DASHBOARD_SUMMARY;
   }
 
-  const response = await apiClient.get<{ data: DashboardSummary }>('/dashboard/summary');
-  return response.data.data;
+  const response = await apiClient.get<DashboardSummary>('/dashboard/summary');
+  return response.data;
 };
 
 /**
@@ -60,10 +60,10 @@ export const getTopicStanceRatio = async (): Promise<TopicStanceData[]> => {
     return MOCK_TOPIC_STANCE_RATIO;
   }
 
-  const response = await apiClient.get<{ data: TopicStanceData[] }>(
+  const response = await apiClient.get<TopicStanceData[]>(
     '/dashboard/topics/stance-ratio',
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -76,8 +76,8 @@ export const getPressSpectrum = async (): Promise<PressSpectrum[]> => {
     return MOCK_PRESS_SPECTRUM;
   }
 
-  const response = await apiClient.get<{ data: PressSpectrum[] }>('/dashboard/press-spectrum');
-  return response.data.data;
+  const response = await apiClient.get<PressSpectrum[]>('/dashboard/press-spectrum');
+  return response.data;
 };
 
 /**
@@ -90,8 +90,8 @@ export const getPressActivity = async (): Promise<PressActivity[]> => {
     return MOCK_PRESS_ACTIVITY;
   }
 
-  const response = await apiClient.get<{ data: PressActivity[] }>('/press/activity');
-  return response.data.data;
+  const response = await apiClient.get<PressActivity[]>('/press/activity');
+  return response.data;
 };
 
 /**
@@ -117,10 +117,10 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
     return MOCK_BERTOPIC_VISUALIZATION;
   }
 
-  const response = await apiClient.get<{ data: BertopicVisualizationData }>(
+  const response = await apiClient.get<BertopicVisualizationData>(
     '/topics/visualization',
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -133,8 +133,8 @@ export const getDashboardData = async (): Promise<DashboardData> => {
     return MOCK_DASHBOARD_DATA;
   }
 
-  const response = await apiClient.get<{ data: DashboardData }>('/dashboard');
-  return response.data.data;
+  const response = await apiClient.get<DashboardData>('/dashboard');
+  return response.data;
 };
 
 /**

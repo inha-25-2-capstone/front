@@ -54,10 +54,10 @@ export const getPressList = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<Press> }>(
+  const response = await apiClient.get<PaginatedResponse<Press>>(
     `/press?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
