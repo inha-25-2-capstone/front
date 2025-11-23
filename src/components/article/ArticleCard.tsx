@@ -38,7 +38,9 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <StanceBadge stance={article.stance} />
             <Typography variant="caption" color="text.secondary">
-              {article.press}
+              {typeof article.press === 'string'
+                ? article.press
+                : article.press?.name || '알 수 없음'}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               •

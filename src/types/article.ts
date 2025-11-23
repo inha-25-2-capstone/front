@@ -37,7 +37,7 @@ export interface ArticleDetail extends Article {
 export interface ArticleSummary {
   id: number;
   title: string;
-  press: string; // 언론사명
+  press: string | { id: string; name: string } | null; // 언론사 정보 (문자열 또는 객체)
   pressId: string;
   date: string; // 표시용 날짜 (예: "2025.10.28")
   imageUrl?: string;
@@ -67,7 +67,7 @@ export type ArticleSortField = 'publishedAt' | 'viewCount' | 'createdAt';
 export interface RecommendedArticle {
   id: number;
   title: string;
-  press: string;
+  press: string | { id: string; name: string } | null; // 언론사 정보 (문자열 또는 객체)
   stance: Stance;
   similarity?: number; // 유사도 점수 (0-1)
 }
