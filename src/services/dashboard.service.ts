@@ -42,16 +42,12 @@ export const getDashboardSummary = async (): Promise<DashboardSummary> => {
 
 /**
  * 핵심 키워드 트렌드 조회
+ * Note: 백엔드 API 미구현으로 Mock 데이터 사용
  */
 export const getKeywords = async (): Promise<KeywordData[]> => {
-  // Mock 모드 체크
-  if (env.VITE_USE_MOCK_DATA === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-    return MOCK_KEYWORDS;
-  }
-
-  const response = await apiClient.get<{ data: KeywordData[] }>('/dashboard/keywords');
-  return response.data.data;
+  // 백엔드 API 미구현 - 항상 Mock 데이터 반환
+  await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+  return MOCK_KEYWORDS;
 };
 
 /**
@@ -100,21 +96,15 @@ export const getPressActivity = async (): Promise<PressActivity[]> => {
 
 /**
  * 언론사 스탠스 히트맵 데이터 조회
+ * Note: 백엔드 API 미구현으로 Mock 데이터 사용
  */
 export const getPressStanceHeatmap = async (): Promise<{
   data: PressStanceData[];
   topics: string[];
 }> => {
-  // Mock 모드 체크
-  if (env.VITE_USE_MOCK_DATA === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-    return MOCK_PRESS_STANCE_HEATMAP;
-  }
-
-  const response = await apiClient.get<{
-    data: { data: PressStanceData[]; topics: string[] };
-  }>('/press/stance-heatmap');
-  return response.data.data;
+  // 백엔드 API 미구현 - 항상 Mock 데이터 반환
+  await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+  return MOCK_PRESS_STANCE_HEATMAP;
 };
 
 /**
