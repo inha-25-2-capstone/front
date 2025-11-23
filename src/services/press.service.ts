@@ -97,7 +97,29 @@ export const getPressById = async (pressId: string): Promise<PressDetail> => {
     throw new Error(`언론사 ID ${pressId}를 찾을 수 없습니다.`);
   }
 
-  return press as PressDetail;
+  // 백엔드가 statistics 객체를 제공하지 않으므로 생성
+  const stanceDistribution = press.stanceDistribution || { support: 0, neutral: 0, oppose: 0 };
+  const totalArticles =
+    stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+
+  // 평균 스탠스 점수 계산 (옹호: +1, 중립: 0, 비판: -1)
+  const avgStanceScore =
+    totalArticles > 0
+      ? (stanceDistribution.support * 1 + stanceDistribution.neutral * 0 + stanceDistribution.oppose * -1) /
+          totalArticles
+      : 0;
+
+  return {
+    ...press,
+    statistics: {
+      pressId: press.id,
+      articleCount: press.articleCount,
+      totalViewCount: 0, // 백엔드가 제공하지 않음
+      avgStanceScore,
+      stanceDistribution,
+      activityScore: Math.min(100, press.articleCount * 2), // 임시 계산식
+    },
+  };
 };
 
 /**
