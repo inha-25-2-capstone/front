@@ -70,8 +70,21 @@ export const getPressById = async (pressId: string): Promise<PressDetail> => {
     return getMockPressById(pressId);
   }
 
-  const response = await apiClient.get<{ data: PressDetail }>(`/press/${pressId}`);
-  return response.data.data;
+  // 서버가 개별 언론사 조회를 지원하지 않으므로 전체 목록을 가져와서 필터링
+  const response = await apiClient.get<Press[]>(`/press?include=statistics`);
+
+  if (!response.data || response.data.length === 0) {
+    throw new Error('언론사 목록을 불러올 수 없습니다.');
+  }
+
+  // 배열에서 정확히 일치하는 ID를 찾음
+  const press = response.data.find((p) => p.id === pressId);
+
+  if (!press) {
+    throw new Error(`언론사 ID ${pressId}를 찾을 수 없습니다.`);
+  }
+
+  return press as PressDetail;
 };
 
 /**
@@ -104,16 +117,22 @@ export const getPressArticles = async (
 
   const { pressId, page = 1, limit = 20, sortField = 'publishedAt', sortOrder = 'desc' } = params;
 
+  // sortField를 snake_case로 변환 (publishedAt -> published_at)
+  const sortFieldSnake = sortField === 'publishedAt' ? 'published_at' : sortField;
+
   const queryParams = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
-    sort: `${sortField}:${sortOrder}`,
+    sort: `${sortFieldSnake}:${sortOrder}`,
   });
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  // /press/{press_id}/articles 엔드포인트 사용
+  // 인터셉터가 자동으로 { data, pagination } → { items, pagination }로 변환
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/press/${pressId}/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+
+  return response.data;
 };
 
 /**
