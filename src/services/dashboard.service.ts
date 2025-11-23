@@ -128,7 +128,7 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
   }
 
   const response = await apiClient.get<{ data: BertopicVisualizationData }>(
-    '/dashboard/bertopic-visualization',
+    '/topics/visualization',
   );
   return response.data.data;
 };
