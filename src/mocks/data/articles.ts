@@ -101,7 +101,8 @@ export const getMockArticleById = (id: number): ArticleDetail => {
     topicId: 1,
     press: {
       id: article.pressId,
-      name: (typeof article.press === 'string' ? article.press : article.press?.name) || '알 수 없음',
+      name:
+        (typeof article.press === 'string' ? article.press : article.press?.name) || '알 수 없음',
       description: `${typeof article.press === 'string' ? article.press : article.press?.name || '알 수 없음'}의 설명`,
       articleCount: 10,
       stanceDistribution: { support: 3, neutral: 4, oppose: 3 },

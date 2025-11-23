@@ -60,9 +60,7 @@ export const getTopicStanceRatio = async (): Promise<TopicStanceData[]> => {
     return MOCK_TOPIC_STANCE_RATIO;
   }
 
-  const response = await apiClient.get<TopicStanceData[]>(
-    '/dashboard/topics/stance-ratio',
-  );
+  const response = await apiClient.get<TopicStanceData[]>('/dashboard/topics/stance-ratio');
   return response.data;
 };
 
@@ -117,9 +115,7 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
     return MOCK_BERTOPIC_VISUALIZATION;
   }
 
-  const response = await apiClient.get<BertopicVisualizationData>(
-    '/topics/visualization',
-  );
+  const response = await apiClient.get<BertopicVisualizationData>('/topics/visualization');
   return response.data;
 };
 

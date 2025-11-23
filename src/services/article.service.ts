@@ -89,9 +89,7 @@ export const getArticleById = async (
   }
 
   const queryParams = include ? `?include=${include}` : '';
-  const response = await apiClient.get<ArticleDetail>(
-    `/articles/${articleId}${queryParams}`,
-  );
+  const response = await apiClient.get<ArticleDetail>(`/articles/${articleId}${queryParams}`);
   return response.data;
 };
 

@@ -126,9 +126,7 @@ export const getTopicRecommendations = async (topicId: number): Promise<ArticleS
     return MOCK_ARTICLES.slice(0, 3); // 처음 3개 기사 반환
   }
 
-  const response = await apiClient.get<ArticleSummary[]>(
-    `/topics/${topicId}/recommendations`,
-  );
+  const response = await apiClient.get<ArticleSummary[]>(`/topics/${topicId}/recommendations`);
   return response.data;
 };
 
