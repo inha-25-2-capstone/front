@@ -8,7 +8,7 @@ import type { Stance } from '@/types';
 import { getStanceColor, getStanceLabel } from '@/utils';
 
 interface StanceBadgeProps {
-  stance: Stance;
+  stance: Stance | null;
   size?: 'small' | 'medium';
 }
 

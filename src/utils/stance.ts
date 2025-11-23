@@ -24,25 +24,33 @@ export const STANCE_LABELS = {
 
 /**
  * 스탠스에 해당하는 색상 가져오기
- * @param stance - 스탠스 타입
+ * @param stance - 스탠스 타입 (null인 경우 분석 중)
  * @returns 색상 코드 (hex)
  *
  * @example
  * getStanceColor('support') // '#4caf50'
+ * getStanceColor(null) // '#bdbdbd' (분석 중)
  */
-export const getStanceColor = (stance: Stance): string => {
+export const getStanceColor = (stance: Stance | null): string => {
+  if (stance === null) {
+    return '#bdbdbd'; // 회색 (분석 중)
+  }
   return STANCE_COLORS[stance];
 };
 
 /**
  * 스탠스에 해당하는 한글 라벨 가져오기
- * @param stance - 스탠스 타입
+ * @param stance - 스탠스 타입 (null인 경우 분석 중)
  * @returns 한글 라벨
  *
  * @example
  * getStanceLabel('support') // '옹호'
+ * getStanceLabel(null) // '분석 중'
  */
-export const getStanceLabel = (stance: Stance): string => {
+export const getStanceLabel = (stance: Stance | null): string => {
+  if (stance === null) {
+    return '분석 중';
+  }
   return STANCE_LABELS[stance];
 };
 
@@ -57,13 +65,17 @@ export const STANCE_LIGHT_COLORS = {
 
 /**
  * 스탠스에 해당하는 밝은 배경 색상 가져오기
- * @param stance - 스탠스 타입
+ * @param stance - 스탠스 타입 (null인 경우 분석 중)
  * @returns 밝은 배경 색상 코드 (hex)
  *
  * @example
  * getStanceLightColor('support') // '#e8f5e9'
+ * getStanceLightColor(null) // '#f5f5f5' (분석 중)
  */
-export const getStanceLightColor = (stance: Stance): string => {
+export const getStanceLightColor = (stance: Stance | null): string => {
+  if (stance === null) {
+    return '#f5f5f5'; // 연한 회색 (분석 중)
+  }
   return STANCE_LIGHT_COLORS[stance];
 };
 
