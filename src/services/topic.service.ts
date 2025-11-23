@@ -65,10 +65,10 @@ export const getTopics = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<TopicSummary> }>(
+  const response = await apiClient.get<PaginatedResponse<TopicSummary>>(
     `/topics?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -82,8 +82,8 @@ export const getTopicById = async (topicId: number, include?: string): Promise<T
   }
 
   const queryParams = include ? `?include=${include}` : '';
-  const response = await apiClient.get<{ data: TopicDetail }>(`/topics/${topicId}${queryParams}`);
-  return response.data.data;
+  const response = await apiClient.get<TopicDetail>(`/topics/${topicId}${queryParams}`);
+  return response.data;
 };
 
 /**
@@ -110,10 +110,10 @@ export const getTopicArticles = async (
     queryParams.append('stance', stance);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/topics/${topicId}/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -126,10 +126,8 @@ export const getTopicRecommendations = async (topicId: number): Promise<ArticleS
     return MOCK_ARTICLES.slice(0, 3); // 처음 3개 기사 반환
   }
 
-  const response = await apiClient.get<{ data: ArticleSummary[] }>(
-    `/topics/${topicId}/recommendations`,
-  );
-  return response.data.data;
+  const response = await apiClient.get<ArticleSummary[]>(`/topics/${topicId}/recommendations`);
+  return response.data;
 };
 
 /**

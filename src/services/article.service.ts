@@ -69,10 +69,10 @@ export const getArticles = async (
     queryParams.append('endDate', filter.endDate);
   }
 
-  const response = await apiClient.get<{ data: PaginatedResponse<ArticleSummary> }>(
+  const response = await apiClient.get<PaginatedResponse<ArticleSummary>>(
     `/articles?${queryParams.toString()}`,
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -89,10 +89,8 @@ export const getArticleById = async (
   }
 
   const queryParams = include ? `?include=${include}` : '';
-  const response = await apiClient.get<{ data: ArticleDetail }>(
-    `/articles/${articleId}${queryParams}`,
-  );
-  return response.data.data;
+  const response = await apiClient.get<ArticleDetail>(`/articles/${articleId}${queryParams}`);
+  return response.data;
 };
 
 /**

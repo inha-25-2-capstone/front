@@ -36,22 +36,18 @@ export const getDashboardSummary = async (): Promise<DashboardSummary> => {
     return MOCK_DASHBOARD_SUMMARY;
   }
 
-  const response = await apiClient.get<{ data: DashboardSummary }>('/dashboard/summary');
-  return response.data.data;
+  const response = await apiClient.get<DashboardSummary>('/dashboard/summary');
+  return response.data;
 };
 
 /**
  * 핵심 키워드 트렌드 조회
+ * Note: 백엔드 API 미구현으로 Mock 데이터 사용
  */
 export const getKeywords = async (): Promise<KeywordData[]> => {
-  // Mock 모드 체크
-  if (env.VITE_USE_MOCK_DATA === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-    return MOCK_KEYWORDS;
-  }
-
-  const response = await apiClient.get<{ data: KeywordData[] }>('/dashboard/keywords');
-  return response.data.data;
+  // 백엔드 API 미구현 - 항상 Mock 데이터 반환
+  await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+  return MOCK_KEYWORDS;
 };
 
 /**
@@ -64,10 +60,8 @@ export const getTopicStanceRatio = async (): Promise<TopicStanceData[]> => {
     return MOCK_TOPIC_STANCE_RATIO;
   }
 
-  const response = await apiClient.get<{ data: TopicStanceData[] }>(
-    '/dashboard/topics/stance-ratio',
-  );
-  return response.data.data;
+  const response = await apiClient.get<TopicStanceData[]>('/dashboard/topics/stance-ratio');
+  return response.data;
 };
 
 /**
@@ -80,8 +74,8 @@ export const getPressSpectrum = async (): Promise<PressSpectrum[]> => {
     return MOCK_PRESS_SPECTRUM;
   }
 
-  const response = await apiClient.get<{ data: PressSpectrum[] }>('/dashboard/press-spectrum');
-  return response.data.data;
+  const response = await apiClient.get<PressSpectrum[]>('/dashboard/press-spectrum');
+  return response.data;
 };
 
 /**
@@ -94,27 +88,21 @@ export const getPressActivity = async (): Promise<PressActivity[]> => {
     return MOCK_PRESS_ACTIVITY;
   }
 
-  const response = await apiClient.get<{ data: PressActivity[] }>('/press/activity');
-  return response.data.data;
+  const response = await apiClient.get<PressActivity[]>('/press/activity');
+  return response.data;
 };
 
 /**
  * 언론사 스탠스 히트맵 데이터 조회
+ * Note: 백엔드 API 미구현으로 Mock 데이터 사용
  */
 export const getPressStanceHeatmap = async (): Promise<{
   data: PressStanceData[];
   topics: string[];
 }> => {
-  // Mock 모드 체크
-  if (env.VITE_USE_MOCK_DATA === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-    return MOCK_PRESS_STANCE_HEATMAP;
-  }
-
-  const response = await apiClient.get<{
-    data: { data: PressStanceData[]; topics: string[] };
-  }>('/press/stance-heatmap');
-  return response.data.data;
+  // 백엔드 API 미구현 - 항상 Mock 데이터 반환
+  await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+  return MOCK_PRESS_STANCE_HEATMAP;
 };
 
 /**
@@ -127,10 +115,8 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
     return MOCK_BERTOPIC_VISUALIZATION;
   }
 
-  const response = await apiClient.get<{ data: BertopicVisualizationData }>(
-    '/dashboard/bertopic-visualization',
-  );
-  return response.data.data;
+  const response = await apiClient.get<BertopicVisualizationData>('/topics/visualization');
+  return response.data;
 };
 
 /**
@@ -143,8 +129,8 @@ export const getDashboardData = async (): Promise<DashboardData> => {
     return MOCK_DASHBOARD_DATA;
   }
 
-  const response = await apiClient.get<{ data: DashboardData }>('/dashboard');
-  return response.data.data;
+  const response = await apiClient.get<DashboardData>('/dashboard');
+  return response.data;
 };
 
 /**

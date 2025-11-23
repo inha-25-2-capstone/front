@@ -27,7 +27,9 @@ export default function RecommendedArticleCard({ article }: RecommendedArticleCa
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <StanceBadge stance={article.stance} />
             <Typography variant="caption" color="text.secondary">
-              {article.press}
+              {typeof article.press === 'string'
+                ? article.press
+                : article.press?.name || '알 수 없음'}
             </Typography>
           </Box>
           <Typography variant="subtitle2" fontWeight="bold" sx={{ lineHeight: 1.4 }}>
