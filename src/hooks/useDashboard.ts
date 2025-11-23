@@ -95,7 +95,8 @@ export const useBertopicVisualization = (): UseQueryResult<BertopicVisualization
   return useQuery({
     queryKey: ['dashboard', 'bertopicVisualization'],
     queryFn: dashboardService.getBertopicVisualization,
-    staleTime: 5 * 60 * 1000, // 5분
+    staleTime: 60 * 60 * 1000, // 1시간 - 서버 토픽 클러스터링 주기와 동기화
+    gcTime: 3 * 60 * 60 * 1000, // 3시간 - 메모리에 더 오래 보관
   });
 };
 
