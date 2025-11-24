@@ -27,7 +27,7 @@ export interface PressStatistics {
   articleCount: number;
   totalViewCount: number;
   avgStanceScore: number; // 평균 스탠스 점수
-  stanceDistribution: StanceDistribution;
+  stanceDistribution: StanceDistribution | null;
   activityScore: number; // 활동 지수 (0-100)
 }
 

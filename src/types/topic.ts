@@ -21,7 +21,7 @@ export interface Topic extends BaseEntity {
  */
 export interface TopicDetail extends Topic {
   mainArticle: ArticleDetail; // 대표 기사
-  stanceDistribution: StanceDistribution; // 스탠스 분포
+  stanceDistribution: StanceDistribution | null; // 스탠스 분포
   relatedArticles: ArticleSummary[]; // 관련 기사 목록
   keywords: string[]; // 핵심 키워드
 }
@@ -36,7 +36,7 @@ export interface TopicSummary {
   viewCount: number;
   mainArticleTitle?: string;
   mainArticleImage?: string;
-  stanceDistribution: StanceDistribution;
+  stanceDistribution: StanceDistribution | null;
 }
 
 /**
