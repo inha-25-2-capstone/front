@@ -83,7 +83,7 @@ export default function MainPage() {
       )}
 
       {/* BERTopic 토픽 클러스터 시각화 */}
-      {bertopicData && bertopicData.topics.length > 0 && (
+      {bertopicData?.topics && bertopicData.topics.length > 0 && (
         <Paper sx={{ p: 3, mb: 4 }}>
           <BertopicVisualization data={bertopicData.topics} />
         </Paper>

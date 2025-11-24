@@ -54,10 +54,23 @@ export const getPressList = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<PaginatedResponse<Press>>(
-    `/press?${queryParams.toString()}`,
-  );
-  return response.data;
+  // 백엔드는 배열을 반환하므로 PaginatedResponse로 변환
+  const response = await apiClient.get<Press[]>(`/press?${queryParams.toString()}`);
+
+  const allData = response.data || [];
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  const paginatedData = allData.slice(start, end);
+
+  return {
+    data: paginatedData,
+    pagination: {
+      page,
+      limit,
+      total: allData.length,
+      totalPages: Math.ceil(allData.length / limit),
+    },
+  };
 };
 
 /**
@@ -84,7 +97,31 @@ export const getPressById = async (pressId: string): Promise<PressDetail> => {
     throw new Error(`언론사 ID ${pressId}를 찾을 수 없습니다.`);
   }
 
-  return press as PressDetail;
+  // 백엔드가 statistics 객체를 제공하지 않으므로 생성
+  const stanceDistribution = press.stanceDistribution || { support: 0, neutral: 0, oppose: 0 };
+  const totalArticles =
+    stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+
+  // 평균 스탠스 점수 계산 (옹호: +1, 중립: 0, 비판: -1)
+  const avgStanceScore =
+    totalArticles > 0
+      ? (stanceDistribution.support * 1 +
+          stanceDistribution.neutral * 0 +
+          stanceDistribution.oppose * -1) /
+        totalArticles
+      : 0;
+
+  return {
+    ...press,
+    statistics: {
+      pressId: press.id,
+      articleCount: press.articleCount,
+      totalViewCount: 0, // 백엔드가 제공하지 않음
+      avgStanceScore,
+      stanceDistribution,
+      activityScore: Math.min(100, press.articleCount * 2), // 임시 계산식
+    },
+  };
 };
 
 /**

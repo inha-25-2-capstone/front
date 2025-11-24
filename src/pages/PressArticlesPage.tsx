@@ -99,6 +99,15 @@ export default function PressArticlesPage() {
     );
   }
 
+  // stanceDistribution이 null일 경우 기본값 사용
+  const stanceDistribution = pressDetail.statistics.stanceDistribution || {
+    support: 0,
+    neutral: 0,
+    oppose: 0,
+  };
+  const totalStance =
+    stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+
   return (
     <Box>
       {/* 뒤로 가기 버튼 */}
@@ -240,43 +249,43 @@ export default function PressArticlesPage() {
                 mb: 1.5,
               }}
             >
-              {pressDetail.statistics.stanceDistribution.support > 0 && (
+              {stanceDistribution.support > 0 && (
                 <Box
                   sx={{
-                    width: `${(pressDetail.statistics.stanceDistribution.support / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    width: `${totalStance > 0 ? (stanceDistribution.support / totalStance) * 100 : 0}%`,
                     bgcolor: '#66bb6a',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       opacity: 0.8,
                     },
                   }}
-                  title={`옹호 ${pressDetail.statistics.stanceDistribution.support}개`}
+                  title={`옹호 ${stanceDistribution.support}개`}
                 />
               )}
-              {pressDetail.statistics.stanceDistribution.neutral > 0 && (
+              {stanceDistribution.neutral > 0 && (
                 <Box
                   sx={{
-                    width: `${(pressDetail.statistics.stanceDistribution.neutral / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    width: `${totalStance > 0 ? (stanceDistribution.neutral / totalStance) * 100 : 0}%`,
                     bgcolor: '#9e9e9e',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       opacity: 0.8,
                     },
                   }}
-                  title={`중립 ${pressDetail.statistics.stanceDistribution.neutral}개`}
+                  title={`중립 ${stanceDistribution.neutral}개`}
                 />
               )}
-              {pressDetail.statistics.stanceDistribution.oppose > 0 && (
+              {stanceDistribution.oppose > 0 && (
                 <Box
                   sx={{
-                    width: `${(pressDetail.statistics.stanceDistribution.oppose / (pressDetail.statistics.stanceDistribution.support + pressDetail.statistics.stanceDistribution.neutral + pressDetail.statistics.stanceDistribution.oppose)) * 100}%`,
+                    width: `${totalStance > 0 ? (stanceDistribution.oppose / totalStance) * 100 : 0}%`,
                     bgcolor: '#ef5350',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       opacity: 0.8,
                     },
                   }}
-                  title={`비판 ${pressDetail.statistics.stanceDistribution.oppose}개`}
+                  title={`비판 ${stanceDistribution.oppose}개`}
                 />
               )}
             </Box>
@@ -285,48 +294,36 @@ export default function PressArticlesPage() {
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#66bb6a' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {Math.round(
-                      (pressDetail.statistics.stanceDistribution.support /
-                        (pressDetail.statistics.stanceDistribution.support +
-                          pressDetail.statistics.stanceDistribution.neutral +
-                          pressDetail.statistics.stanceDistribution.oppose)) *
-                        100,
-                    )}
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.support / totalStance) * 100)
+                      : 0}
                     %
                   </strong>{' '}
-                  ({pressDetail.statistics.stanceDistribution.support})
+                  ({stanceDistribution.support})
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#9e9e9e' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {Math.round(
-                      (pressDetail.statistics.stanceDistribution.neutral /
-                        (pressDetail.statistics.stanceDistribution.support +
-                          pressDetail.statistics.stanceDistribution.neutral +
-                          pressDetail.statistics.stanceDistribution.oppose)) *
-                        100,
-                    )}
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.neutral / totalStance) * 100)
+                      : 0}
                     %
                   </strong>{' '}
-                  ({pressDetail.statistics.stanceDistribution.neutral})
+                  ({stanceDistribution.neutral})
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#ef5350' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {Math.round(
-                      (pressDetail.statistics.stanceDistribution.oppose /
-                        (pressDetail.statistics.stanceDistribution.support +
-                          pressDetail.statistics.stanceDistribution.neutral +
-                          pressDetail.statistics.stanceDistribution.oppose)) *
-                        100,
-                    )}
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.oppose / totalStance) * 100)
+                      : 0}
                     %
                   </strong>{' '}
-                  ({pressDetail.statistics.stanceDistribution.oppose})
+                  ({stanceDistribution.oppose})
                 </Typography>
               </Box>
             </Box>

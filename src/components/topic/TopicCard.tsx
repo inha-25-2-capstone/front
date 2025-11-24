@@ -14,7 +14,10 @@ interface TopicCardProps {
 
 export default function TopicCard({ topic, rank }: TopicCardProps) {
   const { id, name, articleCount, stanceDistribution } = topic;
-  const total = stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+
+  // stanceDistribution이 null일 경우 기본값 사용
+  const distribution = stanceDistribution || { support: 0, neutral: 0, oppose: 0 };
+  const total = distribution.support + distribution.neutral + distribution.oppose;
 
   // 임시 이미지 URL (실제로는 topic.imageUrl 사용)
   const imageUrl = `https://picsum.photos/seed/${id}/400/240`;
@@ -99,7 +102,7 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
         {/* 스탠스 분포 칩 */}
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Chip
-            label={`옹호 ${stanceDistribution.support}`}
+            label={`옹호 ${distribution.support}`}
             size="small"
             sx={{
               bgcolor: '#e8f5e9',
@@ -110,7 +113,7 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
             }}
           />
           <Chip
-            label={`중립 ${stanceDistribution.neutral}`}
+            label={`중립 ${distribution.neutral}`}
             size="small"
             sx={{
               bgcolor: '#f5f5f5',
@@ -121,7 +124,7 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
             }}
           />
           <Chip
-            label={`비판 ${stanceDistribution.oppose}`}
+            label={`비판 ${distribution.oppose}`}
             size="small"
             sx={{
               bgcolor: '#ffebee',
@@ -147,19 +150,19 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
           >
             <Box
               sx={{
-                width: `${(stanceDistribution.support / total) * 100}%`,
+                width: `${(distribution.support / total) * 100}%`,
                 bgcolor: '#4caf50',
               }}
             />
             <Box
               sx={{
-                width: `${(stanceDistribution.neutral / total) * 100}%`,
+                width: `${(distribution.neutral / total) * 100}%`,
                 bgcolor: '#9e9e9e',
               }}
             />
             <Box
               sx={{
-                width: `${(stanceDistribution.oppose / total) * 100}%`,
+                width: `${(distribution.oppose / total) * 100}%`,
                 bgcolor: '#f44336',
               }}
             />
