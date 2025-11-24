@@ -32,6 +32,11 @@ export default function MainPage() {
     error: bertopicError,
   } = useBertopicVisualization();
 
+  // 디버깅: 에러 확인
+  if (bertopicError) {
+    console.error('🔴 BERTopic Error:', bertopicError);
+  }
+
   // 로딩 상태
   const isLoading = isTopicsLoading || isKeywordsLoading || isHeatmapLoading || isBertopicLoading;
 
