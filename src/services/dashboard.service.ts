@@ -107,6 +107,7 @@ export const getPressStanceHeatmap = async (): Promise<{
 
 /**
  * BERTopic 토픽 클러스터 시각화 데이터 조회
+ * 백엔드가 PNG 이미지를 반환하므로 Blob으로 받아서 URL로 변환
  */
 export const getBertopicVisualization = async (): Promise<BertopicVisualizationData> => {
   // Mock 모드 체크
@@ -115,8 +116,15 @@ export const getBertopicVisualization = async (): Promise<BertopicVisualizationD
     return MOCK_BERTOPIC_VISUALIZATION;
   }
 
-  const response = await apiClient.get<BertopicVisualizationData>('/topics/visualization');
-  return response.data;
+  // 이미지를 blob으로 받아오기
+  const response = await apiClient.get<Blob>('/topics/visualization', {
+    responseType: 'blob',
+  });
+
+  // Blob을 URL로 변환
+  const imageUrl = URL.createObjectURL(response.data);
+
+  return { imageUrl };
 };
 
 /**

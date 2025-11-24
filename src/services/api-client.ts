@@ -52,12 +52,16 @@ apiClient.interceptors.request.use(
 /**
  * Response 인터셉터
  * 응답 후 에러 처리
- * snake_case 응답을 camelCase로 변환
+ * snake_case 응답을 camelCase로 변환 (Blob 제외)
  */
 apiClient.interceptors.response.use(
   (response) => {
-    // 응답 데이터를 camelCase로 변환
-    if (response.data) {
+    // Blob, ArrayBuffer 등 바이너리 데이터는 변환하지 않음
+    if (
+      response.data &&
+      !(response.data instanceof Blob) &&
+      response.config.responseType !== 'blob'
+    ) {
       response.data = toCamelCase(response.data);
     }
     return response;

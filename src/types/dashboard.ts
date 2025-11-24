@@ -66,9 +66,10 @@ export interface BertopicPoint {
 
 /**
  * BERTopic 시각화 데이터
+ * 백엔드가 이미지(PNG)를 반환하므로 이미지 URL을 저장
  */
 export interface BertopicVisualizationData {
-  topics: BertopicPoint[];
+  imageUrl: string; // Blob URL 또는 API 엔드포인트 URL
 }
 
 /**

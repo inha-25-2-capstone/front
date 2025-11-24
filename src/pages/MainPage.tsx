@@ -32,6 +32,11 @@ export default function MainPage() {
     error: bertopicError,
   } = useBertopicVisualization();
 
+  // 디버깅: 에러 확인
+  if (bertopicError) {
+    console.error('🔴 BERTopic Error:', bertopicError);
+  }
+
   // 로딩 상태
   const isLoading = isTopicsLoading || isKeywordsLoading || isHeatmapLoading || isBertopicLoading;
 
@@ -83,9 +88,9 @@ export default function MainPage() {
       )}
 
       {/* BERTopic 토픽 클러스터 시각화 */}
-      {bertopicData?.topics && bertopicData.topics.length > 0 && (
+      {bertopicData?.imageUrl && (
         <Paper sx={{ p: 3, mb: 4 }}>
-          <BertopicVisualization data={bertopicData.topics} />
+          <BertopicVisualization imageUrl={bertopicData.imageUrl} />
         </Paper>
       )}
 
