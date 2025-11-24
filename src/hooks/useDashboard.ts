@@ -90,6 +90,7 @@ export const usePressStanceHeatmap = (): UseQueryResult<
 
 /**
  * BERTopic 토픽 클러스터 시각화 데이터 조회
+ * 1시간 주기로만 요청하도록 설정
  */
 export const useBertopicVisualization = (): UseQueryResult<BertopicVisualizationData, Error> => {
   return useQuery({
@@ -97,6 +98,9 @@ export const useBertopicVisualization = (): UseQueryResult<BertopicVisualization
     queryFn: dashboardService.getBertopicVisualization,
     staleTime: 60 * 60 * 1000, // 1시간 - 서버 토픽 클러스터링 주기와 동기화
     gcTime: 3 * 60 * 60 * 1000, // 3시간 - 메모리에 더 오래 보관
+    refetchOnMount: false, // 컴포넌트 마운트 시 재요청 안 함
+    refetchOnWindowFocus: false, // 윈도우 포커스 시 재요청 안 함
+    refetchOnReconnect: false, // 네트워크 재연결 시 재요청 안 함
   });
 };
 
