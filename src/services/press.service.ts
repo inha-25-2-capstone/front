@@ -105,8 +105,10 @@ export const getPressById = async (pressId: string): Promise<PressDetail> => {
   // 평균 스탠스 점수 계산 (옹호: +1, 중립: 0, 비판: -1)
   const avgStanceScore =
     totalArticles > 0
-      ? (stanceDistribution.support * 1 + stanceDistribution.neutral * 0 + stanceDistribution.oppose * -1) /
-          totalArticles
+      ? (stanceDistribution.support * 1 +
+          stanceDistribution.neutral * 0 +
+          stanceDistribution.oppose * -1) /
+        totalArticles
       : 0;
 
   return {

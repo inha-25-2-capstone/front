@@ -105,7 +105,8 @@ export default function PressArticlesPage() {
     neutral: 0,
     oppose: 0,
   };
-  const totalStance = stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
+  const totalStance =
+    stanceDistribution.support + stanceDistribution.neutral + stanceDistribution.oppose;
 
   return (
     <Box>
@@ -293,7 +294,10 @@ export default function PressArticlesPage() {
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#66bb6a' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {totalStance > 0 ? Math.round((stanceDistribution.support / totalStance) * 100) : 0}%
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.support / totalStance) * 100)
+                      : 0}
+                    %
                   </strong>{' '}
                   ({stanceDistribution.support})
                 </Typography>
@@ -302,7 +306,10 @@ export default function PressArticlesPage() {
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#9e9e9e' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {totalStance > 0 ? Math.round((stanceDistribution.neutral / totalStance) * 100) : 0}%
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.neutral / totalStance) * 100)
+                      : 0}
+                    %
                   </strong>{' '}
                   ({stanceDistribution.neutral})
                 </Typography>
@@ -311,7 +318,10 @@ export default function PressArticlesPage() {
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#ef5350' }} />
                 <Typography variant="caption" color="text.secondary">
                   <strong>
-                    {totalStance > 0 ? Math.round((stanceDistribution.oppose / totalStance) * 100) : 0}%
+                    {totalStance > 0
+                      ? Math.round((stanceDistribution.oppose / totalStance) * 100)
+                      : 0}
+                    %
                   </strong>{' '}
                   ({stanceDistribution.oppose})
                 </Typography>
