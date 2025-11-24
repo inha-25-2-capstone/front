@@ -57,7 +57,11 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     // Blob, ArrayBuffer 등 바이너리 데이터는 변환하지 않음
-    if (response.data && !(response.data instanceof Blob) && response.config.responseType !== 'blob') {
+    if (
+      response.data &&
+      !(response.data instanceof Blob) &&
+      response.config.responseType !== 'blob'
+    ) {
       response.data = toCamelCase(response.data);
     }
     return response;

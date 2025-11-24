@@ -5,7 +5,6 @@ interface BertopicVisualizationProps {
 }
 
 export default function BertopicVisualization({ imageUrl }: BertopicVisualizationProps) {
-
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -44,7 +43,8 @@ export default function BertopicVisualization({ imageUrl }: BertopicVisualizatio
       {/* 설명 */}
       <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
         <Typography variant="caption" color="text.secondary">
-          💡 가까이 위치한 토픽일수록 내용이 유사합니다. 백엔드에서 생성된 BERTopic 시각화 이미지입니다.
+          💡 가까이 위치한 토픽일수록 내용이 유사합니다. 백엔드에서 생성된 BERTopic 시각화
+          이미지입니다.
         </Typography>
       </Box>
     </Box>
