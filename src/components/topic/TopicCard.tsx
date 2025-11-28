@@ -20,7 +20,8 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
   const total = distribution.support + distribution.neutral + distribution.oppose;
 
   // 대표 기사 이미지 사용, 없으면 플레이스홀더
-  const imageUrl = mainArticleImage || `https://via.placeholder.com/400x240/e3f2fd/1976d2?text=No+Image`;
+  const imageUrl =
+    mainArticleImage || `https://via.placeholder.com/400x240/e3f2fd/1976d2?text=No+Image`;
 
   return (
     <Card
