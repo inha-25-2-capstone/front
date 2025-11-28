@@ -13,14 +13,15 @@ interface TopicCardProps {
 }
 
 export default function TopicCard({ topic, rank }: TopicCardProps) {
-  const { id, name, articleCount, stanceDistribution } = topic;
+  const { id, name, articleCount, stanceDistribution, mainArticleImage } = topic;
 
   // stanceDistribution이 null일 경우 기본값 사용
   const distribution = stanceDistribution || { support: 0, neutral: 0, oppose: 0 };
   const total = distribution.support + distribution.neutral + distribution.oppose;
 
-  // 임시 이미지 URL (실제로는 topic.imageUrl 사용)
-  const imageUrl = `https://picsum.photos/seed/${id}/400/240`;
+  // 대표 기사 이미지 사용, 없으면 플레이스홀더
+  const imageUrl =
+    mainArticleImage || `https://via.placeholder.com/400x240/e3f2fd/1976d2?text=No+Image`;
 
   return (
     <Card
