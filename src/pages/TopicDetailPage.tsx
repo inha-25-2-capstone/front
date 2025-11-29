@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ArticleCard from '@/components/article/ArticleCard';
 import MainArticleCard from '@/components/article/MainArticleCard';
 import StanceFilter from '@/components/common/StanceFilter';
+import TopicDetailSkeleton from '@/components/common/TopicDetailSkeleton';
 import { useTopicArticles, useTopicDetail } from '@/hooks';
 import type { Stance } from '@/types';
 
@@ -62,13 +63,7 @@ export default function TopicDetailPage() {
   };
 
   if (isTopicLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <TopicDetailSkeleton />;
   }
 
   if (topicError) {

@@ -25,31 +25,44 @@ export default function Header() {
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: 4 }}>
         {/* 로고 */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          component={Link}
+          to="/"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
           <Box
             sx={{
-              width: 36,
-              height: 36,
-              bgcolor: '#000',
-              borderRadius: 1,
+              width: 40,
+              height: 40,
+              background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+              borderRadius: 2,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#fff',
-              fontWeight: 'bold',
-              fontSize: 18,
             }}
           >
-            AI
+            <NewspaperIcon sx={{ fontSize: 24 }} />
           </Box>
-          <Box>
-            <Typography variant="h6" fontWeight="bold">
-              AI 뉴스 추천
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              객관적 분석 서비스
-            </Typography>
-          </Box>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              letterSpacing: '-0.5px',
+              background: 'linear-gradient(135deg, #1a1a2e 0%, #4a5568 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            PoliView
+          </Typography>
         </Box>
 
         {/* 네비게이션 메뉴 */}
