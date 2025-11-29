@@ -3,9 +3,10 @@
  */
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Alert, Box, CircularProgress, IconButton, Typography } from '@mui/material';
+import { Alert, Box, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import PressListSkeleton from '@/components/common/PressListSkeleton';
 import PressCard from '@/components/press/PressCard';
 import { usePressList } from '@/hooks';
 
@@ -23,13 +24,7 @@ export default function PressListPage() {
   });
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <PressListSkeleton />;
   }
 
   if (error) {
@@ -84,6 +79,7 @@ export default function PressListPage() {
               name={press.name}
               articleCount={press.articleCount}
               description={press.description || `${press.name}의 최신 뉴스를 확인해보세요`}
+              logoUrl={press.logoUrl}
             />
           ))}
         </Box>

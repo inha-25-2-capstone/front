@@ -4,20 +4,13 @@
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LaunchIcon from '@mui/icons-material/Launch';
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  IconButton,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Alert, Box, Button, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RecommendedArticleCard from '@/components/article/RecommendedArticleCard';
+import ArticleDetailSkeleton from '@/components/common/ArticleDetailSkeleton';
+import ImagePlaceholder from '@/components/common/ImagePlaceholder';
 import StanceBadge from '@/components/common/StanceBadge';
 import StanceFilter from '@/components/common/StanceFilter';
 import { useArticleDetail } from '@/hooks';
@@ -60,13 +53,7 @@ export default function ArticleDetailPage() {
       })) || [];
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <ArticleDetailSkeleton />;
   }
 
   if (error) {
@@ -130,7 +117,7 @@ export default function ArticleDetailPage() {
             <Divider sx={{ mb: 3 }} />
 
             {/* 기사 이미지 */}
-            {article.imageUrl && (
+            {article.imageUrl ? (
               <Box
                 component="img"
                 src={article.imageUrl}
@@ -143,6 +130,10 @@ export default function ArticleDetailPage() {
                   mb: 3,
                 }}
               />
+            ) : (
+              <Box sx={{ mb: 3, borderRadius: 1, overflow: 'hidden' }}>
+                <ImagePlaceholder height={300} />
+              </Box>
             )}
 
             {/* 기사 요약 */}

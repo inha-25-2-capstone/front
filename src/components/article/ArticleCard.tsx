@@ -5,6 +5,7 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import ImagePlaceholder from '@/components/common/ImagePlaceholder';
 import StanceBadge from '@/components/common/StanceBadge';
 import type { ArticleSummary } from '@/types';
 import { formatToDotDate, truncate } from '@/utils';
@@ -26,13 +27,15 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         onClick={handleClick}
         sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}
       >
-        {article.imageUrl && (
+        {article.imageUrl ? (
           <CardMedia
             component="img"
             sx={{ width: 140, height: 140, objectFit: 'cover' }}
             image={article.imageUrl}
             alt={article.title}
           />
+        ) : (
+          <ImagePlaceholder width={140} height={140} />
         )}
         <CardContent sx={{ flex: 1, py: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>

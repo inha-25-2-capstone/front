@@ -26,6 +26,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import ArticleCard from '@/components/article/ArticleCard';
+import PressArticlesSkeleton from '@/components/common/PressArticlesSkeleton';
 import { usePressArticles, usePressDetail } from '@/hooks';
 
 type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
@@ -74,13 +75,7 @@ export default function PressArticlesPage() {
   };
 
   if (isPressLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <PressArticlesSkeleton />;
   }
 
   if (pressError) {

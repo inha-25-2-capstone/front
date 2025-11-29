@@ -5,6 +5,7 @@
 import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import ImagePlaceholder from '@/components/common/ImagePlaceholder';
 import StanceBadge from '@/components/common/StanceBadge';
 import type { ArticleDetail } from '@/types';
 import { formatToKoreanDate } from '@/utils';
@@ -22,7 +23,7 @@ export default function MainArticleCard({ article }: MainArticleCardProps) {
 
   return (
     <Card sx={{ mb: 4 }}>
-      {article.imageUrl && (
+      {article.imageUrl ? (
         <CardMedia
           component="img"
           height="400"
@@ -30,6 +31,8 @@ export default function MainArticleCard({ article }: MainArticleCardProps) {
           alt={article.title}
           sx={{ objectFit: 'cover' }}
         />
+      ) : (
+        <ImagePlaceholder height={400} />
       )}
       <CardContent sx={{ p: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>

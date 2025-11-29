@@ -2,8 +2,9 @@
  * 메인 페이지 (스탠스 대시보드)
  */
 
-import { Alert, Box, CircularProgress, Paper, Typography } from '@mui/material';
+import { Alert, Box, Paper, Typography } from '@mui/material';
 
+import MainPageSkeleton from '@/components/common/MainPageSkeleton';
 import BertopicVisualization from '@/components/dashboard/BertopicVisualization';
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
 import PressStanceHeatmap from '@/components/dashboard/PressStanceHeatmap';
@@ -44,13 +45,7 @@ export default function MainPage() {
   const hasError = topicsError || keywordsError || heatmapError || bertopicError;
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <MainPageSkeleton />;
   }
 
   if (hasError) {
@@ -65,11 +60,19 @@ export default function MainPage() {
     <Box>
       {/* 페이지 헤더 */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          오늘의 정치 지향
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          한국 가장 논쟁적 역할을 하는 언론사 탐험되는 논조로 변동 받지 않겠습니다
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 800,
+            letterSpacing: '-0.5px',
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #4a5568 100%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            display: 'inline-block',
+          }}
+        >
+          오늘의 정치 뉴스
         </Typography>
       </Box>
 

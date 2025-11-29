@@ -10,3 +10,6 @@ dist/
 .DS_Store
 .cache/
 vite.config.local.*
+
+.vercel
+.env*.local

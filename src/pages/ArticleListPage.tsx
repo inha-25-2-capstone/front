@@ -5,7 +5,6 @@
 import {
   Alert,
   Box,
-  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -18,6 +17,7 @@ import {
 import { useState } from 'react';
 
 import ArticleCard from '@/components/article/ArticleCard';
+import ArticleListSkeleton from '@/components/common/ArticleListSkeleton';
 import StanceFilter from '@/components/common/StanceFilter';
 import { useArticles } from '@/hooks';
 import type { ArticleSortField, Stance } from '@/types';
@@ -63,13 +63,7 @@ export default function ArticleListPage() {
   };
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <ArticleListSkeleton />;
   }
 
   if (error) {
