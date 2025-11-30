@@ -50,3 +50,20 @@ export interface TopicCard {
   dominantStance: 'support' | 'neutral' | 'oppose'; // 주요 스탠스
   thumbnail?: string;
 }
+
+/**
+ * 일별 키워드 항목
+ */
+export interface DailyKeyword {
+  text: string;
+  weight: number;
+}
+
+/**
+ * 일별 키워드 응답 (워드클라우드용)
+ */
+export interface DailyKeywordsResponse {
+  date: string; // YYYY-MM-DD
+  total_topics: number;
+  keywords: DailyKeyword[];
+}

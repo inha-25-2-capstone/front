@@ -5,7 +5,14 @@
 import { env } from '@/lib/env';
 import { MOCK_ARTICLES } from '@/mocks/data/articles';
 import { getMockTopicArticles, getMockTopicById, MOCK_TOPICS } from '@/mocks/data/topics';
-import type { ArticleSummary, PaginatedResponse, Stance, TopicDetail, TopicSummary } from '@/types';
+import type {
+  ArticleSummary,
+  DailyKeywordsResponse,
+  PaginatedResponse,
+  Stance,
+  TopicDetail,
+  TopicSummary,
+} from '@/types';
 
 import { apiClient } from './api-client';
 
@@ -131,11 +138,63 @@ export const getTopicRecommendations = async (topicId: number): Promise<ArticleS
 };
 
 /**
+ * 일별 키워드 조회 파라미터
+ */
+interface GetDailyKeywordsParams {
+  date?: string; // YYYY-MM-DD, 기본값: 오늘
+  limit?: number; // 10-100, 기본값: 50
+}
+
+/**
+ * 일별 키워드 조회 (워드클라우드용)
+ */
+export const getDailyKeywords = async (
+  params?: GetDailyKeywordsParams,
+): Promise<DailyKeywordsResponse> => {
+  // Mock 모드 체크
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+    return {
+      date: params?.date || new Date().toISOString().split('T')[0],
+      total_topics: 7,
+      keywords: [
+        { text: '윤석열', weight: 85 },
+        { text: '대통령', weight: 78 },
+        { text: '국회', weight: 65 },
+        { text: '탄핵', weight: 60 },
+        { text: '민주당', weight: 55 },
+        { text: '국민의힘', weight: 50 },
+        { text: '정치', weight: 45 },
+        { text: '검찰', weight: 40 },
+        { text: '총선', weight: 35 },
+        { text: '여야', weight: 30 },
+      ],
+    };
+  }
+
+  const queryParams = new URLSearchParams();
+
+  if (params?.date) {
+    queryParams.append('date', params.date);
+  }
+  if (params?.limit) {
+    queryParams.append('limit', params.limit.toString());
+  }
+
+  const queryString = queryParams.toString();
+  const response = await apiClient.get<DailyKeywordsResponse>(
+    `/topics/daily-keywords${queryString ? `?${queryString}` : ''}`,
+  );
+  return response.data;
+};
+
+/**
  * Topic Service 객체
  */
 export const topicService = {
-  getTopics,
-  getTopicById,
+  getDailyKeywords,
   getTopicArticles,
+  getTopicById,
   getTopicRecommendations,
+  getTopics,
 };

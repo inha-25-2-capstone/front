@@ -26,7 +26,14 @@ export type {
 } from './article';
 
 // Topic types
-export type { Topic, TopicCard, TopicDetail, TopicSummary } from './topic';
+export type {
+  DailyKeyword,
+  DailyKeywordsResponse,
+  Topic,
+  TopicCard,
+  TopicDetail,
+  TopicSummary,
+} from './topic';
 
 // Press types
 export type {
