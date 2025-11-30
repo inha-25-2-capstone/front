@@ -5,7 +5,14 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 
 import { topicService } from '@/services';
-import type { ArticleSummary, PaginatedResponse, Stance, TopicDetail, TopicSummary } from '@/types';
+import type {
+  ArticleSummary,
+  DailyKeywordsResponse,
+  PaginatedResponse,
+  Stance,
+  TopicDetail,
+  TopicSummary,
+} from '@/types';
 
 /**
  * 토픽 목록 조회 파라미터
@@ -106,5 +113,30 @@ export const useTopicRecommendations = (
     queryFn: () => topicService.getTopicRecommendations(topicId),
     staleTime: 5 * 60 * 1000, // 5분
     enabled: enabled && !!topicId,
+  });
+};
+
+/**
+ * 일별 키워드 조회 파라미터
+ */
+interface UseDailyKeywordsParams {
+  date?: string; // YYYY-MM-DD
+  limit?: number; // 10-100
+  enabled?: boolean;
+}
+
+/**
+ * 일별 키워드 조회 (워드클라우드용)
+ */
+export const useDailyKeywords = (
+  params?: UseDailyKeywordsParams,
+): UseQueryResult<DailyKeywordsResponse, Error> => {
+  const { enabled = true, ...queryParams } = params || {};
+
+  return useQuery({
+    queryKey: ['topics', 'daily-keywords', queryParams],
+    queryFn: () => topicService.getDailyKeywords(queryParams),
+    staleTime: 5 * 60 * 1000, // 5분
+    enabled,
   });
 };

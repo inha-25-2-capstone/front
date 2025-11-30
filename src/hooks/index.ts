@@ -21,7 +21,13 @@ export {
 export { useArticleDetail, useArticles } from './useArticles';
 
 // Topic hooks
-export { useTopicArticles, useTopicDetail, useTopicRecommendations, useTopics } from './useTopics';
+export {
+  useDailyKeywords,
+  useTopicArticles,
+  useTopicDetail,
+  useTopicRecommendations,
+  useTopics,
+} from './useTopics';
 
 // Press hooks
 export { usePressArticles, usePressDetail, usePressList } from './usePress';

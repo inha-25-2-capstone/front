@@ -9,7 +9,12 @@ import BertopicVisualization from '@/components/dashboard/BertopicVisualization'
 import KeywordTrend from '@/components/dashboard/KeywordTrend';
 import PressStanceHeatmap from '@/components/dashboard/PressStanceHeatmap';
 import TopicCarousel from '@/components/topic/TopicCarousel';
-import { useBertopicVisualization, useKeywords, usePressStanceHeatmap, useTopics } from '@/hooks';
+import {
+  useBertopicVisualization,
+  useDailyKeywords,
+  usePressStanceHeatmap,
+  useTopics,
+} from '@/hooks';
 
 export default function MainPage() {
   // Dashboard API 호출
@@ -21,7 +26,11 @@ export default function MainPage() {
     page: 1,
     limit: 7,
   });
-  const { data: keywords, isLoading: isKeywordsLoading, error: keywordsError } = useKeywords();
+  const {
+    data: dailyKeywordsData,
+    isLoading: isKeywordsLoading,
+    error: keywordsError,
+  } = useDailyKeywords();
   const {
     data: heatmapResponse,
     isLoading: isHeatmapLoading,
@@ -38,11 +47,11 @@ export default function MainPage() {
     console.error('🔴 BERTopic Error:', bertopicError);
   }
 
-  // 로딩 상태
-  const isLoading = isTopicsLoading || isKeywordsLoading || isHeatmapLoading || isBertopicLoading;
+  // 로딩 상태 (키워드는 선택적이므로 제외)
+  const isLoading = isTopicsLoading || isHeatmapLoading || isBertopicLoading;
 
-  // 에러 상태
-  const hasError = topicsError || keywordsError || heatmapError || bertopicError;
+  // 에러 상태 (키워드는 선택적이므로 제외)
+  const hasError = topicsError || heatmapError || bertopicError;
 
   if (isLoading) {
     return <MainPageSkeleton />;
@@ -84,9 +93,9 @@ export default function MainPage() {
       )}
 
       {/* 핵심 키워드 트렌드 */}
-      {keywords && keywords.length > 0 && (
+      {dailyKeywordsData && dailyKeywordsData.keywords.length > 0 && (
         <Box sx={{ mb: 4 }}>
-          <KeywordTrend keywords={keywords} />
+          <KeywordTrend keywords={dailyKeywordsData.keywords} />
         </Box>
       )}
 
