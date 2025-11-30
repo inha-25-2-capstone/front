@@ -26,11 +26,7 @@ export default function MainPage() {
     page: 1,
     limit: 7,
   });
-  const {
-    data: dailyKeywordsData,
-    isLoading: isKeywordsLoading,
-    error: keywordsError,
-  } = useDailyKeywords();
+  const { data: dailyKeywordsData } = useDailyKeywords();
   const {
     data: heatmapResponse,
     isLoading: isHeatmapLoading,
