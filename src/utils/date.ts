@@ -27,8 +27,12 @@ export const formatToKoreanDate = (isoDate: string): string => {
  * @example
  * formatToDotDate('2025-10-31T12:00:00Z') // '2025.10.31'
  */
-export const formatToDotDate = (isoDate: string): string => {
+export const formatToDotDate = (isoDate: string | undefined | null): string => {
+  if (!isoDate) return '-';
+
   const date = new Date(isoDate);
+  if (isNaN(date.getTime())) return '-';
+
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');

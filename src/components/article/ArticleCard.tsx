@@ -49,7 +49,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
               •
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {formatToDotDate(article.date)}
+              {formatToDotDate(article.date || article.publishedAt)}
             </Typography>
           </Box>
           <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 0.5 }}>

@@ -90,7 +90,7 @@ apiClient.interceptors.response.use(
           console.error('서버 에러가 발생했습니다.');
           break;
         default:
-          console.error('알 수 없는 에러가 발생했습니다.');
+          console.error(`에러 발생 (상태 코드: ${status})`, error.response.data);
       }
     } else if (error.request) {
       // 요청은 보냈지만 응답을 받지 못한 경우

@@ -22,8 +22,7 @@ import {
   type SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import ArticleCard from '@/components/article/ArticleCard';
 import PressArticlesSkeleton from '@/components/common/PressArticlesSkeleton';
@@ -34,8 +33,11 @@ type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
 export default function PressArticlesPage() {
   const navigate = useNavigate();
   const { pressId } = useParams<{ pressId: string }>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState<SortOption>('publishedAt:desc');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // URL에서 상태 읽기
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const sortOption = (searchParams.get('sort') as SortOption) || 'publishedAt:desc';
 
   // 정렬 옵션 파싱
   const [sortField, sortOrder] = sortOption.split(':') as ['publishedAt', 'asc' | 'desc'];
@@ -64,14 +66,26 @@ export default function PressArticlesPage() {
     enabled: !!pressId,
   });
 
+  // URL 파라미터 업데이트 헬퍼
+  const updateParams = (updates: Record<string, string>) => {
+    const newParams = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value && value !== 'publishedAt:desc' && value !== '1') {
+        newParams.set(key, value);
+      } else {
+        newParams.delete(key);
+      }
+    });
+    setSearchParams(newParams);
+  };
+
   const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
+    updateParams({ page: page.toString() });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSortChange = (event: SelectChangeEvent) => {
-    setSortOption(event.target.value as SortOption);
-    setCurrentPage(1); // 정렬 변경 시 첫 페이지로
+    updateParams({ sort: event.target.value, page: '1' });
   };
 
   if (isPressLoading) {
