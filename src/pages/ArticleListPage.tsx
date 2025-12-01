@@ -14,7 +14,7 @@ import {
   type SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import ArticleCard from '@/components/article/ArticleCard';
 import ArticleListSkeleton from '@/components/common/ArticleListSkeleton';
@@ -25,9 +25,12 @@ import type { ArticleSortField, Stance } from '@/types';
 type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
 
 export default function ArticleListPage() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [stanceFilter, setStanceFilter] = useState<Stance | '전체'>('전체');
-  const [sortOption, setSortOption] = useState<SortOption>('publishedAt:desc');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // URL에서 상태 읽기
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const stanceFilter = (searchParams.get('stance') as Stance | '전체') || '전체';
+  const sortOption = (searchParams.get('sort') as SortOption) || 'publishedAt:desc';
 
   // 정렬 옵션 파싱
   const [sortField, sortOrder] = sortOption.split(':') as [ArticleSortField, 'asc' | 'desc'];
@@ -47,19 +50,30 @@ export default function ArticleListPage() {
     sortOrder,
   });
 
+  // URL 파라미터 업데이트 헬퍼
+  const updateParams = (updates: Record<string, string>) => {
+    const newParams = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value && value !== '전체' && value !== 'publishedAt:desc' && value !== '1') {
+        newParams.set(key, value);
+      } else {
+        newParams.delete(key);
+      }
+    });
+    setSearchParams(newParams);
+  };
+
   const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
+    updateParams({ page: page.toString() });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStanceChange = (newStance: Stance | '전체') => {
-    setStanceFilter(newStance);
-    setCurrentPage(1); // 필터 변경 시 첫 페이지로
+    updateParams({ stance: newStance, page: '1' });
   };
 
   const handleSortChange = (event: SelectChangeEvent) => {
-    setSortOption(event.target.value as SortOption);
-    setCurrentPage(1); // 정렬 변경 시 첫 페이지로
+    updateParams({ sort: event.target.value, page: '1' });
   };
 
   if (isLoading) {

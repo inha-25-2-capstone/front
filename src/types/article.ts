@@ -39,7 +39,8 @@ export interface ArticleSummary {
   title: string;
   press: string | { id: string; name: string } | null; // 언론사 정보 (문자열 또는 객체)
   pressId: string;
-  date: string; // 표시용 날짜 (예: "2025.10.28")
+  date?: string; // 표시용 날짜 (예: "2025.10.28")
+  publishedAt?: string; // ISO 8601 형식 날짜
   imageUrl?: string;
   stance: Stance;
   viewCount?: number;

@@ -46,10 +46,18 @@ export const getArticles = async (
     sortOrder = 'desc',
   } = params || {};
 
+  // camelCase를 snake_case로 변환
+  const sortFieldMap: Record<string, string> = {
+    publishedAt: 'published_at',
+    viewCount: 'view_count',
+    createdAt: 'created_at',
+  };
+  const snakeSortField = sortFieldMap[sortField] || sortField;
+
   const queryParams = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
-    sort: `${sortField}:${sortOrder}`,
+    sort: `${snakeSortField}:${sortOrder}`,
   });
 
   // 필터 추가

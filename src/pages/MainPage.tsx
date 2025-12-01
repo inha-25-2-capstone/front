@@ -88,19 +88,34 @@ export default function MainPage() {
         </Box>
       )}
 
-      {/* 핵심 키워드 트렌드 */}
-      {dailyKeywordsData && dailyKeywordsData.keywords.length > 0 && (
-        <Box sx={{ mb: 4 }}>
-          <KeywordTrend keywords={dailyKeywordsData.keywords} />
+      {/* 키워드 트렌드 + 토픽 클러스터 시각화 (3:7 비율) */}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 3,
+          mb: 4,
+          flexDirection: { xs: 'column', md: 'row' },
+        }}
+      >
+        {/* 핵심 키워드 트렌드 (35%) */}
+        <Box
+          sx={{
+            flex: { xs: 'none', md: 3.5 },
+            minWidth: 0,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <KeywordTrend keywords={dailyKeywordsData?.keywords || []} />
         </Box>
-      )}
 
-      {/* BERTopic 토픽 클러스터 시각화 */}
-      {bertopicData?.imageUrl && (
-        <Paper sx={{ p: 3, mb: 4 }}>
-          <BertopicVisualization imageUrl={bertopicData.imageUrl} />
-        </Paper>
-      )}
+        {/* BERTopic 토픽 클러스터 시각화 (65%) */}
+        <Box sx={{ flex: { xs: 'none', md: 6.5 }, minWidth: 0 }}>
+          <Paper sx={{ p: 3, height: '100%' }}>
+            <BertopicVisualization imageUrl={bertopicData?.imageUrl} topics={topicsData?.data} />
+          </Paper>
+        </Box>
+      </Box>
 
       {/* 언론사별 스탠스 분포 히트맵 */}
       {heatmapResponse && heatmapResponse.data.length > 0 && (
