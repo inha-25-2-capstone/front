@@ -36,21 +36,21 @@ export default function KeywordTrend({ keywords }: KeywordTrendProps) {
 
     // 가중치 순으로 정렬 (큰 것부터)
     const sorted = [...displayKeywords].sort(
-      (a, b) => (b.weight || b.count || 1) - (a.weight || a.count || 1)
+      (a, b) => (b.weight || b.count || 1) - (a.weight || a.count || 1),
     );
 
     // 10개 키워드를 고르게 배치하기 위한 미리 정의된 위치
     const predefinedPositions = [
-      { x: 50, y: 50 },   // 1위: 정중앙
-      { x: 25, y: 25 },   // 2위: 좌상단
-      { x: 75, y: 75 },   // 3위: 우하단
-      { x: 75, y: 25 },   // 4위: 우상단
-      { x: 25, y: 75 },   // 5위: 좌하단
-      { x: 50, y: 20 },   // 6위: 상단 중앙
-      { x: 50, y: 80 },   // 7위: 하단 중앙
-      { x: 15, y: 50 },   // 8위: 좌측 중앙
-      { x: 85, y: 50 },   // 9위: 우측 중앙
-      { x: 38, y: 38 },   // 10위: 중앙 좌상
+      { x: 50, y: 50 }, // 1위: 정중앙
+      { x: 25, y: 25 }, // 2위: 좌상단
+      { x: 75, y: 75 }, // 3위: 우하단
+      { x: 75, y: 25 }, // 4위: 우상단
+      { x: 25, y: 75 }, // 5위: 좌하단
+      { x: 50, y: 20 }, // 6위: 상단 중앙
+      { x: 50, y: 80 }, // 7위: 하단 중앙
+      { x: 15, y: 50 }, // 8위: 좌측 중앙
+      { x: 85, y: 50 }, // 9위: 우측 중앙
+      { x: 38, y: 38 }, // 10위: 중앙 좌상
     ];
 
     const positions = sorted.map((_, index) => {

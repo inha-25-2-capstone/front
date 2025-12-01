@@ -17,11 +17,41 @@ export default function BertopicVisualization({ imageUrl, topics }: BertopicVisu
 
   // TODO: 임시 mock 데이터 (API 연동 후 제거)
   const mockTopics: TopicSummary[] = [
-    { id: 1, name: '윤석열 탄핵', articleCount: 42, viewCount: 1200, stanceDistribution: { support: 30, neutral: 45, oppose: 25 } },
-    { id: 2, name: '국회 예산안', articleCount: 28, viewCount: 800, stanceDistribution: { support: 20, neutral: 60, oppose: 20 } },
-    { id: 3, name: '검찰 수사', articleCount: 35, viewCount: 950, stanceDistribution: { support: 15, neutral: 40, oppose: 45 } },
-    { id: 4, name: '여야 협상', articleCount: 22, viewCount: 600, stanceDistribution: { support: 35, neutral: 50, oppose: 15 } },
-    { id: 5, name: '경제 정책', articleCount: 18, viewCount: 450, stanceDistribution: { support: 40, neutral: 35, oppose: 25 } },
+    {
+      id: 1,
+      name: '윤석열 탄핵',
+      articleCount: 42,
+      viewCount: 1200,
+      stanceDistribution: { support: 30, neutral: 45, oppose: 25 },
+    },
+    {
+      id: 2,
+      name: '국회 예산안',
+      articleCount: 28,
+      viewCount: 800,
+      stanceDistribution: { support: 20, neutral: 60, oppose: 20 },
+    },
+    {
+      id: 3,
+      name: '검찰 수사',
+      articleCount: 35,
+      viewCount: 950,
+      stanceDistribution: { support: 15, neutral: 40, oppose: 45 },
+    },
+    {
+      id: 4,
+      name: '여야 협상',
+      articleCount: 22,
+      viewCount: 600,
+      stanceDistribution: { support: 35, neutral: 50, oppose: 15 },
+    },
+    {
+      id: 5,
+      name: '경제 정책',
+      articleCount: 18,
+      viewCount: 450,
+      stanceDistribution: { support: 40, neutral: 35, oppose: 25 },
+    },
   ];
   const displayTopics = topics && topics.length > 0 ? topics : mockTopics;
 
