@@ -96,7 +96,7 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
         </Typography>
 
         {/* 기사 수 */}
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ mt: -0.5 }}>
           {articleCount}개 기사
         </Typography>
 
