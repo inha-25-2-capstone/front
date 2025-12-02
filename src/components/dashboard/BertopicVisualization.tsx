@@ -184,10 +184,14 @@ export default function BertopicVisualization({ imageUrl, topics }: BertopicVisu
       {/* 토픽 칩 목록 */}
       {displayTopics.length > 0 && (
         <Box sx={{ mt: 2 }}>
-          <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ mb: 2, display: 'block', textAlign: 'center' }}
+          >
             토픽 바로가기
           </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
             {displayTopics.map((topic) => {
               const stancePercents = getStancePercents(topic.stanceDistribution);
               return (

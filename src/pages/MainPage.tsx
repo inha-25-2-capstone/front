@@ -24,7 +24,7 @@ export default function MainPage() {
     error: topicsError,
   } = useTopics({
     page: 1,
-    limit: 7,
+    limit: 8,
   });
   const { data: dailyKeywordsData } = useDailyKeywords();
   const {

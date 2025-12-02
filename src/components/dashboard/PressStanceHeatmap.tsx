@@ -83,10 +83,11 @@ export default function PressStanceHeatmap({ data, topicNames }: PressStanceHeat
             display: 'grid',
             gridTemplateColumns: `200px repeat(${topicNames.length}, 1fr)`,
             gap: 1,
-            alignItems: 'center',
+            alignItems: 'end',
+            px: 1.5,
           }}
         >
-          <Typography variant="caption" fontWeight="600" color="text.secondary" sx={{ pl: 2 }}>
+          <Typography variant="caption" fontWeight="600" color="text.secondary" sx={{ pl: 1 }}>
             언론사 / 토픽
           </Typography>
           {topicNames.map((topic) => (
@@ -98,7 +99,14 @@ export default function PressStanceHeatmap({ data, topicNames }: PressStanceHeat
               align="center"
               sx={{
                 fontSize: '0.7rem',
-                lineHeight: 1.2,
+                lineHeight: 1.3,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                wordBreak: 'keep-all',
+                minHeight: '2.6em',
               }}
             >
               {topic}

@@ -162,6 +162,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
         '저출산 대책': 'support',
         '입시 제도': 'neutral',
         '노동시간 단축': 'support',
+        '외교 정책': 'neutral',
       },
     },
     {
@@ -174,6 +175,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
         '저출산 대책': 'support',
         '입시 제도': 'neutral',
         '노동시간 단축': 'neutral',
+        '외교 정책': 'support',
       },
     },
     {
@@ -186,6 +188,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
         '저출산 대책': 'support',
         '입시 제도': 'oppose',
         '노동시간 단축': 'neutral',
+        '외교 정책': 'neutral',
       },
     },
     {
@@ -198,6 +201,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
         '저출산 대책': 'neutral',
         '입시 제도': 'oppose',
         '노동시간 단축': 'neutral',
+        '외교 정책': 'support',
       },
     },
     {
@@ -210,6 +214,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
         '저출산 대책': 'support',
         '입시 제도': 'oppose',
         '노동시간 단축': 'support',
+        '외교 정책': 'oppose',
       },
     },
   ],
@@ -221,6 +226,7 @@ export const MOCK_PRESS_STANCE_HEATMAP: {
     '저출산 대책',
     '입시 제도',
     '노동시간 단축',
+    '외교 정책',
   ],
 };
 
