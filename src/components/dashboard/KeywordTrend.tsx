@@ -25,7 +25,9 @@ export default function KeywordTrend({ keywords }: KeywordTrendProps) {
     { text: '총선', weight: 35 },
     { text: '여야', weight: 30 },
   ];
-  const displayKeywords = keywords.length > 0 ? keywords : mockKeywords;
+  const allKeywords = keywords.length > 0 ? keywords : mockKeywords;
+  // 상위 10개만 표시
+  const displayKeywords = allKeywords.slice(0, 10);
 
   // 가중치 기반으로 폰트 크기, 선명도, 위치 계산
   const keywordsWithStyle = useMemo(() => {
