@@ -70,15 +70,9 @@ export default function TopicStanceDistribution({
           mb: 2,
         }}
       >
-        {supportPercent > 0 && (
-          <Box sx={{ width: `${supportPercent}%`, bgcolor: '#4caf50' }} />
-        )}
-        {neutralPercent > 0 && (
-          <Box sx={{ width: `${neutralPercent}%`, bgcolor: '#9e9e9e' }} />
-        )}
-        {opposePercent > 0 && (
-          <Box sx={{ width: `${opposePercent}%`, bgcolor: '#f44336' }} />
-        )}
+        {supportPercent > 0 && <Box sx={{ width: `${supportPercent}%`, bgcolor: '#4caf50' }} />}
+        {neutralPercent > 0 && <Box sx={{ width: `${neutralPercent}%`, bgcolor: '#9e9e9e' }} />}
+        {opposePercent > 0 && <Box sx={{ width: `${opposePercent}%`, bgcolor: '#f44336' }} />}
       </Box>
 
       {/* 상세 정보 */}
