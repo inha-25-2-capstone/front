@@ -4,10 +4,10 @@
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArticleIcon from '@mui/icons-material/Article';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import {
   Alert,
+  Avatar,
   Box,
   Chip,
   CircularProgress,
@@ -29,6 +29,27 @@ import PressArticlesSkeleton from '@/components/common/PressArticlesSkeleton';
 import { usePressArticles, usePressDetail } from '@/hooks';
 
 type SortOption = 'publishedAt:desc' | 'publishedAt:asc';
+
+// 언론사 이름에 따른 색상 생성 (일관된 색상 유지)
+const getColorFromName = (name: string): string => {
+  const colors = [
+    '#1976d2', // 파랑
+    '#388e3c', // 초록
+    '#d32f2f', // 빨강
+    '#7b1fa2', // 보라
+    '#f57c00', // 주황
+    '#0288d1', // 하늘
+    '#c2185b', // 핑크
+    '#455a64', // 그레이
+  ];
+
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return colors[Math.abs(hash) % colors.length];
+};
 
 export default function PressArticlesPage() {
   const navigate = useNavigate();
@@ -143,7 +164,27 @@ export default function PressArticlesPage() {
             borderColor: 'divider',
           }}
         >
-          <NewspaperIcon sx={{ fontSize: 36, color: 'primary.main' }} />
+          {pressDetail.logoUrl ? (
+            <Avatar
+              src={pressDetail.logoUrl}
+              alt={pressDetail.name}
+              variant="rounded"
+              sx={{ width: 48, height: 48 }}
+            />
+          ) : (
+            <Avatar
+              variant="rounded"
+              sx={{
+                width: 48,
+                height: 48,
+                bgcolor: getColorFromName(pressDetail.name),
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}
+            >
+              {pressDetail.name.charAt(0)}
+            </Avatar>
+          )}
           <Box sx={{ flex: 1 }}>
             <Typography variant="h5" fontWeight="bold">
               {pressDetail.name}

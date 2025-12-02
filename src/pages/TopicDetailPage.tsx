@@ -19,6 +19,7 @@ import ArticleCard from '@/components/article/ArticleCard';
 import MainArticleCard from '@/components/article/MainArticleCard';
 import StanceFilter from '@/components/common/StanceFilter';
 import TopicDetailSkeleton from '@/components/common/TopicDetailSkeleton';
+import TopicStanceDistribution from '@/components/topic/TopicStanceDistribution';
 import { useTopicArticles, useTopicDetail } from '@/hooks';
 import type { Stance } from '@/types';
 
@@ -106,6 +107,14 @@ export default function TopicDetailPage() {
           총 {topicDetail.articleCount}개의 기사
         </Typography>
       </Box>
+
+      {/* 스탠스 분포 시각화 */}
+      {topicDetail.stanceDistribution && (
+        <TopicStanceDistribution
+          distribution={topicDetail.stanceDistribution}
+          topicName={topicDetail.name}
+        />
+      )}
 
       {/* 대표 기사 */}
       {topicDetail.mainArticle && (
