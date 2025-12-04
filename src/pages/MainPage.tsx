@@ -25,6 +25,7 @@ export default function MainPage() {
   } = useTopics({
     page: 1,
     limit: 8,
+    include: 'main_article,stance_distribution',
   });
   const { data: dailyKeywordsData } = useDailyKeywords();
   const {

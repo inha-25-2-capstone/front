@@ -17,7 +17,7 @@ export interface Article extends BaseEntity {
   originalUrl: string;
   publishedAt: string; // ISO 8601 형식
   viewCount: number;
-  stance: Stance;
+  stance: Stance | null; // null인 경우 분석 중
   pressId: string; // Press ID는 문자열
   topicId: number;
 }
@@ -42,7 +42,7 @@ export interface ArticleSummary {
   date?: string; // 표시용 날짜 (예: "2025.10.28")
   publishedAt?: string; // ISO 8601 형식 날짜
   imageUrl?: string;
-  stance: Stance;
+  stance: Stance | null; // null인 경우 분석 중
   viewCount?: number;
 }
 
@@ -69,6 +69,6 @@ export interface RecommendedArticle {
   id: number;
   title: string;
   press: string | { id: string; name: string } | null; // 언론사 정보 (문자열 또는 객체)
-  stance: Stance;
+  stance: Stance | null; // null인 경우 분석 중
   similarity?: number; // 유사도 점수 (0-1)
 }

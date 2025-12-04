@@ -36,6 +36,31 @@ interface GetTopicArticlesParams {
 }
 
 /**
+ * API 응답의 TopicSummary 변환 (mainArticle -> mainArticleImage, mainArticleStance 등)
+ */
+interface ApiTopicSummary
+  extends Omit<TopicSummary, 'mainArticleImage' | 'mainArticleTitle' | 'mainArticleStance'> {
+  mainArticle?: {
+    title?: string;
+    imageUrl?: string;
+    stance?: Stance | null;
+  };
+  mainArticleTitle?: string;
+  mainArticleImage?: string;
+  mainArticleStance?: Stance | null;
+}
+
+const transformTopicSummary = (topic: ApiTopicSummary): TopicSummary => {
+  const { mainArticle, ...rest } = topic;
+  return {
+    ...rest,
+    mainArticleTitle: topic.mainArticleTitle || mainArticle?.title,
+    mainArticleImage: topic.mainArticleImage || mainArticle?.imageUrl,
+    mainArticleStance: topic.mainArticleStance || mainArticle?.stance || null,
+  };
+};
+
+/**
  * 토픽 목록 조회
  */
 export const getTopics = async (
@@ -72,10 +97,15 @@ export const getTopics = async (
     queryParams.append('include', include);
   }
 
-  const response = await apiClient.get<PaginatedResponse<TopicSummary>>(
+  const response = await apiClient.get<PaginatedResponse<ApiTopicSummary>>(
     `/topics?${queryParams.toString()}`,
   );
-  return response.data;
+
+  // mainArticle 필드를 플랫하게 변환
+  return {
+    ...response.data,
+    data: response.data.data.map(transformTopicSummary),
+  };
 };
 
 /**

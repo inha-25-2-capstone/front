@@ -3,7 +3,7 @@
  */
 
 import type { ArticleDetail, ArticleSummary } from './article';
-import type { BaseEntity, StanceDistribution } from './common';
+import type { BaseEntity, Stance, StanceDistribution } from './common';
 
 /**
  * 토픽 기본 정보
@@ -36,6 +36,7 @@ export interface TopicSummary {
   viewCount: number;
   mainArticleTitle?: string;
   mainArticleImage?: string;
+  mainArticleStance?: Stance | null; // 대표 기사 스탠스
   stanceDistribution: StanceDistribution | null;
 }
 
