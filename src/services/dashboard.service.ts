@@ -93,16 +93,84 @@ export const getPressActivity = async (): Promise<PressActivity[]> => {
 };
 
 /**
+ * API 응답 타입 (언론사 스탠스 분포)
+ */
+interface ApiPressStanceDistribution {
+  date: string;
+  totalTopics: number;
+  pressList: Array<{
+    pressId: string;
+    pressName: string;
+    topicStances: Array<{
+      topicId: number;
+      topicName: string;
+      dominantStance: 'support' | 'neutral' | 'oppose';
+      distribution: {
+        support: number;
+        neutral: number;
+        oppose: number;
+      };
+    }>;
+  }>;
+}
+
+/**
  * 언론사 스탠스 히트맵 데이터 조회
- * Note: 백엔드 API 미구현으로 Mock 데이터 사용
  */
 export const getPressStanceHeatmap = async (): Promise<{
   data: PressStanceData[];
   topics: string[];
 }> => {
-  // 백엔드 API 미구현 - 항상 Mock 데이터 반환
-  await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-  return MOCK_PRESS_STANCE_HEATMAP;
+  // Mock 모드 체크
+  if (env.VITE_USE_MOCK_DATA === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
+    return MOCK_PRESS_STANCE_HEATMAP;
+  }
+
+  const response = await apiClient.get<ApiPressStanceDistribution>(
+    '/press/stance-distribution?limit=10',
+  );
+
+  const apiData = response.data;
+
+  // 모든 언론사의 토픽을 수집하여 고유한 토픽 목록 생성
+  const topicMap = new Map<number, string>();
+  apiData.pressList.forEach((press) => {
+    press.topicStances.forEach((topic) => {
+      if (!topicMap.has(topic.topicId)) {
+        topicMap.set(topic.topicId, topic.topicName.slice(0, 15) + '...');
+      }
+    });
+  });
+
+  // topicId 순서로 정렬된 토픽 목록
+  const sortedTopicIds = Array.from(topicMap.keys()).sort((a, b) => a - b);
+  const topics = sortedTopicIds.map((id) => topicMap.get(id)!);
+
+  // PressStanceData 형식으로 변환
+  const data: PressStanceData[] = apiData.pressList
+    .map((press) => {
+      // 해당 언론사의 토픽별 스탠스를 Map으로 변환
+      const stanceMap = new Map(press.topicStances.map((t) => [t.topicId, t.dominantStance]));
+
+      // 모든 토픽에 대해 스탠스 매핑 (없으면 null 처리를 위해 빈 값)
+      const topicsRecord: Record<string, 'support' | 'neutral' | 'oppose'> = {};
+      sortedTopicIds.forEach((topicId) => {
+        const topicKey = topicMap.get(topicId)!;
+        const stance = stanceMap.get(topicId);
+        if (stance) {
+          topicsRecord[topicKey] = stance;
+        }
+      });
+
+      return {
+        press: press.pressName,
+        topics: topicsRecord,
+      };
+    })
+    .sort((a, b) => a.press.localeCompare(b.press, 'ko')); // 언론사명 가나다순 정렬
+
+  return { data, topics };
 };
 
 /**

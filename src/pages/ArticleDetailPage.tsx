@@ -29,7 +29,7 @@ export default function ArticleDetailPage() {
     error,
   } = useArticleDetail({
     articleId: Number(articleId),
-    include: 'press,topic,related_articles',
+    include: 'stance,press,topic,related_articles',
     enabled: !!articleId,
   });
 
