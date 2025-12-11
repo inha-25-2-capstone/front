@@ -164,11 +164,7 @@ export default function TopicDetailPage() {
 
         {/* 분석 중 안내 메시지 */}
         {hasAnalyzingArticles && stanceFilter === '전체' && (
-          <Alert
-            severity="info"
-            icon={<InfoOutlinedIcon />}
-            sx={{ mb: 2 }}
-          >
+          <Alert severity="info" icon={<InfoOutlinedIcon />} sx={{ mb: 2 }}>
             일부 기사는 AI가 스탠스를 분석 중입니다. 분석이 완료되면 자동으로 분류됩니다.
           </Alert>
         )}
