@@ -9,14 +9,16 @@ import type { Stance } from '@/types';
 import { getStanceColor, getStanceLabel } from '@/utils';
 
 interface StanceBadgeProps {
-  stance: Stance | null;
+  stance: Stance | null | undefined;
   size?: 'small' | 'medium';
 }
 
 export default function StanceBadge({ stance, size = 'small' }: StanceBadgeProps) {
-  const color = getStanceColor(stance);
-  const label = getStanceLabel(stance);
-  const isAnalyzing = stance === null;
+  // undefined도 null로 처리 (분석 중)
+  const normalizedStance = stance ?? null;
+  const color = getStanceColor(normalizedStance);
+  const label = getStanceLabel(normalizedStance);
+  const isAnalyzing = normalizedStance === null;
 
   return (
     <Chip
