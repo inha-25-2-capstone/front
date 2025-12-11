@@ -3,6 +3,7 @@
  */
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Alert,
   Box,
@@ -12,8 +13,8 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import ArticleCard from '@/components/article/ArticleCard';
 import MainArticleCard from '@/components/article/MainArticleCard';
@@ -26,8 +27,11 @@ import type { Stance } from '@/types';
 export default function TopicDetailPage() {
   const navigate = useNavigate();
   const { topicId } = useParams<{ topicId: string }>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [stanceFilter, setStanceFilter] = useState<Stance | '전체'>('전체');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // URL 파라미터에서 필터 상태 읽기
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const stanceFilter = (searchParams.get('stance') as Stance | '전체') || '전체';
 
   // 토픽 상세 정보 (대표 기사 포함)
   const {
@@ -54,14 +58,37 @@ export default function TopicDetailPage() {
   });
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      if (page === 1) {
+        newParams.delete('page');
+      } else {
+        newParams.set('page', page.toString());
+      }
+      return newParams;
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStanceChange = (newStance: Stance | '전체') => {
-    setStanceFilter(newStance);
-    setCurrentPage(1); // 필터 변경 시 첫 페이지로
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      // 필터 변경 시 페이지 리셋
+      newParams.delete('page');
+      if (newStance === '전체') {
+        newParams.delete('stance');
+      } else {
+        newParams.set('stance', newStance);
+      }
+      return newParams;
+    });
   };
+
+  // 분석 중인 기사가 있는지 확인
+  const hasAnalyzingArticles = useMemo(() => {
+    if (!articlesData?.data) return false;
+    return articlesData.data.some((article) => article.stance === null);
+  }, [articlesData]);
 
   if (isTopicLoading) {
     return <TopicDetailSkeleton />;
@@ -128,12 +155,23 @@ export default function TopicDetailPage() {
 
       {/* 관련 기사 리스트 */}
       <Paper sx={{ p: 3 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h5" fontWeight="bold">
             관련 기사
           </Typography>
           <StanceFilter value={stanceFilter} onChange={handleStanceChange} />
         </Box>
+
+        {/* 분석 중 안내 메시지 */}
+        {hasAnalyzingArticles && stanceFilter === '전체' && (
+          <Alert
+            severity="info"
+            icon={<InfoOutlinedIcon />}
+            sx={{ mb: 2 }}
+          >
+            일부 기사는 AI가 스탠스를 분석 중입니다. 분석이 완료되면 자동으로 분류됩니다.
+          </Alert>
+        )}
 
         {isArticlesLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
