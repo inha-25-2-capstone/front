@@ -5,6 +5,7 @@
 import { Box, Card, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+import ImagePlaceholder from '@/components/common/ImagePlaceholder';
 import type { TopicSummary } from '@/types';
 
 interface TopicCardProps {
@@ -18,10 +19,6 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
   // stanceDistribution이 null일 경우 기본값 사용
   const distribution = stanceDistribution || { support: 0, neutral: 0, oppose: 0 };
   const total = distribution.support + distribution.neutral + distribution.oppose;
-
-  // 대표 기사 이미지 사용, 없으면 플레이스홀더
-  const imageUrl =
-    mainArticleImage || `https://via.placeholder.com/400x240/e3f2fd/1976d2?text=No+Image`;
 
   return (
     <Card
@@ -67,15 +64,19 @@ export default function TopicCard({ topic, rank }: TopicCardProps) {
       )}
 
       {/* 이미지 */}
-      <CardMedia
-        component="img"
-        height="180"
-        image={imageUrl}
-        alt={name}
-        sx={{
-          objectFit: 'cover',
-        }}
-      />
+      {mainArticleImage ? (
+        <CardMedia
+          component="img"
+          height="180"
+          image={mainArticleImage}
+          alt={name}
+          sx={{
+            objectFit: 'cover',
+          }}
+        />
+      ) : (
+        <ImagePlaceholder height={180} />
+      )}
 
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1.5, pt: 2 }}>
         {/* 제목 */}
