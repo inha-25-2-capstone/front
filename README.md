@@ -54,6 +54,7 @@
 
 - 📄 **기사 본문**: 전체 내용 표시
 - 🎭 **스탠스 뱃지**: 옹호/중립/비판 색상 구분
+- 📊 **AI 스탠스 분석**: Softmax 확률 및 Score 시각화
 - 💡 **후보 기사**: 반대 논조 기사 최대 3개 추천
 - 🔄 **관련 기사**: 동일 토픽 내 다른 기사
 
@@ -323,10 +324,9 @@ git branch -d feature/my-new-feature
 
 ### 환경별 배포 설정
 
-| 환경           | 브랜치    | 플랫폼 | URL                                   | Mock 데이터 |
-| -------------- | --------- | ------ | ------------------------------------- | ----------- |
-| **Staging**    | `develop` | Render | https://your-app-staging.onrender.com | true        |
-| **Production** | `main`    | Render | https://your-app-prod.onrender.com    | false       |
+| 환경           | 브랜치 | 플랫폼 | URL                                    | Mock 데이터 |
+| -------------- | ------ | ------ | -------------------------------------- | ----------- |
+| **Production** | `main` | Vercel | https://politics-news-front.vercel.app | false       |
 
 ### CI/CD 파이프라인
 
@@ -339,10 +339,10 @@ git branch -d feature/my-new-feature
   3. Type 검사
   4. Build 테스트
 
-#### CD (Render)
+#### CD (Vercel)
 
-- **트리거**: Push to `develop` 또는 `main`
-- **자동 배포**: 브랜치별 자동 배포 설정
+- **트리거**: Push to `main`
+- **자동 배포**: Vercel 자동 배포
 
 ---
 
