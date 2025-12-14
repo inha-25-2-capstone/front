@@ -7,6 +7,19 @@ import type { Press } from './press';
 import type { Topic } from './topic';
 
 /**
+ * 스탠스 분석 원본 정보 (시연용)
+ */
+export interface StanceInfo {
+  label: Stance;
+  score: number;
+  probabilities: {
+    support: number;
+    neutral: number;
+    oppose: number;
+  };
+}
+
+/**
  * 기사 기본 정보
  */
 export interface Article extends BaseEntity {
@@ -29,6 +42,7 @@ export interface ArticleDetail extends Article {
   press: Press;
   topic: Topic;
   relatedArticles?: ArticleSummary[];
+  stanceInfo?: StanceInfo; // 시연용: 원본 스탠스 분석 정보
 }
 
 /**
