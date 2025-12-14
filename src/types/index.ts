@@ -23,6 +23,7 @@ export type {
   ArticleSortField,
   ArticleSummary,
   RecommendedArticle,
+  StanceInfo,
 } from './article';
 
 // Topic types

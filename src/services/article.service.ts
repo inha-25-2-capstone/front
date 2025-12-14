@@ -11,6 +11,7 @@ import type {
   ArticleSummary,
   PaginatedResponse,
   Stance,
+  StanceInfo,
 } from '@/types';
 
 import { apiClient } from './api-client';
@@ -50,6 +51,19 @@ const transformStance = (stance: Stance | ApiStance | null): Stance | null => {
   // 분석 중인 경우 null 반환
   if (isAnalyzing(stance)) return null;
   return stance.label;
+};
+
+/**
+ * 원본 stance 정보 추출 (시연용)
+ */
+const extractStanceInfo = (stance: Stance | ApiStance | null): StanceInfo | undefined => {
+  if (!stance) return undefined;
+  if (typeof stance === 'string') return undefined;
+  return {
+    label: stance.label,
+    score: stance.score,
+    probabilities: stance.probabilities,
+  };
 };
 
 /**
@@ -137,10 +151,14 @@ export const getArticleById = async (
   const queryParams = include ? `?include=${include}` : '';
   const response = await apiClient.get<ArticleDetail>(`/articles/${articleId}${queryParams}`);
 
+  const rawStance = response.data.stance as Stance | ApiStance | null;
+
   // stance 필드 변환 (객체 -> 문자열, 분석 중이면 null)
+  // stanceInfo에는 원본 정보 보존 (시연용)
   return {
     ...response.data,
-    stance: transformStance(response.data.stance as Stance | ApiStance | null),
+    stance: transformStance(rawStance),
+    stanceInfo: extractStanceInfo(rawStance),
   };
 };
 

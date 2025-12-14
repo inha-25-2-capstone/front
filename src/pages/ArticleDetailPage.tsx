@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RecommendedArticleCard from '@/components/article/RecommendedArticleCard';
+import StanceAnalysisInfo from '@/components/article/StanceAnalysisInfo';
 import ArticleDetailSkeleton from '@/components/common/ArticleDetailSkeleton';
 import ImagePlaceholder from '@/components/common/ImagePlaceholder';
 import StanceBadge from '@/components/common/StanceBadge';
@@ -198,6 +199,13 @@ export default function ArticleDetailPage() {
               <Alert severity="info">해당 스탠스의 관련 기사가 없습니다.</Alert>
             )}
           </Paper>
+
+          {/* 스탠스 분석 정보 (시연용) */}
+          {article.stanceInfo && (
+            <Paper sx={{ p: 3, mt: 2 }}>
+              <StanceAnalysisInfo stanceInfo={article.stanceInfo} />
+            </Paper>
+          )}
         </Box>
       </Box>
     </Box>
