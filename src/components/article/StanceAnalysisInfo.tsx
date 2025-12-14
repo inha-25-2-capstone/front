@@ -63,7 +63,11 @@ export default function StanceAnalysisInfo({ stanceInfo }: StanceAnalysisInfoPro
       </Box>
 
       {/* Softmax 확률 표시 */}
-      <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontWeight: 600 }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ display: 'block', mb: 1.5, fontWeight: 600 }}
+      >
         Softmax Probabilities
       </Typography>
 
@@ -73,7 +77,11 @@ export default function StanceAnalysisInfo({ stanceInfo }: StanceAnalysisInfoPro
           <Typography variant="body2" sx={{ color: STANCE_COLORS.support, fontWeight: 500 }}>
             {STANCE_LABELS.support}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', fontWeight: 700 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontFamily: 'monospace', fontWeight: 700 }}
+          >
             {supportPercent}%
           </Typography>
         </Box>
@@ -97,7 +105,11 @@ export default function StanceAnalysisInfo({ stanceInfo }: StanceAnalysisInfoPro
           <Typography variant="body2" sx={{ color: STANCE_COLORS.neutral, fontWeight: 500 }}>
             {STANCE_LABELS.neutral}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', fontWeight: 700 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontFamily: 'monospace', fontWeight: 700 }}
+          >
             {neutralPercent}%
           </Typography>
         </Box>
@@ -121,7 +133,11 @@ export default function StanceAnalysisInfo({ stanceInfo }: StanceAnalysisInfoPro
           <Typography variant="body2" sx={{ color: STANCE_COLORS.oppose, fontWeight: 500 }}>
             {STANCE_LABELS.oppose}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', fontWeight: 700 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontFamily: 'monospace', fontWeight: 700 }}
+          >
             {opposePercent}%
           </Typography>
         </Box>
